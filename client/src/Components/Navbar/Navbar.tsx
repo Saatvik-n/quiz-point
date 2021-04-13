@@ -1,11 +1,18 @@
-import { Box, Flex, useMediaQuery, Image, VStack } from '@chakra-ui/react';
-import * as React from 'react';
+import {
+  Box,
+  Flex,
+  useMediaQuery,
+  Image,
+  VStack,
+  HStack,
+  Text,
+} from "@chakra-ui/react";
+import * as React from "react";
 import { useState } from "react";
+import burgerIcon from "../svgs/Homepage/burger.svg";
 
-export interface NavbarProps {
-  
-}
- 
+export interface NavbarProps {}
+
 const Navbar: React.FC<NavbarProps> = () => {
   const [isMobile] = useMediaQuery("(max-width: 1000px)"); // used to check if user is in a smaller device
   const [isClicked, setIsClicked] = useState(false);
@@ -24,7 +31,8 @@ const Navbar: React.FC<NavbarProps> = () => {
     setIsClicked(!curVal);
   };
 
-  if (isMobile) {                       // This is only returned if device width <= 1000
+  if (isMobile) {
+    // This is only returned if device width <= 1000
     return (
       <>
         <Flex
@@ -33,48 +41,48 @@ const Navbar: React.FC<NavbarProps> = () => {
           paddingBottom={8}
           borderBottomColor="lightgray"
           borderBottomWidth="2px"
-          position="fixed"              // Always stays on top of the screen
+          position="fixed" // Always stays on top of the screen
           backgroundColor="white"
-          width="100%"                  
-          zIndex={5}                    // It is always in front of any other element 
+          width="100%"
+          zIndex={5} // It is always in front of any other element
         >
           <Box>
-            <Image src={logo} />        {/* DSI logo */}
+            <Text fontSize="2xl" >
+              Quiz Point
+            </Text>
           </Box>
 
-          <Image src={burgerIcon}
-          onClick={handleClick} />
+          <Image src={burgerIcon} onClick={handleClick} />
         </Flex>
-        {isClicked ? (                  // Display only if user has clicked the hamburger icon
-          <VStack paddingTop="90px" spacing={0}>      {/* Vertical stack for links */}
-            {links.map((linkName, id) => {
-              return (
-                <Box
-                  key={id}
-                  backgroundColor="#F6F6F6"
-                  w="100%"
-                  textAlign="center"
-                  paddingTop={4} paddingBottom={4}
-                  borderBottomColor="lightgray"
-                  borderBottomWidth="1px"
-                >
-                  <Text margin={0}  fontSize="lg">
-                    {linkName}
-                  </Text>
-                </Box>
-              );
-            })}
+        {isClicked ? ( // Display only if user has clicked the hamburger icon
+          <VStack paddingTop="100px" spacing={5}> {/* Padding top is so that the menu can take up space  */}
+            {/* Vertical stack for links */}
+            <Box borderBottom="2px solid #cccccc" width="100%"
+            textAlign="center"
+            paddingBottom={2} >
+              <Text>
+                Home
+              </Text>
+            </Box>
+            <Box borderBottom="2px solid #cccccc" width="100%"
+            textAlign="center"
+            paddingBottom={2} >
+              <Text>
+                Sign In
+              </Text>
+            </Box>
           </VStack>
         ) : null}
       </>
     );
   }
 
-  return (      // Displayed when user's screen with is > 1000 px
+  return (
+    // Displayed when user's screen with is > 1000 px
     <Flex
       justifyContent="space-around"
       padding={4}
-      paddingBottom={8}
+      paddingBottom={6}
       borderBottomColor="lightgray"
       borderBottomWidth="2px"
       position="fixed"
@@ -82,38 +90,25 @@ const Navbar: React.FC<NavbarProps> = () => {
       w="100%"
       zIndex={5}
       backgroundColor="white"
+      alignItems="center"
     >
-      {
-        /*
+      {/*
         3 main sections - Logo, Links, Icons
-        */
-      }
-      <HStack>
+        */}
+      <Box>
+        <Text fontSize="3xl"> Quiz Point</Text>
+      </Box>
+
+      <HStack spacing={6}>
         <Box>
-          <Image src={logo} />
+          <Text fontSize="1xl">Home</Text>
         </Box>
-      </HStack>
-      <HStack spacing={50}>
-        {links.map((linkName, id) => {
-          return (
-            <Box key={id}>
-              <Text paddingTop={4} fontSize="md">
-                {linkName}{" "}
-              </Text>
-            </Box>
-          );
-        })}
-      </HStack>
-      <HStack spacing={6} >
-        <Image src={homeIcon}
-        cursor="pointer" />
-        <Image src={mailIcon}
-        cursor="pointer" />
-        <Image src={shuffleIcon}
-        cursor="pointer" />
+        <Box>
+          <Text fontSize="1xl">Sign In</Text>
+        </Box>
       </HStack>
     </Flex>
   );
-}
- 
+};
+
 export default Navbar;
