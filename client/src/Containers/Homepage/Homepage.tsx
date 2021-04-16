@@ -1,11 +1,13 @@
 import { useDisclosure } from '@chakra-ui/hooks';
-import * as React from 'react';
+import React , {useState} from 'react';
+import { useHistory } from "react-router-dom";
+
 import Banner from '../../Components/Homepage/Banner';
 import Footer from '../../Components/Homepage/Footer';
-import HomepageModal from '../../Components/Homepage/Modal/HomepageModa';
+import HomepageModal from '../../Components/Homepage/Modal/HomepageModal';
 import Section1 from '../../Components/Homepage/Sections/Section1';
 import Section2 from '../../Components/Homepage/Sections/Section2';
-import Navbar from '../../Components/Navbar/Navbar';
+
 export interface HomepageProps {
   
 }
@@ -13,15 +15,37 @@ export interface HomepageProps {
 const Homepage: React.FC<HomepageProps> = () => {
 
   const {isOpen, onOpen, onClose} = useDisclosure()
+  const history = useHistory()
+
+  const [quizID, setQuizID] = useState("") // By default, this is empty, since we don't know whether the user will choose to go to a quiz
+
+
+  const handleQuizIDChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newQuizID = e.target.value;
+    setQuizID(newQuizID)
+  }
+
+
+  const quizRedirect = () => {
+
+  }
+
+  const signIn = () => {
+    history.push('/login')
+  }
 
   return (  
     <>
-      <Navbar />
       <HomepageModal
       isOpen={isOpen}
       onClose={onClose}
+      sign={signIn}
+      quizID={quizID}
+      quizRedirect={quizRedirect}
+      handleQuizIDChange={handleQuizIDChange}
       />
-      <Banner onOpen={onOpen} />
+      <Banner onOpen={onOpen}
+ />
       <Section1 />
       <Section2 />
       <Footer />

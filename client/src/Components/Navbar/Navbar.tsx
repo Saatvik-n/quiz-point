@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import burgerIcon from "../svgs/Homepage/burger.svg";
 
 export interface NavbarProps {}
@@ -16,15 +17,6 @@ export interface NavbarProps {}
 const Navbar: React.FC<NavbarProps> = () => {
   const [isMobile] = useMediaQuery("(max-width: 1000px)"); // used to check if user is in a smaller device
   const [isClicked, setIsClicked] = useState(false);
-
-  const links = [
-    "Services",
-    "Products",
-    "Technology",
-    "About",
-    "Client",
-    "Partner",
-  ];
 
   const handleClick = () => {
     let curVal = isClicked;
@@ -47,8 +39,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           zIndex={5} // It is always in front of any other element
         >
           <Box>
-            <Text fontSize="2xl" >
-              Quiz Point
+            <Text  fontSize="2xl" > Quiz Point
             </Text>
           </Box>
 
@@ -60,14 +51,14 @@ const Navbar: React.FC<NavbarProps> = () => {
             <Box borderBottom="2px solid #cccccc" width="100%"
             textAlign="center"
             paddingBottom={2} >
-              <Text>
+              <Text as="a" href="/#/" >
                 Home
               </Text>
             </Box>
             <Box borderBottom="2px solid #cccccc" width="100%"
             textAlign="center"
             paddingBottom={2} >
-              <Text>
+              <Text as="a" href="/#/login" >
                 Sign In
               </Text>
             </Box>
@@ -90,21 +81,17 @@ const Navbar: React.FC<NavbarProps> = () => {
       w="100%"
       zIndex={5}
       backgroundColor="white"
-      alignItems="center"
-    >
-      {/*
-        3 main sections - Logo, Links, Icons
-        */}
+      alignItems="center"  >
+      {/* 2 main sections - logo and links */}
       <Box>
         <Text fontSize="3xl"> Quiz Point</Text>
       </Box>
-
       <HStack spacing={6}>
         <Box>
-          <Text fontSize="1xl">Home</Text>
+          <Text fontSize="1xl"  as={"a"} href="/#/"> Home </Text>
         </Box>
         <Box>
-          <Text fontSize="1xl">Sign In</Text>
+          <Text fontSize="1xl" as="a" href="/#/login" >Sign In</Text>
         </Box>
       </HStack>
     </Flex>

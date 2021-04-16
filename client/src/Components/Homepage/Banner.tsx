@@ -10,6 +10,8 @@ export interface BannerProps {
 }
 
 const Banner: React.FC<BannerProps> = (props) => {
+
+
   return (
     <>
       <Box height="7rem"></Box>
