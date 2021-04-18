@@ -9,7 +9,7 @@ export interface BannerProps {
   onOpen: () => void;
 }
 
-const Banner: React.FC<BannerProps> = (props) => {
+const Banner: React.FC<BannerProps> = React.memo((props) => {
 
 
   return (
@@ -27,7 +27,7 @@ const Banner: React.FC<BannerProps> = (props) => {
         textAlign={{base: "center", xl: "inherit"}}
         paddingBottom={{base: "20px", xl:"40px"}} >
           <Text fontSize={{ base: "5xl", md:"5xl", xl: "6xl" }} fontWeight="600">
-            Create, edit, share, and practice quizzess for free
+            Create, edit, share, and practice quizzes for free
           </Text>
           <Button 
           marginTop="20px"
@@ -43,6 +43,6 @@ const Banner: React.FC<BannerProps> = (props) => {
       </Flex>
     </>
   );
-};
+});
 
 export default Banner;

@@ -34,7 +34,7 @@ const DecideType: React.FC<DecideTypeProps> = (props) => {
     answerText
   } = props;
 
-  if (quizType === "single option") {
+  if (quizType === "Single Option") {
     return (
       <SingleOption
         handleClick={handleClick}
@@ -44,7 +44,7 @@ const DecideType: React.FC<DecideTypeProps> = (props) => {
     );
   }
 
-  if (quizType === "multiple choice") {
+  if (quizType === "Multiple Choice") {
     return (
       <CheckboxOptions
         handleClick={handleClick}

@@ -6,7 +6,11 @@ import shareImage from "../../svgs/Homepage/share.svg";
 
 export interface Section2Props {}
 
-const Section2: React.FC<Section2Props> = () => {
+/**
+ * Memo is used here, because it doesn't receieve any props
+ */
+
+const Section2: React.FC<Section2Props> = React.memo(() => {
   return (
     <Flex justify="center" wrap="wrap" paddingTop="40px" paddingBottom="40px">
       <Box width="500px" marginRight="40px">
@@ -42,6 +46,6 @@ const Section2: React.FC<Section2Props> = () => {
       </Center>
     </Flex>
   );
-};
+});
 
 export default Section2;

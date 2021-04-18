@@ -3,7 +3,7 @@ import { QuizData } from "../Types/QuizInterface";
 export const SampleQuiz:QuizData = [
   {
       questionText: 'What is the capital of France?',
-      type: "single option", 
+      type: "Single Option", 
       answerOptions: [
           { answerText: 'New York', isCorrect: false },
           { answerText: 'London', isCorrect: false },
@@ -13,7 +13,7 @@ export const SampleQuiz:QuizData = [
   },
   {
       questionText: 'Who is CEO of Tesla?',
-      type: "single option", 
+      type: "Single Option", 
       answerOptions: [
           { answerText: 'Jeff Bezos', isCorrect: false },
           { answerText: 'Elon Musk', isCorrect: true },
@@ -21,7 +21,7 @@ export const SampleQuiz:QuizData = [
   },
   {
       questionText: 'The iPhone was created by which company?',
-      type: "single option", 
+      type: "Single Option", 
       answerOptions: [
           { answerText: 'Apple', isCorrect: true },
           { answerText: 'Intel', isCorrect: false },
@@ -31,7 +31,7 @@ export const SampleQuiz:QuizData = [
   },
   {
       questionText: 'Which of these is a programming language?',
-      type: "multiple choice", 
+      type: "Multiple Choice", 
       answerOptions: [
           { answerText: 'Python', isCorrect: true },
           { answerText: 'HTTP', isCorrect: false },
@@ -41,7 +41,7 @@ export const SampleQuiz:QuizData = [
   },
   {
       questionText: "What is the powerhouse of the cell?", 
-      type:"flashcard", 
+      type:"Flashcard", 
       flashcardAnswerText: "Mitochondria"
   }
 ]

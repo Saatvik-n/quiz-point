@@ -6,7 +6,11 @@ import boardImage from "../../svgs/Homepage/board.svg";
 
 export interface Section1Props {}
 
-const Section1: React.FC<Section1Props> = () => {
+/**
+ * Memo is used here, because it doesn't receieve any props
+ */
+
+const Section1: React.FC<Section1Props> = React.memo(() => {
   return (
     <Flex
       justify="center"
@@ -50,6 +54,6 @@ const Section1: React.FC<Section1Props> = () => {
       </Box>
     </Flex>
   );
-};
+});
 
 export default Section1;

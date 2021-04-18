@@ -25,8 +25,8 @@ const initializeAnswerArray = (quizdata: QuizData): AnswerArray => {
   for (let i = 0; i < quizdata.length; i++) {
     const currentQuestion = quizdata[i];
     if (
-      currentQuestion.type === "single option" ||
-      currentQuestion.type === "multiple choice"
+      currentQuestion.type === "Single Option" ||
+      currentQuestion.type === "Multiple Choice"
     ) {
       const numberOfQuestions = currentQuestion.answerOptions?.length;
       let tempArray = new Array(numberOfQuestions).fill(false);
@@ -59,7 +59,6 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
 
   useEffect(() => {
     const initAnswerArray = initializeAnswerArray(quizData);
-    console.log(initAnswerArray);
 
     /**
      * Filling both of the flashcard related arrays with 'false' initially,
@@ -101,7 +100,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
    */
   const handleClick = (index: number) => {
     let copy = cloneDeep(currentAns);
-    if (quizData[currentQuestion].type === "single option") {
+    if (quizData[currentQuestion].type === "Single Option") {
       const currentQuestionLength = currentAns![currentQuestion].length;
       let tempArray = new Array(currentQuestionLength).fill(false);
       tempArray[index] = true;
@@ -148,6 +147,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
     setCorrectFlashAns(correctFlashAnsCopy);
   };
 
+  // TODO: Replace this with a spinner
   if (isLoading) {
     return <div></div>;
   }

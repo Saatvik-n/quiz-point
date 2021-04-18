@@ -20,7 +20,7 @@ export const checkMultipleChoiceCorrect = (userAnsers: boolean[], correctAnswers
   return true
 }
 
-/** Functions for single option questions */
+/** Functions for Single Option questions */
 
 export const findUserAnswerInSingle = (userAnswers: boolean[], answerOptions: Array<singleOption>):string => {
   for (let i = 0; i < answerOptions.length; i++) {
@@ -32,7 +32,7 @@ export const findUserAnswerInSingle = (userAnswers: boolean[], answerOptions: Ar
 }
 
 
-// This returns the index of the correct answer in a single option question
+// This returns the index of the correct answer in a Single Option question
 export const findCorrectAnswerInSingle = (answerOptions: Array<singleOption>):string => {
   let index = 0;
   for (let i = 0; i < answerOptions.length; i++) {
@@ -44,9 +44,24 @@ export const findCorrectAnswerInSingle = (answerOptions: Array<singleOption>):st
   return "";
 }
 
+/**
+ * This function returns an object of type answerOptions (an array of single options).
+ * Each option will have the same text, but every isCorrectField will be set to false
+ */
+export const clearAllOptions = (curAnswerOptions: singleOption[]):singleOption[] => {
+  const clearedAnswerOptions:singleOption[] = curAnswerOptions.map((option) => {
+    return {
+      answerText: option.answerText, 
+      isCorrect: false
+    }
+  })
+
+  return clearedAnswerOptions
+}
+
 /** Functions for multiple option questions */
 
-// This function returns the user's selected answer in a multiple choice question by concatenating 
+// This function returns the user's selected answer in a Multiple Choice question by concatenating 
 // all of the selected options into a single string
 export const getUserAnswersInMultiple = (userAnswers: boolean[], answerOptions: Array<singleOption>): string => {
   let res = "";
@@ -63,7 +78,7 @@ export const getUserAnswersInMultiple = (userAnswers: boolean[], answerOptions: 
   return res;
 }
 
-// This function returns all of the correct answers in a multiple choice question as a string 
+// This function returns all of the correct answers in a Multiple Choice question as a string 
 // By concatenating all of the correct answerString s 
 export const getCorrectAnswersInMultiple = (answerOptions: Array<singleOption>): string => {
   let res = ""
@@ -75,4 +90,23 @@ export const getCorrectAnswersInMultiple = (answerOptions: Array<singleOption>):
   let tempLength = res.length
   res = res.substring(0, tempLength - 2)
   return res;
+}
+
+/**
+ * When a user clicks on a MCQ button, ew 
+ */
+export const handleMultipleChoiceClick = (curAnswerOptions: singleOption[], index: number): singleOption[] => {
+  let newAnswerOptions:singleOption[] = []
+  newAnswerOptions = curAnswerOptions.map((option, i) => {
+    if (index === i) {
+      return {
+        isCorrect: !option.isCorrect, 
+        answerText: option.answerText
+      }
+    }
+    else {
+      return option;
+    }
+  })
+  return newAnswerOptions
 }

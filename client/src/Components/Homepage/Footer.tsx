@@ -9,7 +9,11 @@ import githubIcon from "../svgs/Homepage/icons/github.svg";
 
 export interface FooterProps {}
 
-const Footer: React.FC<FooterProps> = () => {
+/**
+ * Memo is used here, because it doesn't receieve any props
+ */
+
+const Footer: React.FC<FooterProps> = React.memo(() => {
   return (
     <Flex
       justifyContent="center"
@@ -31,6 +35,6 @@ const Footer: React.FC<FooterProps> = () => {
       </Box>
     </Flex>
   );
-};
+});
 
 export default Footer;

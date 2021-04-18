@@ -28,12 +28,12 @@ const giveQuizQAData = (
     const question = quizData[i];
     let resObj:quizQADatarow = initQADataRowObject
     resObj["questionText"] = question.questionText
-    if (question.type === "flashcard") {
+    if (question.type === "Flashcard") {
       resObj["isCorrect"] = correctFlashAns[i]
       resObj["yourAnswer"] = currentAns[i] as string
       resObj["givenAnswer"] = question.flashcardAnswerText!
     }
-    else if (question.type === "single option") {
+    else if (question.type === "Single Option") {
       resObj["isCorrect"] = checkSingleOptionCorrect(currentAns[i] as boolean[], question.answerOptions!)
       let userSingleOptionAnswer = findUserAnswerInSingle(currentAns[i] as boolean[], quizData[i].answerOptions!)
       let correctSingleOptionAnswer = findCorrectAnswerInSingle(quizData[i].answerOptions!)
@@ -47,7 +47,6 @@ const giveQuizQAData = (
     }
     
     result.push({...resObj}) 
-    console.log(result);
   }
   
   return result;

@@ -3,14 +3,23 @@ export interface singleOption {
   isCorrect: boolean;
 }
 
-export type questionTypes = "single option" | "multiple choice" | "flashcard" 
+export type questionTypes = "Single Option" | "Multiple Choice" | "Flashcard" 
 
-
-interface singleQuestion {
+/**
+ * Each question we read from somewhere (reading from API or sample quiz) 
+ * will have this format
+ */
+export interface singleQuestion {
   questionText: string;
   answerOptions?: Array<singleOption>;
   flashcardAnswerText?: string;
   type: questionTypes
+}
+
+export interface CurrentQuestion{
+  singleOption: singleQuestion;
+  multipleChoice: singleQuestion;
+  flashcardText: singleQuestion;
 }
 
 /**
@@ -18,15 +27,34 @@ interface singleQuestion {
  */
 export type QuizData = Array<singleQuestion>
 
-
-
 export interface flashcardOption {
   answerText: string;
   isCorrect: boolean;
 }
 
+/**
+ * This is used to keep track of the questions while creating a quiz.
+ * Questions are an array of possible types (single, multiple, flashcard), so when we have to finish 
+ * creating the quiz, then we need to construct the JSON file for the quiz. To do that, other information 
+ * is needed apart from those types:
+ * Question Text
+ * Question Type - this is decided by the last button you have pressed. Each quiz question has 3 fields (single, multiple, flash)
+ * When you press finish creating quiz, the data in that type is taken and used to create the JSON File 
+ */
+
+export type quizTypeState = Array<{
+  questionText: string,
+  questionType: questionTypes
+}>
+
+/**
+ * This is the current data in the question. This allows user to go back, and switch between types of questions 
+ */
+
+export type currentQuizData = Array<CurrentQuestion>
+
 /* This is to keep track of the quiz answers that you have given 
- Array<boolean> - for single and multiple choice questions
+ Array<boolean> - for single and Multiple Choice questions
 string - for flashcard based questions
 */
 export type AnswerArray = Array<Array<boolean> | string> 
@@ -34,7 +62,7 @@ export type AnswerArray = Array<Array<boolean> | string>
  * This is used to store objects to display when user wants to see their entered options. Fields:
  * questionText - self explanatory 
  * isCorrect - for option based questions, compare and return a result. For flashcard questions - use the user's provided input
- * yourAnswer, givenAnswer - string for flashcard, single option. string[] WOULD BE USED for multiple choice, 
+ * yourAnswer, givenAnswer - string for flashcard, Single Option. string[] WOULD BE USED for Multiple Choice, 
  * but all the options are concatenated into a single string
  */
 export interface quizQADatarow {
@@ -51,3 +79,4 @@ export const initQADataRowObject:quizQADatarow = {
   yourAnswer: "", 
   givenAnswer: ""
 }
+
