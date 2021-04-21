@@ -1,5 +1,5 @@
 import { Image } from "@chakra-ui/image";
-import { Box, Flex, HStack, Text } from "@chakra-ui/layout";
+import { Box, Flex, Text } from "@chakra-ui/layout";
 import * as React from "react";
 
 import reactIcon from "../svgs/Homepage/icons/react.svg";

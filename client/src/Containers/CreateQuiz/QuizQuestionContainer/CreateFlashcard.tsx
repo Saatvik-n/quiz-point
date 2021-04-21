@@ -1,12 +1,12 @@
 import * as React from "react";
 import { VStack, Text, Textarea } from "@chakra-ui/react";
-import CreateQuizContext from "../../../Contexts/CreateQuizContext";
+import CurrentQuizQuestionContext from "../../../Contexts/CurrentQuizQuestionContext";
 
 export interface FlashcardProps {}
 
 const CreateFlashcard: React.FC<FlashcardProps> = () => {
 
-  const {currentQuestionState, currentQuestionDispatch} = React.useContext(CreateQuizContext);
+  const {currentQuestionState, currentQuestionDispatch} = React.useContext(CurrentQuizQuestionContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     currentQuestionDispatch({

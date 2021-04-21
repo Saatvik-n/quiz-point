@@ -1,20 +1,22 @@
-import { Box, VStack, HStack } from "@chakra-ui/layout";
+import { VStack, HStack } from "@chakra-ui/layout";
 import { Checkbox, Input } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import * as React from "react";
-import CreateQuizContext from "../../../Contexts/CreateQuizContext";
+import CurrentQuizQuestionContext from "../../../Contexts/CurrentQuizQuestionContext";
 
 export interface MultipleChoiceProps {}
 
 const CreateMultipleChoice: React.FC<MultipleChoiceProps> = () => {
   const { currentQuestionState, currentQuestionDispatch } = React.useContext(
-    CreateQuizContext
+    CurrentQuizQuestionContext
   );
 
   const changeOptionText = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
+    
+    
     currentQuestionDispatch({
       type: "changeTextChoice",
       field: "Multiple Choice",

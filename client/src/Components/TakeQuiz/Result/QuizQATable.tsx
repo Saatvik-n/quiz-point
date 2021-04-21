@@ -65,7 +65,7 @@ const QuizQATable: React.FC<QuizQATableProps> = (props) => {
 
   React.useEffect(() => {
     const result = giveQuizQAData(quizData, currentAns, correctFlashAns)
-    console.log(result);
+    
     
   }, [])
 

@@ -1,15 +1,19 @@
 import { VStack } from "@chakra-ui/layout";
 import React, { useContext } from "react";
 import SingleOptionType from "../../../Components/CreateQuiz/CreateQuizTypeComponents/SingleOptionType";
-import CreateQuizContext from "../../../Contexts/CreateQuizContext";
+import CurrentQuizQuestionContext from "../../../Contexts/CurrentQuizQuestionContext";
 import { CurrentQuestion } from "../../../Types/QuizInterface";
 
-export interface SingleQuestionProps {}
+export interface SingleQuestionProps {
+  openModal: (m: string) => void;
+}
 
 const SingleQuestion: React.FC<SingleQuestionProps> = (props) => {
   const { currentQuestionState, currentQuestionDispatch } = useContext(
-    CreateQuizContext
+    CurrentQuizQuestionContext
   );
+
+  const {openModal} = props 
 
   const changeOptionText = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -50,6 +54,7 @@ const SingleQuestion: React.FC<SingleQuestionProps> = (props) => {
           (option, index) => {
             return (
               <SingleOptionType
+              openModal={openModal}
                 optionText={option.answerText}
                 handleTextChange={changeOptionText}
                 index={index}

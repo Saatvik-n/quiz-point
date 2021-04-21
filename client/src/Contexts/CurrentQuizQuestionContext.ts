@@ -47,7 +47,12 @@ type changeQuestionStateAction =
   | {
       type: "changeFlashcardText";
       payload: string;
-    };
+    }
+  |
+    { 
+      type: "changeQuestion"; // This is for when we want to change a question. The new question values will be provided 
+      payload: currentQuestionType;
+    }
 
 export const initialQuestionState: CurrentQuestion = {
   singleOption: {
@@ -95,6 +100,8 @@ export const changeQuestionStateReducer = (
         case "Single Option":
           const curAnswerOptions = [...state.singleOption.answerOptions!];
           curAnswerOptions.push({ answerText: "", isCorrect: false });
+
+
           return {
             ...state,
             singleOption: {
@@ -123,8 +130,10 @@ export const changeQuestionStateReducer = (
     case "changeTextChoice": {
       switch (action.field) {
         case "Single Option": {
+          
           const curAnswerOptions = [...state.singleOption.answerOptions!];
           curAnswerOptions[action.index].answerText = action.payload;
+
 
           return {
             ...state,
@@ -221,23 +230,28 @@ export const changeQuestionStateReducer = (
         },
       };
     }
+    case "changeQuestion": {
+      return {
+        ...action.payload
+      }
+    }
     default:
       break;
   }
   return state;
 };
 
-export interface createQuizContextProps {
+export interface CurrentQuizQuestionContextProps {
   currentQuestionState: currentQuestionType;
   currentQuestionDispatch: React.Dispatch<changeQuestionStateAction>;
 }
 
-const CreateQuizContext = createContext<createQuizContextProps>({
+const CurrentQuizQuestionContext = createContext<CurrentQuizQuestionContextProps>({
   currentQuestionState: initialQuestionState,
   currentQuestionDispatch: () => {},
 });
 
-export const CreateQuizContextProvider = CreateQuizContext.Provider;
-export const CreateQuizContextReducer = CreateQuizContext.Consumer;
+export const CurrentQuizQuestionContextProvider = CurrentQuizQuestionContext.Provider;
+export const CurrentQuizQuestionContextConsumer = CurrentQuizQuestionContext.Consumer;
 
-export default CreateQuizContext;
+export default CurrentQuizQuestionContext;

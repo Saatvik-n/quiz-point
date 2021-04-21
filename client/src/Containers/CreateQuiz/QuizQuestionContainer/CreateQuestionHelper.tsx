@@ -6,14 +6,15 @@ import CreateFlashcard from "./CreateFlashcard"
 
 export interface CreateQuestionHelperProps {
   questionType: questionTypes;
+  openModal: (m: string) => void;
 }
  
 const CreateQuestionHelper: React.FC<CreateQuestionHelperProps> = (props) => {
-  const {questionType} = props 
+  const {questionType, openModal} = props 
 
   if (questionType === "Single Option") {
     return (
-      <CreateSingleQuestion   />
+      <CreateSingleQuestion  openModal={openModal} />
     )
   }
 

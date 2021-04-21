@@ -16,7 +16,7 @@ export interface singleQuestion {
   type: questionTypes
 }
 
-export interface CurrentQuestion{
+export type CurrentQuestion = {
   singleOption: singleQuestion;
   multipleChoice: singleQuestion;
   flashcardText: singleQuestion;
@@ -51,7 +51,7 @@ export type quizTypeState = Array<{
  * This is the current data in the question. This allows user to go back, and switch between types of questions 
  */
 
-export type currentQuizData = Array<CurrentQuestion>
+export type CurrentQuizData = Array<CurrentQuestion>
 
 /* This is to keep track of the quiz answers that you have given 
  Array<boolean> - for single and Multiple Choice questions
@@ -80,3 +80,4 @@ export const initQADataRowObject:quizQADatarow = {
   givenAnswer: ""
 }
 
+export type validateError= "multipleError" | "flashError" | "none"

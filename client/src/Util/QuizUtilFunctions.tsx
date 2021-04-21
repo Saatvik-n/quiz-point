@@ -1,4 +1,5 @@
-import { singleOption } from "../Types/QuizInterface";
+import { CurrentQuizData, QuizData, quizTypeState, singleOption, singleQuestion } from "../Types/QuizInterface";
+import cloneDeep from "clone-deep"
 
 export const checkSingleOptionCorrect = (userAnsers: boolean[], correctAnswers: singleOption[]):boolean => {
   for (let i = 0; i < correctAnswers.length; i++) {
@@ -109,4 +110,59 @@ export const handleMultipleChoiceClick = (curAnswerOptions: singleOption[], inde
     }
   })
   return newAnswerOptions
+}
+
+/**
+ * Check if the multiple choice question has at least one option checked as true
+ */
+export const checkAtLeastOneIsTrue = (curAnswerOptions: singleOption[]):boolean => {
+  for (const option of curAnswerOptions) {
+    if (option.isCorrect === true) {
+      return true
+    }
+  }
+  return false
+}
+
+export const createQuizData = (currentQuizState: CurrentQuizData, questionInfo: quizTypeState):QuizData => {
+
+  const resultingQuizData:QuizData =[]
+  console.log(questionInfo);
+  
+  for (let i = 0; i < currentQuizState.length; i++) {
+    const quizQuestion = cloneDeep(currentQuizState[i]);
+    const currentQuestionInfo =  cloneDeep(questionInfo[i])
+    
+
+    // @ts-ignore
+    const currentQuestion:singleQuestion = {}
+    currentQuestion.questionText = currentQuestionInfo.questionText
+
+
+    switch (currentQuestionInfo.questionType) {
+      case "Single Option": {
+        currentQuestion.type = "Single Option"
+        currentQuestion.answerOptions = quizQuestion.singleOption.answerOptions
+        break;
+      }
+      case "Multiple Choice": {
+        currentQuestion.type = "Multiple Choice"
+        currentQuestion.answerOptions = quizQuestion.multipleChoice.answerOptions
+        break;
+      }
+
+      case "Flashcard": {
+        currentQuestion.type = "Flashcard"
+        currentQuestion.flashcardAnswerText = quizQuestion.flashcardText.flashcardAnswerText
+        break;
+      }
+                
+      default:
+        currentQuestion.type = "Single Option"
+        currentQuestion.flashcardAnswerText = "blah"
+        break;
+    }
+    resultingQuizData.push(cloneDeep(currentQuestion))
+  }
+  return resultingQuizData
 }

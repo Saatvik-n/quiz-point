@@ -1,5 +1,5 @@
-import { Text, VStack } from '@chakra-ui/layout';
-import { Radio, RadioGroup } from '@chakra-ui/radio';
+import { VStack } from '@chakra-ui/layout';
+import { Radio } from '@chakra-ui/radio';
 import * as React from 'react';
 
 import { singleOption } from "../../../Types/QuizInterface";
@@ -15,9 +15,9 @@ const SingleOption: React.FC<SingleOptionProps> = (props) => {
   const {answerTexts, checkedArray, handleClick} = props
 
   React.useEffect(() => {
-    console.log("Checked array is");
     
-    console.log(checkedArray);
+    
+    
     
   }, [])
 

@@ -1,5 +1,5 @@
 import { Image } from "@chakra-ui/image";
-import { Box, Center, Flex, HStack, Text } from "@chakra-ui/layout";
+import { Box, Center, Flex, Text } from "@chakra-ui/layout";
 import * as React from "react";
 
 import boardImage from "../../svgs/Homepage/board.svg";
