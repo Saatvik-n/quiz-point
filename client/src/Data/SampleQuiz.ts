@@ -31,7 +31,7 @@ export const SampleQuiz:QuizData = [
   },
   {
       questionText: 'Which of these is a programming language?',
-      type: "Multiple Choice", 
+      type: "Multiple Option", 
       answerOptions: [
           { answerText: 'Python', isCorrect: true },
           { answerText: 'HTTP', isCorrect: false },

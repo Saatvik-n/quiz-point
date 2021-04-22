@@ -2,7 +2,6 @@ import { VStack } from "@chakra-ui/layout";
 import React, { useContext } from "react";
 import SingleOptionType from "../../../Components/CreateQuiz/CreateQuizTypeComponents/SingleOptionType";
 import CurrentQuizQuestionContext from "../../../Contexts/CurrentQuizQuestionContext";
-import { CurrentQuestion } from "../../../Types/QuizInterface";
 
 export interface SingleQuestionProps {
   openModal: (m: string) => void;

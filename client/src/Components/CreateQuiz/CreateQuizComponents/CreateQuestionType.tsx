@@ -11,7 +11,7 @@ export interface CreateQuestionTypeProps {
 const CreateQuestionType: React.FC<CreateQuestionTypeProps> = (props) => {
   const types: Array<questionTypes> = [
     "Single Option",
-    "Multiple Choice",
+    "Multiple Option",
     "Flashcard",
   ];
 

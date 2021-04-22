@@ -71,7 +71,7 @@ export const initialQuestionState: CurrentQuestion = {
   },
   multipleChoice: {
     questionText: "",
-    type: "Multiple Choice",
+    type: "Multiple Option",
     answerOptions: [
       {
         answerText: "",
@@ -109,7 +109,7 @@ export const changeQuestionStateReducer = (
               answerOptions: curAnswerOptions,
             },
           };
-        case "Multiple Choice": {
+        case "Multiple Option": {
           const curAnswerOptions = [...state.multipleChoice.answerOptions!];
           curAnswerOptions.push({ answerText: "", isCorrect: false });
           return {
@@ -143,7 +143,7 @@ export const changeQuestionStateReducer = (
             },
           };
         }
-        case "Multiple Choice": {
+        case "Multiple Option": {
           const curAnswerOptions = [...state.multipleChoice.answerOptions!];
           curAnswerOptions[action.index].answerText = action.payload;
 
@@ -187,7 +187,7 @@ export const changeQuestionStateReducer = (
           };
         }
 
-        case "Multiple Choice": {
+        case "Multiple Option": {
           const curAnswerOptions = [...state.multipleChoice.answerOptions!];
           curAnswerOptions.splice(action.index, 1);
           return {

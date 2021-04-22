@@ -1,4 +1,4 @@
-import { Table, TableCaption, Td, Thead, Tbody, Th, Tr, Tfoot } from "@chakra-ui/react";
+import { Table,  Td, Thead, Tbody, Th, Tr, Tfoot } from "@chakra-ui/react";
 import * as React from "react";
 
 export interface QuizResultsTableProps {
@@ -32,7 +32,7 @@ const QuizResultsTable: React.FC<QuizResultsTableProps> = (props) => {
             <Td> {singleOptionQs} </Td>
           </Tr>
           <Tr>
-            <Td> Multiple Choice </Td>
+            <Td> Multiple Option </Td>
             <Td> {correctMultiple} </Td>
             <Td> {multipleChoiceQs} </Td>
           </Tr>

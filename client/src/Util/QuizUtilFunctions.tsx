@@ -35,7 +35,6 @@ export const findUserAnswerInSingle = (userAnswers: boolean[], answerOptions: Ar
 
 // This returns the index of the correct answer in a Single Option question
 export const findCorrectAnswerInSingle = (answerOptions: Array<singleOption>):string => {
-  let index = 0;
   for (let i = 0; i < answerOptions.length; i++) {
     const currentOption = answerOptions[i] 
     if (currentOption.isCorrect === true) {
@@ -62,7 +61,7 @@ export const clearAllOptions = (curAnswerOptions: singleOption[]):singleOption[]
 
 /** Functions for multiple option questions */
 
-// This function returns the user's selected answer in a Multiple Choice question by concatenating 
+// This function returns the user's selected answer in a Multiple Option question by concatenating 
 // all of the selected options into a single string
 export const getUserAnswersInMultiple = (userAnswers: boolean[], answerOptions: Array<singleOption>): string => {
   let res = "";
@@ -79,7 +78,7 @@ export const getUserAnswersInMultiple = (userAnswers: boolean[], answerOptions: 
   return res;
 }
 
-// This function returns all of the correct answers in a Multiple Choice question as a string 
+// This function returns all of the correct answers in a Multiple Option question as a string 
 // By concatenating all of the correct answerString s 
 export const getCorrectAnswersInMultiple = (answerOptions: Array<singleOption>): string => {
   let res = ""
@@ -145,8 +144,8 @@ export const createQuizData = (currentQuizState: CurrentQuizData, questionInfo: 
         currentQuestion.answerOptions = quizQuestion.singleOption.answerOptions
         break;
       }
-      case "Multiple Choice": {
-        currentQuestion.type = "Multiple Choice"
+      case "Multiple Option": {
+        currentQuestion.type = "Multiple Option"
         currentQuestion.answerOptions = quizQuestion.multipleChoice.answerOptions
         break;
       }

@@ -44,7 +44,7 @@ const DecideType: React.FC<DecideTypeProps> = (props) => {
     );
   }
 
-  if (quizType === "Multiple Choice") {
+  if (quizType === "Multiple Option") {
     return (
       <CheckboxOptions
         handleClick={handleClick}

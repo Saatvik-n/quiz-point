@@ -1,4 +1,4 @@
-import { Box, Center, HStack, Text, VStack } from "@chakra-ui/layout";
+import { Box, Center, HStack,  VStack } from "@chakra-ui/layout";
 import React, { useEffect, useReducer, useState } from "react";
 import CreateQuizHeader from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuizHeader";
 
@@ -14,10 +14,9 @@ import {
 import CreateQuestion from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuestion";
 import CreateQuestionType from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuestionType";
 import {
-  CurrentQuestion,
   questionTypes,
+  QuizData,
   quizTypeState,
-  singleOption,
   validateError,
 } from "../../Types/QuizInterface";
 
@@ -38,6 +37,7 @@ import CurrentQuestionDisplay from "../../Components/CreateQuiz/CreateQuizCompon
 import { useDisclosure } from "@chakra-ui/hooks";
 import CreateQuizModal from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuizModal";
 import { checkAtLeastOneIsTrue, createQuizData } from "../../Util/QuizUtilFunctions";
+import TakeQuiz from "../TakeQuiz/TakeQuiz";
 
 export interface CreateQuizProps {}
 
@@ -66,6 +66,8 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
   const [modalMessage, setModalMessage] = useState("")
 
   const [quizFinished, setQuizFinished] = useState(false)
+
+  const [finishedQuizData, setFinishedQuizData] = useState<QuizData>()
 
   const {isOpen, onClose, onOpen} = useDisclosure()
 
@@ -116,7 +118,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
 
   const validateCurrentOptions = ():validateError => {
     switch (currentQuestionInfo[currentQuestionNumber].questionType) {
-      case "Multiple Choice": {
+      case "Multiple Option": {
         const res = checkAtLeastOneIsTrue(currentQuestionState.multipleChoice.answerOptions!)
         if (res === false) {
           return "multipleError"
@@ -346,7 +348,8 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
     const finalQuizData = createQuizData(cqs, currentQuestionInfo)
     console.log(finalQuizData);
     
-
+    setFinishedQuizData(finalQuizData)
+    setQuizFinished(true)
   }
 
 
@@ -361,6 +364,12 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
 
   if (loading) {
     return <div></div>;
+  }
+
+  if (quizFinished) {
+    return (
+      <TakeQuiz givenQuizData={finishedQuizData} />
+    )
   }
 
   return (

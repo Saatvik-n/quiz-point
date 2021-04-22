@@ -19,7 +19,7 @@ const CreateMultipleChoice: React.FC<MultipleChoiceProps> = () => {
     
     currentQuestionDispatch({
       type: "changeTextChoice",
-      field: "Multiple Choice",
+      field: "Multiple Option",
       index: index,
       payload: e.target.value,
     });
@@ -38,7 +38,7 @@ const CreateMultipleChoice: React.FC<MultipleChoiceProps> = () => {
   const deleteOption = (index: number) => {
     currentQuestionDispatch({
       type: "delete", 
-      field: "Multiple Choice",
+      field: "Multiple Option",
       index: index
     })
   }

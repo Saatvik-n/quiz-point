@@ -91,7 +91,7 @@ export const iqTemp: CurrentQuestion = {
   },
   multipleChoice: {
     questionText: "",
-    type: "Multiple Choice",
+    type: "Multiple Option",
     answerOptions: [
       {
         answerText: "",

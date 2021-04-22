@@ -34,6 +34,10 @@ const Homepage: React.FC<HomepageProps> = () => {
     history.push('/login')
   }
 
+  const takeSampleQuiz = () => {
+    history.push('/samplequiz')
+  }
+
   return (  
     <>
       <HomepageModal
@@ -43,6 +47,7 @@ const Homepage: React.FC<HomepageProps> = () => {
       quizID={quizID}
       quizRedirect={quizRedirect}
       handleQuizIDChange={handleQuizIDChange}
+      takeSampleQuiz={takeSampleQuiz}
       />
       <Banner onOpen={onOpen}
  />

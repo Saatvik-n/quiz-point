@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup } from '@chakra-ui/checkbox';
+import { Checkbox } from '@chakra-ui/checkbox';
 import { Text, VStack } from '@chakra-ui/layout';
 import * as React from 'react';
 

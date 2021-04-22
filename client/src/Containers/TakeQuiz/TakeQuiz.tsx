@@ -10,14 +10,17 @@ import TakingQuizHeader from "../../Components/TakeQuiz/Headers/TakingQuizHeader
 import moveLeftIcon from "../../Components/svgs/Quiz/moveLeft.svg";
 import moveRightIcon from "../../Components/svgs/Quiz/moveRight.svg";
 
-import { SampleQuiz } from "../../Data/SampleQuiz";
+// import { SampleQuiz } from "../../Data/SampleQuiz";
 
 import { QuizData, AnswerArray } from "../../Types/QuizInterface";
 import DecideType from "../../Components/TakeQuiz/DecideType";
 import { Button } from "@chakra-ui/button";
 import QuizResults from "../../Components/TakeQuiz/Result/QuizResults";
 
-export interface TakeQuizProps {}
+export interface TakeQuizProps {
+  givenQuizData?: QuizData;
+
+}
 
 // This returns an array of unchecked checkboxes, unclicked radio buttons, empty texts
 const initializeAnswerArray = (quizdata: QuizData): AnswerArray => {
@@ -26,7 +29,7 @@ const initializeAnswerArray = (quizdata: QuizData): AnswerArray => {
     const currentQuestion = quizdata[i];
     if (
       currentQuestion.type === "Single Option" ||
-      currentQuestion.type === "Multiple Choice"
+      currentQuestion.type === "Multiple Option"
     ) {
       const numberOfQuestions = currentQuestion.answerOptions?.length;
       let tempArray = new Array(numberOfQuestions).fill(false);
@@ -38,9 +41,12 @@ const initializeAnswerArray = (quizdata: QuizData): AnswerArray => {
   return resArray;
 };
 
-const TakeQuiz: React.FC<TakeQuizProps> = () => {
+const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
+
+  const {givenQuizData} = props 
+
   // Self explanatory
-  const [quizData, setQuizData] = useState<QuizData>(SampleQuiz);
+  const [quizData, setQuizData] = useState<QuizData>(givenQuizData!);
   const [currentQuestion, setCurrent] = useState(0);
   const [isQuizFinished, setQuizFinished] = useState(false);
 
@@ -55,7 +61,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const quizLength = SampleQuiz.length;
+  const quizLength = givenQuizData!.length
 
   useEffect(() => {
     const initAnswerArray = initializeAnswerArray(quizData);

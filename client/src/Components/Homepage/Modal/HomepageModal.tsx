@@ -16,6 +16,7 @@ export interface HomepageModalProps {
   quizID: string;
   quizRedirect: () => void;
   handleQuizIDChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  takeSampleQuiz: () => void;
 }
 
 const HomepageModal: React.FC<HomepageModalProps> = (props) => {
@@ -26,6 +27,7 @@ const HomepageModal: React.FC<HomepageModalProps> = (props) => {
     quizID,
     quizRedirect,
     handleQuizIDChange,
+    takeSampleQuiz
   } = props;
 
   const [chooseQuiz, setChooseQuiz] = useState(false); // This determines whether the modal should display the input for user to enter quiz id
@@ -39,6 +41,8 @@ On closing the modl, we do 2 things:
     setChooseQuiz(false);
     onClose();
   };
+
+
 
   if (chooseQuiz) {
     return (
@@ -75,7 +79,7 @@ On closing the modl, we do 2 things:
             Take quiz with quiz ID{" "}
           </Button>
           <br />
-          <Button margin="10px 0px"> Take Sample Quiz </Button>
+          <Button margin="10px 0px" onClick={takeSampleQuiz} > Take Sample Quiz </Button>
         </ModalBody>
       </ModalContent>
     </Modal>

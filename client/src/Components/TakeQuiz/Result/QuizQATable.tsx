@@ -5,8 +5,7 @@ import {
   AnswerArray,
   initQADataRowObject,
   QuizData,
-  quizQADatarow,
-  singleOption,
+  quizQADatarow
 } from "../../../Types/QuizInterface";
 import { checkMultipleChoiceCorrect, checkSingleOptionCorrect, findCorrectAnswerInSingle, findUserAnswerInSingle, getCorrectAnswersInMultiple, getUserAnswersInMultiple } from "../../../Util/QuizUtilFunctions";
 
@@ -61,13 +60,6 @@ This component displays the following data:
 const QuizQATable: React.FC<QuizQATableProps> = (props) => {
 
   const {quizData, currentAns, correctFlashAns} = props
-
-
-  React.useEffect(() => {
-    const result = giveQuizQAData(quizData, currentAns, correctFlashAns)
-    
-    
-  }, [])
 
   return (
     <Table variant="simple" size="lg" w={{ base: "500px", md: "900px" }} >

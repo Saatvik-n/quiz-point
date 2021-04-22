@@ -1,4 +1,4 @@
-import { Box, Center, Text, VStack } from "@chakra-ui/layout";
+import { Box,  Text, VStack } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
 import * as React from "react";
 

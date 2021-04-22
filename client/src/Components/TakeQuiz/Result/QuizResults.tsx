@@ -21,7 +21,7 @@ const calcQuestions = (quizdata: QuizData) => {
     const quizQuestion = quizdata[i];
     if (quizQuestion.type === "Single Option") {
       singleOptionQs++;
-    } else if (quizQuestion.type === "Multiple Choice") {
+    } else if (quizQuestion.type === "Multiple Option") {
       multipleChoiceQs++;
     } else {
       flashcardQs++;
@@ -66,7 +66,7 @@ const calculateCorrectAnsers = (quizData: QuizData, currentAns: AnswerArray, cor
         singleOptionCorrect++;
       }
     }
-    else if (currentQuestion.type === "Multiple Choice") {
+    else if (currentQuestion.type === "Multiple Option") {
       if (checkMultipleChoiceCorrect(currentAns[i] as boolean[], quizData[i].answerOptions!)) {
         multipleChoiceCorrect++;
       }

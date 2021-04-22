@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CurrentQuestion, questionTypes } from '../../../Types/QuizInterface';
+import {  questionTypes } from '../../../Types/QuizInterface';
 import CreateMultipleChoice from './CreateMultipleChoice';
 import CreateSingleQuestion from './CreateSingleQuestion';
 import CreateFlashcard from "./CreateFlashcard"
@@ -18,7 +18,7 @@ const CreateQuestionHelper: React.FC<CreateQuestionHelperProps> = (props) => {
     )
   }
 
-  else if (questionType === "Multiple Choice") {
+  else if (questionType === "Multiple Option") {
     return (
       <CreateMultipleChoice />
     )

@@ -1,0 +1,1 @@
+export type QuestionType = "Single Option" | "Multiple Option" | "Flashcard"
