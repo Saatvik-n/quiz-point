@@ -34,10 +34,10 @@ type changeCurrentQuestionAction =
     };
 
 export const currentQuizReducer = (state: CurrentQuizData, action: changeCurrentQuestionAction) => {
-  
-  
   switch (action.type) {
     case "next": {
+
+      console.log("Next called");
       
       const stateCopy = cloneDeep(state)
 
@@ -49,12 +49,18 @@ export const currentQuizReducer = (state: CurrentQuizData, action: changeCurrent
         return stateCopy;
       } 
         return stateCopy;
+        
     }
     case "previous": {
       const stateCopy = cloneDeep(state)
+      
+      const actionPayloadClone = cloneDeep(action.payload)
 
-      stateCopy[action.currentQuestion] = cloneDeep(action.payload)
+      stateCopy[action.currentQuestion] = actionPayloadClone
 
+      console.log("Statecopy log");
+      console.log(stateCopy);
+      
       return stateCopy
     }
 

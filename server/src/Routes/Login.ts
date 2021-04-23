@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { loginUser } from "../Controllers/UserController";
+import { loginUser, logoutUser } from "../Controllers/UserController";
 
 const app = Router()
 
 app.post('/api/login', loginUser)
+
+app.get('/api/logout', logoutUser)
 
 export default app;

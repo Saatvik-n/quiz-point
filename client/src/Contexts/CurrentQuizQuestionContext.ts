@@ -1,4 +1,5 @@
 import React, { createContext } from "react";
+import cloneDeep from "clone-deep"
 import {
   CurrentQuestion,
   questionTypes,
@@ -14,9 +15,6 @@ type currentQuestionType = {
   multipleChoice: singleQuestion;
   flashcardText: singleQuestion;
 };
-
-
-
 /**
 
  */

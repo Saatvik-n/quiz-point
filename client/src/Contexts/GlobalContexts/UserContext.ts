@@ -2,14 +2,16 @@ import React, {createContext} from "react"
 
 type currentUserType = {
   username: string, 
-  userID: string
+  userID: string, 
+  name: string
 }
 
 type changeUserStateAction = {
   type: "changeUser", 
   payload: {
     username: string, 
-    userID: string
+    userID: string, 
+    name: string
   }
 }
 | {
@@ -18,7 +20,8 @@ type changeUserStateAction = {
 
 export const initialUserState: currentUserType = {
   userID: "", 
-  username: ""
+  username: "", 
+  name: ""
 }
 
 export const changeUserStateReducer = (
@@ -30,6 +33,7 @@ export const changeUserStateReducer = (
       const payloadCopy = {...action.payload}
       newState.userID = payloadCopy.userID
       newState.username = payloadCopy.username
+      newState.name = payloadCopy.name
 
       return newState
     }
@@ -37,6 +41,7 @@ export const changeUserStateReducer = (
       const newState = {...state}
       newState.userID = ""
       newState.username = ""
+      newState.name = ""
 
       return newState
     }

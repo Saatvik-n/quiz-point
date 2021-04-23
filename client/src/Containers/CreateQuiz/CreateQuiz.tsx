@@ -1,4 +1,4 @@
-import { Box, Center, HStack,  VStack } from "@chakra-ui/layout";
+import { Box, Center, HStack, VStack } from "@chakra-ui/layout";
 import React, { useEffect, useReducer, useState } from "react";
 import CreateQuizHeader from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuizHeader";
 
@@ -36,7 +36,10 @@ import { Button, IconButton } from "@chakra-ui/button";
 import CurrentQuestionDisplay from "../../Components/CreateQuiz/CreateQuizComponents/CurrentQuestionDisplay";
 import { useDisclosure } from "@chakra-ui/hooks";
 import CreateQuizModal from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuizModal";
-import { checkAtLeastOneIsTrue, createQuizData } from "../../Util/QuizUtilFunctions";
+import {
+  checkAtLeastOneIsTrue,
+  createQuizData,
+} from "../../Util/QuizUtilFunctions";
 import TakeQuiz from "../TakeQuiz/TakeQuiz";
 
 export interface CreateQuizProps {}
@@ -63,14 +66,13 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const [modalMessage, setModalMessage] = useState("")
+  const [modalMessage, setModalMessage] = useState("");
 
-  const [quizFinished, setQuizFinished] = useState(false)
+  const [quizFinished, setQuizFinished] = useState(false);
 
-  const [finishedQuizData, setFinishedQuizData] = useState<QuizData>()
+  const [finishedQuizData, setFinishedQuizData] = useState<QuizData>();
 
-  const {isOpen, onClose, onOpen} = useDisclosure()
-
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   // This is for the state of the current question. Context and Reducer are used
   const [currentQuestionState, currentQuestionDispatch] = useReducer(
@@ -111,45 +113,46 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
     setCurrentQuestionInfo(temp);
   };
   const openModal = (message: string) => {
-    
-    setModalMessage(message)
-    onOpen()
-  }
+    setModalMessage(message);
+    onOpen();
+  };
 
-  const validateCurrentOptions = ():validateError => {
+  const validateCurrentOptions = (): validateError => {
     switch (currentQuestionInfo[currentQuestionNumber].questionType) {
       case "Multiple Option": {
-        const res = checkAtLeastOneIsTrue(currentQuestionState.multipleChoice.answerOptions!)
+        const res = checkAtLeastOneIsTrue(
+          currentQuestionState.multipleChoice.answerOptions!
+        );
         if (res === false) {
-          return "multipleError"
+          return "multipleError";
         }
-        return "none"
+        return "none";
       }
       case "Flashcard": {
-        const res = currentQuestionState.flashcardText.flashcardAnswerText!.trim().length > 0
+        const res =
+          currentQuestionState.flashcardText.flashcardAnswerText!.trim()
+            .length > 0;
         if (res === false) {
-          return "flashError"
+          return "flashError";
         }
-        return "none"
+        return "none";
       }
-    
+
       default:
-        return "none"
+        return "none";
     }
-  }
+  };
 
   const nextClick = () => {
-    
-    let validationResult = validateCurrentOptions()
+    let validationResult = validateCurrentOptions();
     if (validationResult !== "none") {
       if (validationResult === "flashError") {
-        openModal("Make sure that the flashcard is not empty")
+        openModal("Make sure that the flashcard is not empty");
+      } else {
+        openModal("Make sure at least one option is checked");
       }
-      else {
-        openModal("Make sure at least one option is checked")
-      }
-      return
-    } 
+      return;
+    }
 
     /**
      * Dispatch to the reducer, saying that we are creating another question.
@@ -164,7 +167,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
     });
 
     /**
-     * When the user goes to another question, we need to save the type of question 
+     * When the user goes to another question, we need to save the type of question
      * he was last on and the question text for that question
      */
     let oldQuestionsInfo = [...currentQuestionInfo];
@@ -174,17 +177,14 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
     };
 
     if (currentQuestionNumber + 1 === curLength) {
-
-    /**
-     * For creating a new question, we have to set the current question to blank.
-     * Here, cloneDeep is used as a safeguard
-     */ 
-    const iqTempClone = cloneDeep(iqTemp);
-
-      
+      /**
+       * For creating a new question, we have to set the current question to blank.
+       * Here, cloneDeep is used as a safeguard
+       */
+      const iqTempClone = cloneDeep(iqTemp);
 
       /**
-       * Since we are creating a new question, push the default question 
+       * Since we are creating a new question, push the default question
        * (no question text, single option) to the question array
        */
       oldQuestionsInfo.push({
@@ -195,7 +195,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
       setCurrentQuestionInfo(oldQuestionsInfo);
 
       /**
-       * Set the current Question to iqTempClone, which basically means set the 
+       * Set the current Question to iqTempClone, which basically means set the
        * new question to the default question (blank)
        */
       currentQuestionDispatch({
@@ -206,9 +206,10 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
       // These are put last because they seem to be delayed when occuring for some reason
       setCurLength((old) => old + 1);
       setCurrentQuestionNumber((old) => old + 1);
-    } else {    // This is in case we are navigating to the next question, and not creating another one
+    } else {
+      // This is in case we are navigating to the next question, and not creating another one
 
-      // A variable is declared here, because for some reason using setCurrentQuestionNumber takes a long time 
+      // A variable is declared here, because for some reason using setCurrentQuestionNumber takes a long time
       // for the currentQuestionNumber to update
       const nextQuestionNumber = currentQuestionNumber + 1;
       setCurrentQuestionInfo(oldQuestionsInfo);
@@ -227,24 +228,22 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
   };
 
   const prevClick = () => {
-    
-    let validationResult = validateCurrentOptions()
+    let validationResult = validateCurrentOptions();
     if (validationResult !== "none") {
       if (validationResult === "flashError") {
-        openModal("Make sure that the flashcard is not empty")
+        openModal("Make sure that the flashcard is not empty");
+      } else {
+        openModal("Make sure at least one option is checked");
       }
-      else {
-        openModal("Make sure at least one option is checked")
-      }
-      return
-    } 
+      return;
+    }
     // Clone the current question state, so that it can be saved to the array
     const currentQuestionClone = cloneDeep(currentQuestionState);
-    // setCurrentQuestionNumber occurs with a delay, so just create a variable here 
+    // setCurrentQuestionNumber occurs with a delay, so just create a variable here
     const previousQuestionNumber = currentQuestionNumber - 1;
 
     /**
-     * Dispatch the current question state, so that it is saved at the current question index 
+     * Dispatch the current question state, so that it is saved at the current question index
      */
     cqd({
       type: "previous",
@@ -253,7 +252,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
     });
 
     /**
-     * Copy over any changes made in the question type or question text to 
+     * Copy over any changes made in the question type or question text to
      * the questionInfo
      */
     let oldQuestionsInfo = cloneDeep(currentQuestionInfo);
@@ -265,70 +264,62 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
     setCurrentQuestionInfo(oldQuestionsInfo);
     setCurrentQuestionNumber((old) => old - 1);
 
-    
-    
-
     // Clone the previous question, just for safety
     const previousQuestionClone = cloneDeep(cqs[previousQuestionNumber]);
-    // Display the previous question data as output 
+    // Display the previous question data as output
     currentQuestionDispatch({
       type: "changeQuestion",
       payload: previousQuestionClone,
     });
   };
 
-
-
-
   const deleteQuestion = () => {
     if (curLength === 1) {
-      setModalMessage("You cannot delete the only remaining question")
-      onOpen()
-      
-      return
+      setModalMessage("You cannot delete the only remaining question");
+      onOpen();
+
+      return;
     }
     /**
      * If you want to delete the first question, set the next one as the current question
      */
-    let oldQuestionsInfo = cloneDeep(currentQuestionInfo)
+    let oldQuestionsInfo = cloneDeep(currentQuestionInfo);
     if (currentQuestionNumber === 0) {
-      const nextQuestionData = cloneDeep(cqs[1])
-      oldQuestionsInfo.shift()
+      const nextQuestionData = cloneDeep(cqs[1]);
+      oldQuestionsInfo.shift();
       cqd({
-        type:"remove", 
-        currentQuestion: 0
-      })
+        type: "remove",
+        currentQuestion: 0,
+      });
 
       currentQuestionDispatch({
-        type:"changeQuestion", 
-        payload: nextQuestionData
-      })
+        type: "changeQuestion",
+        payload: nextQuestionData,
+      });
 
-      setCurLength(old => old - 1)
-      setCurrentQuestionInfo(oldQuestionsInfo)
-    }
-    else {
-      const prevQuestionData = cloneDeep(cqs[currentQuestionNumber - 1])
-      oldQuestionsInfo.splice(currentQuestionNumber, 1)
+      setCurLength((old) => old - 1);
+      setCurrentQuestionInfo(oldQuestionsInfo);
+    } else {
+      const prevQuestionData = cloneDeep(cqs[currentQuestionNumber - 1]);
+      oldQuestionsInfo.splice(currentQuestionNumber, 1);
       cqd({
-        type: "remove", 
-        currentQuestion: currentQuestionNumber
-      })
+        type: "remove",
+        currentQuestion: currentQuestionNumber,
+      });
 
       currentQuestionDispatch({
-        type:"changeQuestion",
-        payload: prevQuestionData
-      })
+        type: "changeQuestion",
+        payload: prevQuestionData,
+      });
 
-      
-      setCurLength(old => old - 1)
-      setCurrentQuestionInfo(oldQuestionsInfo)
-      setCurrentQuestionNumber(old => old - 1)
+      setCurLength((old) => old - 1);
+      setCurrentQuestionInfo(oldQuestionsInfo);
+      setCurrentQuestionNumber((old) => old - 1);
     }
-  }
+  };
 
   const quizDone = () => {
-    // first, set the current quiz data to the current question in the quizData 
+    // first, set the current quiz data to the current question in the quizData
     const currentQuestionClone = cloneDeep(currentQuestionState);
 
     // This copies the current question data to the current index in the array
@@ -338,20 +329,32 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
       currentQuestion: currentQuestionNumber,
       payload: currentQuestionClone,
     });
-
+    cqd({
+      type: "previous",
+      currentQuestion: currentQuestionNumber,
+      payload: currentQuestionClone,
+    });
     /**
      * Make the data from two sources: currentQuizState and currentQuestionInfo
-     * currentQuizState - all the quiz data 
-     * currentQuestionInfo - contains the type of question for each question 
-     *  */ 
+     * currentQuizState - all the quiz data
+     * currentQuestionInfo - contains the type of question for each question
+     *  */
 
-    const finalQuizData = createQuizData(cqs, currentQuestionInfo)
-    console.log(finalQuizData);
-    
-    setFinishedQuizData(finalQuizData)
-    setQuizFinished(true)
-  }
+      console.log("Inside setTimeout");
+      const cqsClone = cloneDeep(cqs);
+      
+      cqsClone[currentQuestionNumber].flashcardText = currentQuestionClone.flashcardText
+      cqsClone[currentQuestionNumber].singleOption = currentQuestionClone.singleOption
+      cqsClone[currentQuestionNumber].multipleChoice = currentQuestionClone.multipleChoice
+      
+      console.log(cqsClone);
+      const finalQuizData = createQuizData(cqsClone, currentQuestionInfo);
+      setFinishedQuizData(finalQuizData);
+      setQuizFinished(true);
 
+
+
+  };
 
   useEffect(() => {
     currentQuestionDispatch({
@@ -367,15 +370,17 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
   }
 
   if (quizFinished) {
-    return (
-      <TakeQuiz givenQuizData={finishedQuizData} />
-    )
+    return <TakeQuiz givenQuizData={finishedQuizData} />;
   }
 
   return (
     <>
       <Box height="7rem"></Box>
-      <CreateQuizModal isOpen={isOpen} onClose={onClose} modalMessage={modalMessage} />
+      <CreateQuizModal
+        isOpen={isOpen}
+        onClose={onClose}
+        modalMessage={modalMessage}
+      />
       <Center>
         <Box>
           <CreateQuizHeader
@@ -411,8 +416,10 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
             >
               <Box>
                 <VStack width={{ base: "80%", lg: "600px" }}>
-                  <CurrentQuestionDisplay currentQuestion={currentQuestionNumber}
-                  totalQuestions={curLength} />
+                  <CurrentQuestionDisplay
+                    currentQuestion={currentQuestionNumber}
+                    totalQuestions={curLength}
+                  />
                   <CreateQuestion
                     textValue={
                       currentQuestionInfo[currentQuestionNumber].questionText
@@ -464,24 +471,23 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
                 </VStack>
               </Box>
             </CurrentQuizQuestionContextProvider>
-            {
-              currentQuestionNumber + 1 === curLength ? (
-                <AddIcon
+            {currentQuestionNumber + 1 === curLength ? (
+              <AddIcon
                 w={9}
                 h={9}
                 marginRight={10}
                 cursor="pointer"
                 onClick={nextClick}
               />
-              ) :             <ArrowForwardIcon
-              w={10}
-              h={10}
-              marginRight={10}
-              cursor="pointer"
-              onClick={nextClick}
-            />
-            }
-
+            ) : (
+              <ArrowForwardIcon
+                w={10}
+                h={10}
+                marginRight={10}
+                cursor="pointer"
+                onClick={nextClick}
+              />
+            )}
           </HStack>
         </Box>
       </Center>

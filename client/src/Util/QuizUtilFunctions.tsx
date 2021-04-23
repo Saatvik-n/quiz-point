@@ -126,16 +126,22 @@ export const checkAtLeastOneIsTrue = (curAnswerOptions: singleOption[]):boolean 
 export const createQuizData = (currentQuizState: CurrentQuizData, questionInfo: quizTypeState):QuizData => {
 
   const resultingQuizData:QuizData =[]
-  console.log(questionInfo);
+
+  
+  
   
   for (let i = 0; i < currentQuizState.length; i++) {
     const quizQuestion = cloneDeep(currentQuizState[i]);
     const currentQuestionInfo =  cloneDeep(questionInfo[i])
     
+    let currentQuestion:singleQuestion = {
+      questionText: "", 
+      type: "Single Option"
+    }
 
-    // @ts-ignore
-    const currentQuestion:singleQuestion = {}
     currentQuestion.questionText = currentQuestionInfo.questionText
+    currentQuestion.type = currentQuestionInfo.questionType
+
 
 
     switch (currentQuestionInfo.questionType) {
@@ -152,16 +158,19 @@ export const createQuizData = (currentQuizState: CurrentQuizData, questionInfo: 
 
       case "Flashcard": {
         currentQuestion.type = "Flashcard"
+        
         currentQuestion.flashcardAnswerText = quizQuestion.flashcardText.flashcardAnswerText
         break;
       }
                 
       default:
-        currentQuestion.type = "Single Option"
+        currentQuestion.type = "Flashcard"
         currentQuestion.flashcardAnswerText = "blah"
         break;
     }
-    resultingQuizData.push(cloneDeep(currentQuestion))
+    const currentQuestionClone = cloneDeep(currentQuestion)
+
+    resultingQuizData.push(currentQuestionClone)
   }
   return resultingQuizData
 }

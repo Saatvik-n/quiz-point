@@ -9,7 +9,9 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import api from "../../API/api";
+import CurrentUserContext from "../../Contexts/GlobalContexts/UserContext";
 import burgerIcon from "../svgs/Homepage/burger.svg";
 
 export interface NavbarProps {}
@@ -18,10 +20,32 @@ const Navbar: React.FC<NavbarProps> = () => {
   const [isMobile] = useMediaQuery("(max-width: 1000px)"); // used to check if user is in a smaller device
   const [isClicked, setIsClicked] = useState(false);
 
+  const history = useHistory()
+
+  const {currentUserState, currentUserDispatch} = React.useContext(CurrentUserContext)
+
   const handleClick = () => {
     let curVal = isClicked;
     setIsClicked(!curVal);
   };
+
+  const handleLogout = () => {
+    api.get('/api/logout')
+    .then(res => {
+      currentUserDispatch({
+        type: "clearUser"
+      })
+      history.push('/')
+    })
+    .catch(err => {
+      console.log("Problem logging out");
+      console.log(err);
+    })
+  }
+
+  const handleLogin = () => {
+    history.push('/login')
+  }
 
   if (isMobile) {
     // This is only returned if device width <= 1000
@@ -58,8 +82,8 @@ const Navbar: React.FC<NavbarProps> = () => {
             <Box borderBottom="2px solid #cccccc" width="100%"
             textAlign="center"
             paddingBottom={2} >
-              <Text as="a" href="/#/login" >
-                Sign In
+              <Text cursor="pointer" onClick={currentUserState.userID !== "" ? handleLogout : handleLogin } >
+              {currentUserState.userID !== "" ? "Log out" : "Sign In"}
               </Text>
             </Box>
           </VStack>
@@ -91,7 +115,9 @@ const Navbar: React.FC<NavbarProps> = () => {
           <Text fontSize="1xl"  as={"a"} href="/#/"> Home </Text>
         </Box>
         <Box>
-          <Text fontSize="1xl" as="a" href="/#/login" >Sign In</Text>
+          <Text cursor="pointer" onClick={currentUserState.userID !== "" ? handleLogout : handleLogin } >
+              {currentUserState.userID !== "" ? "Log out" : "Sign In"}
+          </Text>
         </Box>
       </HStack>
     </Flex>

@@ -1,9 +1,10 @@
 import { Box, Container } from "@chakra-ui/layout";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import api from "../../API/api";
 import LoginFormComponent from "../../Components/User/LoginFormComponent";
 import RegisterFormComponent from "../../Components/User/RegisterFormComponent";
+import CurrentUserContext from "../../Contexts/GlobalContexts/UserContext";
 
 export interface UserSignProps {
   isLogin: boolean;
@@ -17,6 +18,8 @@ const UserSign: React.FC<UserSignProps> = (props) => {
   const [name, setName] = useState("");
 
   const history = useHistory()
+
+  const { currentUserDispatch} = useContext(CurrentUserContext)
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newUsername = e.target.value;
@@ -42,11 +45,38 @@ const UserSign: React.FC<UserSignProps> = (props) => {
     })
     .then(res => {
       console.log(res.data);
+      currentUserDispatch({
+        type: "changeUser", 
+        payload: {
+          userID: res.data.userID, 
+          username: res.data.username, 
+          name: res.data.name
+        }
+      })
       history.push('/user')
     })
     .catch(err => {
       console.log(err);
-      
+    })
+  }
+
+  const registerUser = () => {
+    console.log("Register user called");
+    
+    api.post("/api/register", {
+      username: username, 
+      password: password, 
+      name: name
+    })
+    .then(res => {
+      history.push('/login')
+      setUsername("")
+      setPassword("")
+      setName("")
+    })
+    .catch(err => {
+      console.log("Error registering user");
+      console.log(err);
     })
   }
 
@@ -75,6 +105,7 @@ const UserSign: React.FC<UserSignProps> = (props) => {
         handleUsernameChange={handleUsernameChange}
         handlePasswordChange={handlePasswordChange}
         handleNameChange={handleNameChange}
+        onRegisterClick={registerUser}
       />
     </Container>
   );

@@ -33,8 +33,8 @@ export const App = () => {
     <ChakraProvider theme={theme}>
       <CurrentUserContextProvider value={currentUserValues} >
 
-      <Navbar />
       <HashRouter>
+      <Navbar />
         <Switch>
           <Route path="/login" exact render={() => <UserSign isLogin />} />
           <Route
