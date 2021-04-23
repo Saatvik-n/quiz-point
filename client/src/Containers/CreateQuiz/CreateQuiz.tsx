@@ -1,5 +1,5 @@
 import { Box, Center, HStack, VStack } from "@chakra-ui/layout";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import CreateQuizHeader from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuizHeader";
 
 import cloneDeep from "clone-deep";
@@ -18,7 +18,7 @@ import {
   QuizData,
   quizTypeState,
   validateError,
-} from "../../Types/QuizInterface";
+} from "../../Types/QuizTypes";
 
 import {
   CurrentQuizQuestionContextProvider,
@@ -39,8 +39,12 @@ import CreateQuizModal from "../../Components/CreateQuiz/CreateQuizComponents/Cr
 import {
   checkAtLeastOneIsTrue,
   createQuizData,
+  checkAllOptionsFilled,
 } from "../../Util/QuizUtilFunctions";
 import TakeQuiz from "../TakeQuiz/TakeQuiz";
+import api from "../../API/api";
+import { useHistory } from "react-router";
+import CurrentUserContext from "../../Contexts/GlobalContexts/UserContext";
 
 export interface CreateQuizProps {}
 
@@ -71,6 +75,10 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
   const [quizFinished, setQuizFinished] = useState(false);
 
   const [finishedQuizData, setFinishedQuizData] = useState<QuizData>();
+
+  const { currentUserState } = useContext(CurrentUserContext);
+
+  const history = useHistory();
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -126,6 +134,13 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
         if (res === false) {
           return "multipleError";
         }
+        const res2 = checkAllOptionsFilled(
+          currentQuestionState.multipleChoice.answerOptions!
+        );
+        if (res2 === false) {
+          return "emptyError"
+        }
+
         return "none";
       }
       case "Flashcard": {
@@ -138,6 +153,16 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
         return "none";
       }
 
+      case "Single Option": {
+        if (
+          checkAllOptionsFilled(
+            currentQuestionState.singleOption.answerOptions!
+          ) === false
+        ) {
+          return "emptyError";
+        }
+        return "none";
+      }
       default:
         return "none";
     }
@@ -148,8 +173,10 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
     if (validationResult !== "none") {
       if (validationResult === "flashError") {
         openModal("Make sure that the flashcard is not empty");
-      } else {
+      } else if (validationResult == "multipleError") {
         openModal("Make sure at least one option is checked");
+      } else {
+        openModal("Make sure all options have text in them");
       }
       return;
     }
@@ -232,11 +259,14 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
     if (validationResult !== "none") {
       if (validationResult === "flashError") {
         openModal("Make sure that the flashcard is not empty");
-      } else {
+      } else if (validationResult == "multipleError") {
         openModal("Make sure at least one option is checked");
+      } else {
+        openModal("Make sure all options have text in them");
       }
       return;
     }
+
     // Clone the current question state, so that it can be saved to the array
     const currentQuestionClone = cloneDeep(currentQuestionState);
     // setCurrentQuestionNumber occurs with a delay, so just create a variable here
@@ -319,6 +349,21 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
   };
 
   const quizDone = () => {
+    if (quizName.trim() === "") {
+      openModal("Give the quiz a name");
+      return;
+    }
+    let validationResult = validateCurrentOptions();
+    if (validationResult !== "none") {
+      if (validationResult === "flashError") {
+        openModal("Make sure that the flashcard is not empty");
+      } else if (validationResult == "multipleError") {
+        openModal("Make sure at least one option is checked");
+      } else {
+        openModal("Make sure all options have text in them");
+      }
+      return;
+    }
     // first, set the current quiz data to the current question in the quizData
     const currentQuestionClone = cloneDeep(currentQuestionState);
 
@@ -329,34 +374,51 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
       currentQuestion: currentQuestionNumber,
       payload: currentQuestionClone,
     });
-    cqd({
-      type: "previous",
-      currentQuestion: currentQuestionNumber,
-      payload: currentQuestionClone,
-    });
+
     /**
      * Make the data from two sources: currentQuizState and currentQuestionInfo
      * currentQuizState - all the quiz data
      * currentQuestionInfo - contains the type of question for each question
      *  */
 
-      console.log("Inside setTimeout");
-      const cqsClone = cloneDeep(cqs);
-      
-      cqsClone[currentQuestionNumber].flashcardText = currentQuestionClone.flashcardText
-      cqsClone[currentQuestionNumber].singleOption = currentQuestionClone.singleOption
-      cqsClone[currentQuestionNumber].multipleChoice = currentQuestionClone.multipleChoice
-      
-      console.log(cqsClone);
-      const finalQuizData = createQuizData(cqsClone, currentQuestionInfo);
-      setFinishedQuizData(finalQuizData);
-      setQuizFinished(true);
+    console.log("Inside setTimeout");
+    const cqsClone = cloneDeep(cqs);
 
+    cqsClone[currentQuestionNumber].flashcardText =
+      currentQuestionClone.flashcardText;
+    cqsClone[currentQuestionNumber].singleOption =
+      currentQuestionClone.singleOption;
+    cqsClone[currentQuestionNumber].multipleChoice =
+      currentQuestionClone.multipleChoice;
 
+    console.log(cqsClone);
+    const finalQuizData = createQuizData(cqsClone, currentQuestionInfo);
+    setFinishedQuizData(finalQuizData);
 
+    api
+      .post(`/api/quiz`, {
+        userID: currentUserState.userID,
+        quizName: quizName,
+        quizData: finalQuizData,
+      })
+      .then((res) => {
+        console.log("Successfully sent quiz");
+        history.push("/user");
+      })
+      .catch((err) => {
+        console.log("failed to send quiz");
+        console.log(err);
+      });
   };
 
   useEffect(() => {
+    api
+      .get("/api/validate")
+      .then((res) => {})
+      .catch((err) => {
+        history.push("/");
+      });
+
     currentQuestionDispatch({
       type: "changeQuestion",
       payload: cloneDeep(iqTemp),
@@ -367,10 +429,6 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
 
   if (loading) {
     return <div></div>;
-  }
-
-  if (quizFinished) {
-    return <TakeQuiz givenQuizData={finishedQuizData} />;
   }
 
   return (

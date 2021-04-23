@@ -36,7 +36,7 @@ export async function loginUser(
 
     console.log("Before access token");
     
-    const accessToken = JWT.sign({user: user._id}, process.env.JWT_SECRET_KEY!);
+    const accessToken = JWT.sign({userID: user._id, name:user.name, username:user.username}, process.env.JWT_SECRET_KEY!);
 
     console.log("Access token = " ,accessToken);
     

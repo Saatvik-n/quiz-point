@@ -6,7 +6,7 @@ import {
   initQADataRowObject,
   QuizData,
   quizQADatarow
-} from "../../../Types/QuizInterface";
+} from "../../../Types/QuizTypes";
 import { checkMultipleChoiceCorrect, checkSingleOptionCorrect, findCorrectAnswerInSingle, findUserAnswerInSingle, getCorrectAnswersInMultiple, getUserAnswersInMultiple } from "../../../Util/QuizUtilFunctions";
 
 export interface QuizQATableProps {

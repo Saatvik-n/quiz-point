@@ -2,7 +2,7 @@ import { Checkbox } from '@chakra-ui/checkbox';
 import { Text, VStack } from '@chakra-ui/layout';
 import * as React from 'react';
 
-import { singleOption } from "../../../Types/QuizInterface";
+import { singleOption } from "../../../Types/QuizTypes";
 
 export interface CheckboxOptionsProps {
   answerTexts: Array<singleOption>;

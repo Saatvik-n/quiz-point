@@ -1,4 +1,4 @@
-import { CurrentQuizData, QuizData, quizTypeState, singleOption, singleQuestion } from "../Types/QuizInterface";
+import { CurrentQuizData, QuizData, quizTypeState, singleOption, singleQuestion, userQuizRecord } from "../Types/QuizTypes";
 import cloneDeep from "clone-deep"
 
 export const checkSingleOptionCorrect = (userAnsers: boolean[], correctAnswers: singleOption[]):boolean => {
@@ -59,6 +59,9 @@ export const clearAllOptions = (curAnswerOptions: singleOption[]):singleOption[]
   return clearedAnswerOptions
 }
 
+
+
+
 /** Functions for multiple option questions */
 
 // This function returns the user's selected answer in a Multiple Option question by concatenating 
@@ -79,7 +82,7 @@ export const getUserAnswersInMultiple = (userAnswers: boolean[], answerOptions: 
 }
 
 // This function returns all of the correct answers in a Multiple Option question as a string 
-// By concatenating all of the correct answerString s 
+// By concatenating all of the correct answerStrings 
 export const getCorrectAnswersInMultiple = (answerOptions: Array<singleOption>): string => {
   let res = ""
   for (let i = 0; i < answerOptions.length; i++) {
@@ -93,7 +96,7 @@ export const getCorrectAnswersInMultiple = (answerOptions: Array<singleOption>):
 }
 
 /**
- * When a user clicks on a MCQ button, ew 
+ * When a user clicks on a MCQ button, this is called 
  */
 export const handleMultipleChoiceClick = (curAnswerOptions: singleOption[], index: number): singleOption[] => {
   let newAnswerOptions:singleOption[] = []
@@ -123,12 +126,26 @@ export const checkAtLeastOneIsTrue = (curAnswerOptions: singleOption[]):boolean 
   return false
 }
 
+/**
+ * This function can be applied to both single and multiple choice questions
+ * It returns true if all the options are not empty, else false
+ */
+export const checkAllOptionsFilled = (curAnswerOptions: singleOption[]): boolean => {
+  for (const option of curAnswerOptions) {
+    if (option.answerText.trim() === "") {
+      return false
+    }
+  }
+  return true
+}
+/**
+ * This function creates the quiz data from the current quiz state 
+ * (set of questions - with each question having 3 possible types), and questionInfo 
+ * (the set of correct types and question names for each question)
+ */
 export const createQuizData = (currentQuizState: CurrentQuizData, questionInfo: quizTypeState):QuizData => {
 
   const resultingQuizData:QuizData =[]
-
-  
-  
   
   for (let i = 0; i < currentQuizState.length; i++) {
     const quizQuestion = cloneDeep(currentQuizState[i]);
@@ -141,8 +158,6 @@ export const createQuizData = (currentQuizState: CurrentQuizData, questionInfo: 
 
     currentQuestion.questionText = currentQuestionInfo.questionText
     currentQuestion.type = currentQuestionInfo.questionType
-
-
 
     switch (currentQuestionInfo.questionType) {
       case "Single Option": {
@@ -173,4 +188,24 @@ export const createQuizData = (currentQuizState: CurrentQuizData, questionInfo: 
     resultingQuizData.push(currentQuestionClone)
   }
   return resultingQuizData
+}
+
+/**
+ * Functions used in UserHome - to get quizIDs, and quizNames for the date returned by 
+ * /api/user/:userID
+*/
+export function getQuizInfo(data:userQuizRecord[]) {
+  let quizIDs = []
+  let quizNames = []
+  for (let i = 0; i < data.length; i++) {
+    const record = data[i];
+    
+    quizIDs.push(record._id)
+    quizNames.push(record.quizName)
+  }
+  let result = {
+    quizIDs, 
+    quizNames
+  } 
+  return result
 }

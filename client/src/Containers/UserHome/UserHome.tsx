@@ -10,12 +10,13 @@ import api from "../../API/api";
 import UserHomeModal from "../../Components/UserHome/UserHomeModal";
 import UserQuizzes from "../../Components/UserHome/UserQuizzes";
 import CurrentUserContext from "../../Contexts/GlobalContexts/UserContext";
+import { getQuizInfo } from "../../Util/QuizUtilFunctions";
 
 export interface UserHomeProps {}
 
 const UserHome: React.FC<UserHomeProps> = () => {
-  const sampleQuizNames = ["Quiz 1", "Quiz 2"];
-  const sampleQuizModifiedDates = ["Jan 1, 2020", "Jan 2, 2020"];
+  const [userQuizNames, setUserQuizNames] = useState<string[]>();
+  const [userQuizIDs, setUserQuizIDs] = useState<string[]>();
 
   const [selectedQuiz, setSelectedQuiz] = useState("");
   const [selectedQuizID, setSelectedQuizID] = useState("");
@@ -24,7 +25,9 @@ const UserHome: React.FC<UserHomeProps> = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const {currentUserState} = React.useContext(CurrentUserContext)
+  const { currentUserState, currentUserDispatch } = React.useContext(
+    CurrentUserContext
+  );
 
   const { onClose, onOpen, isOpen } = useDisclosure();
 
@@ -41,27 +44,37 @@ const UserHome: React.FC<UserHomeProps> = () => {
   };
 
   const selectQuiz = (index: number) => {
-    setSelectedQuiz(sampleQuizNames[index]);
-    setSelectedQuizID("Random ID");
+    setSelectedQuiz(userQuizNames![index]);
+    setSelectedQuizID(userQuizIDs![index]);
     console.log("Selected quiz is");
   };
 
   const createQuiz = () => {
-    history.push('/createquiz')
-  }
+    history.push("/createquiz");
+  };
 
   React.useEffect(() => {
     api
       .get("/api/validate")
       .then((res) => {
-        api.get(`/api/user/${currentUserState.userID}`)
-        .then(res => {
-          console.log(res.data);
-          
-        })
+        console.log(res.data);
+        return api
+          .get(`/api/user/${res.data.userID}`)
+          .then((res) => {
+            const quizResultObject = getQuizInfo(res.data.quizzes);
+
+            setUserQuizIDs(quizResultObject.quizIDs);
+            setUserQuizNames(quizResultObject.quizNames);
+
+            console.log("Quiz names are");
+            console.log(userQuizNames);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log("Error in fetching quizzes");
+          });
       })
       .catch((err) => {
-        console.log(err);
         history.push("/");
       });
   }, []);
@@ -69,17 +82,18 @@ const UserHome: React.FC<UserHomeProps> = () => {
   return (
     <>
       <Box h="7rem" />
-      <UserHomeModal
-        onClose={onClose}
-        isOpen={isOpen}
-        quizName={selectedQuiz}
-        quizID={selectedQuizID}
-        showQuizID={showQuizID}
-        changeShowStatus={changeShowStatus}
-      />
+      {isOpen === true ? (
+        <UserHomeModal
+          onClose={onClose}
+          isOpen={isOpen}
+          quizName={selectedQuiz}
+          quizID={selectedQuizID}
+          showQuizID={showQuizID}
+          changeShowStatus={changeShowStatus}
+        />
+      ) : null}
       <Container maxW="container.lg" marginTop={4}>
         <Text fontSize="4xl"> Welcome User </Text>
-
         <Flex justifyContent="space-between" marginTop="1rem">
           <Text fontSize="3xl"> Your Quizzes: </Text>
           <HStack>
@@ -92,10 +106,11 @@ const UserHome: React.FC<UserHomeProps> = () => {
               Take a quiz
             </Button>
             <Button
-              leftIcon={<AddIcon />}
+              rightIcon={<AddIcon />}
               variant="outline"
               colorScheme="cyan"
               size="lg"
+              onClick={createQuiz}
             >
               Create New Quiz
             </Button>
@@ -103,13 +118,12 @@ const UserHome: React.FC<UserHomeProps> = () => {
         </Flex>
         {loading === true ? (
           <Center>
-          <Spinner size="lg" textAlign="center" />
+            <Spinner size="lg" textAlign="center" />
           </Center>
         ) : (
           <UserQuizzes
             showModal={handleQuizClick}
-            quizNames={sampleQuizNames}
-            lastModifiedDates={sampleQuizModifiedDates}
+            quizNames={userQuizNames!}
             selectQuiz={selectQuiz}
           />
         )}

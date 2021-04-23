@@ -1,6 +1,6 @@
 import { Box, Text } from '@chakra-ui/layout';
 import * as React from 'react';
-import { questionTypes } from "../../../Types/QuizInterface";
+import { questionTypes } from "../../../Types/QuizTypes";
 
 export interface QuestionHeaderProps {
   questionName: string;

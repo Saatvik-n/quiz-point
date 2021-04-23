@@ -12,7 +12,7 @@ import moveRightIcon from "../../Components/svgs/Quiz/moveRight.svg";
 
 // import { SampleQuiz } from "../../Data/SampleQuiz";
 
-import { QuizData, AnswerArray } from "../../Types/QuizInterface";
+import { QuizData, AnswerArray } from "../../Types/QuizTypes";
 import DecideType from "../../Components/TakeQuiz/DecideType";
 import { Button } from "@chakra-ui/button";
 import QuizResults from "../../Components/TakeQuiz/Result/QuizResults";

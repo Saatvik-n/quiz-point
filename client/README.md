@@ -5,27 +5,26 @@
 Create a user context for the whole program, and change the navbar based on that
 
 1. Allow user to register, login, create, save quizzes - basically test the API 
-2. After these are done, make suitable error messages, UI improvements, etc.
+2. After these are done, make suitable error messages, UI improvements (like spinners, disabling input), etc.
 3. Make the website responsive 
 
 ### Immediate todos 
 
-* Make a logout API endpoint
-* Use the `validate` method on every initial `useEffect` for each container.
-The `validate` should validate the JWT, and decrypt it, and return the `userid, username, name`  
-everytime
-* Create quiz, and save it for user 
-* Load user's quizzes
+* Change position of buttons in modal
 * Take quiz, delete quiz works when selecting a quiz 
-
 
 ### Later 
 
 * Make page responsive 
+* Don't allow user to go to protected routes
+
+Document everything
 
 ### Optimizations  
 
-Document everything
+You can deploy it after finishing till here
+
+Implment all these later, after all the app's functionalities are finished
 
 * Try to clean up use of duplicate functions, like `changeOptionText`
 * See effects of `React.memo` on components 

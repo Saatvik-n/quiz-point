@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {  questionTypes } from '../../../Types/QuizInterface';
+import {  questionTypes } from '../../../Types/QuizTypes';
 import CreateMultipleChoice from './CreateMultipleChoice';
 import CreateSingleQuestion from './CreateSingleQuestion';
 import CreateFlashcard from "./CreateFlashcard"

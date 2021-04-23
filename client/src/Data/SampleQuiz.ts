@@ -1,4 +1,4 @@
-import { QuizData } from "../Types/QuizInterface";
+import { QuizData } from "../Types/QuizTypes";
 
 export const SampleQuiz:QuizData = [
   {

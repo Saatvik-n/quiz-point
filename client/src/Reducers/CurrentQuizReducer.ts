@@ -1,5 +1,5 @@
 import { initialQuestionState } from "../Contexts/CurrentQuizQuestionContext";
-import { CurrentQuizData, CurrentQuestion } from "../Types/QuizInterface";
+import { CurrentQuizData, CurrentQuestion } from "../Types/QuizTypes";
 import cloneDeep from "clone-deep"
 
 const initialQuestionStateCopy = cloneDeep(initialQuestionState)

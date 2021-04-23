@@ -1,7 +1,7 @@
 import { HStack } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
 import * as React from "react";
-import { questionTypes } from "../../../Types/QuizInterface";
+import { questionTypes } from "../../../Types/QuizTypes";
 
 export interface CreateQuestionTypeProps {
   currentQuestionType: questionTypes;

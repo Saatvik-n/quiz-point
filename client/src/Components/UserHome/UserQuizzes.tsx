@@ -4,13 +4,12 @@ import * as React from "react";
 
 export interface UserQuizzesProps {
   quizNames: string[];
-  lastModifiedDates: string[];
   showModal: () => void;
   selectQuiz: (i:number) => void;
 }
 
 const UserQuizzes: React.FC<UserQuizzesProps> = (props) => {
-  const { quizNames, lastModifiedDates, showModal, selectQuiz } = props;
+  const { quizNames,  showModal, selectQuiz } = props;
 
   const cssStyle: CSSObject = {
     backgroundColor: "rgba(13, 11, 11, 0.07)",
@@ -35,7 +34,6 @@ const UserQuizzes: React.FC<UserQuizzesProps> = (props) => {
               }}
             >
               <Text> {quizName} </Text>
-              <Text> {lastModifiedDates[index]} </Text>
             </Flex>
           );
         })}

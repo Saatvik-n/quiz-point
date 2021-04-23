@@ -18,6 +18,7 @@ import {
   CurrentUserContextProvider,
   initialUserState,
 } from "./Contexts/GlobalContexts/UserContext";
+import api from "./API/api";
 
 export const App = () => {
   const [currentUserState, currentUserDispatch] = React.useReducer(
@@ -29,10 +30,11 @@ export const App = () => {
     currentUserState, 
     currentUserDispatch
   }
+
+
   return (
     <ChakraProvider theme={theme}>
       <CurrentUserContextProvider value={currentUserValues} >
-
       <HashRouter>
       <Navbar />
         <Switch>

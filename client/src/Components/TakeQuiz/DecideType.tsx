@@ -1,6 +1,6 @@
 // This component takes the quiz type as a prop, and returns the appropriate option type (checkbox, radio, or flash)
 import * as React from "react";
-import { questionTypes, singleOption } from "../../Types/QuizInterface";
+import { questionTypes, singleOption } from "../../Types/QuizTypes";
 import CheckboxOptions from "./OptionTypes/CheckboxOptions";
 import FlashcardOption from "./OptionTypes/FlashcardOption";
 import SingleOption from "./OptionTypes/SingleOption";

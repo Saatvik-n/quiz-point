@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/button";
 import { Box, Text, VStack } from "@chakra-ui/layout";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { AnswerArray, QuizData, singleOption } from "../../../Types/QuizInterface";
+import { AnswerArray, QuizData, singleOption } from "../../../Types/QuizTypes";
 import QuizQATable from "./QuizQATable";
 import QuizResultsTable from "./QuizResultsTable";
 

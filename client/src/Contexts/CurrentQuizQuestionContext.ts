@@ -4,7 +4,7 @@ import {
   CurrentQuestion,
   questionTypes,
   singleQuestion,
-} from "../Types/QuizInterface";
+} from "../Types/QuizTypes";
 import {
   clearAllOptions,
   handleMultipleChoiceClick,

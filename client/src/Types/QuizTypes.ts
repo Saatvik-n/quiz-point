@@ -77,4 +77,11 @@ export const initQADataRowObject:quizQADatarow = {
   givenAnswer: ""
 }
 
-export type validateError= "multipleError" | "flashError" | "none"
+export type validateError= "multipleError" | "flashError" | "none" | "emptyError"
+
+// This is for the result returned by getUserQuizzes
+export type userQuizRecord = {
+  isPublic: boolean, 
+  quizName: string, 
+  _id: string
+}

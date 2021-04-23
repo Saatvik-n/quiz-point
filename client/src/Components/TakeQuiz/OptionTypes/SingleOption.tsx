@@ -2,7 +2,7 @@ import { VStack } from '@chakra-ui/layout';
 import { Radio } from '@chakra-ui/radio';
 import * as React from 'react';
 
-import { singleOption } from "../../../Types/QuizInterface";
+import { singleOption } from "../../../Types/QuizTypes";
 
 export interface SingleOptionProps {
   answerTexts: Array<singleOption>;

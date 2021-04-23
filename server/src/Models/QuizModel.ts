@@ -15,7 +15,7 @@ class SingleQuestion {
   public questionText!: string;
 
   @prop({required: true})
-  public questionType!: QuestionType
+  public type!: QuestionType
 
   @prop({type: () => SingleOption, required: false, _id: false})
   public answerOptions?: SingleQuestion[]
@@ -32,7 +32,7 @@ class Quiz {
   public userID!: string
 
   @prop({type: () => SingleQuestion, required: true, _id: false})
-  public quizData!: string;
+  public quizData!: SingleQuestion[];
 
   @prop({required: true})
   public isPublic!: boolean;
