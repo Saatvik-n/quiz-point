@@ -7,6 +7,10 @@ export async function getQuiz(req: Request, res: Response, next: NextFunction) {
   try {
     const quizID = req.params.quizID;
     const quiz = await quizModel.findById(quizID);
+    
+    if (quiz === null) {
+      return next(HttpError(404, "Quiz Not Found"))
+    }
 
     return res.status(200).json({
       message: "Fetched quiz successfully",

@@ -15,6 +15,7 @@ Create a user context for the whole program, and change the navbar based on that
 
 ### Later 
 
+* Take care of all TODOs
 * Make page responsive 
 * Don't allow user to go to protected routes
 

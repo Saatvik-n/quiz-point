@@ -50,7 +50,7 @@ export const App = () => {
             exact
             render={() => <TakeQuiz givenQuizData={SampleQuiz} />}
           />
-          <Route path="/takequiz" exact component={TakeQuiz} />
+          <Route path="/takequiz/:id" exact component={TakeQuiz} />
           <Route path="/user" exact component={UserHome} />
           <Route path="/" exact component={Homepage} />
         </Switch>

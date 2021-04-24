@@ -3,7 +3,7 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import { AddIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { Box, Center, Container, Flex, HStack, Text } from "@chakra-ui/layout";
 import { Spinner } from "@chakra-ui/spinner";
-import * as React from "react";
+import React, {useEffect} from "react";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import api from "../../API/api";
@@ -53,7 +53,19 @@ const UserHome: React.FC<UserHomeProps> = () => {
     history.push("/createquiz");
   };
 
-  React.useEffect(() => {
+  const takeQuiz = () => {
+    if (selectedQuizID === "") {
+      return 
+    }
+    history.push({
+      pathname: `/takequiz/${selectedQuizID}`, 
+      state: {
+        quizID: selectedQuizID
+      }
+    })
+  }
+
+  useEffect(() => {
     api
       .get("/api/validate")
       .then((res) => {
@@ -90,6 +102,7 @@ const UserHome: React.FC<UserHomeProps> = () => {
           quizID={selectedQuizID}
           showQuizID={showQuizID}
           changeShowStatus={changeShowStatus}
+          takequiz={takeQuiz}
         />
       ) : null}
       <Container maxW="container.lg" marginTop={4}>

@@ -16,10 +16,12 @@ import { QuizData, AnswerArray } from "../../Types/QuizTypes";
 import DecideType from "../../Components/TakeQuiz/DecideType";
 import { Button } from "@chakra-ui/button";
 import QuizResults from "../../Components/TakeQuiz/Result/QuizResults";
+import { Spinner } from "@chakra-ui/spinner";
+import api from "../../API/api";
 
 export interface TakeQuizProps {
   givenQuizData?: QuizData;
-
+  location?: any;
 }
 
 // This returns an array of unchecked checkboxes, unclicked radio buttons, empty texts
@@ -42,13 +44,14 @@ const initializeAnswerArray = (quizdata: QuizData): AnswerArray => {
 };
 
 const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
-
-  const {givenQuizData} = props 
+  const { givenQuizData } = props;
 
   // Self explanatory
+  const [quizName, setQuizName] = useState("");
   const [quizData, setQuizData] = useState<QuizData>(givenQuizData!);
   const [currentQuestion, setCurrent] = useState(0);
   const [isQuizFinished, setQuizFinished] = useState(false);
+  const [quizLength, setQuizLength] = useState(0)
 
   // This holds the curent state of your answers: [[false, false, true], [true, true, false], "answer", ...]
   const [currentAns, setCurrentAns] = useState<AnswerArray>();
@@ -57,25 +60,34 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
   const [correctFlashAns, setCorrectFlashAns] = useState<Array<boolean>>();
 
   // This keeps track of the flashcard questions which have had their answers revealed
-  const [shownAns, setShownAns] = useState<Array<boolean>>()
+  const [shownAns, setShownAns] = useState<Array<boolean>>();
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const quizLength = givenQuizData!.length
 
   useEffect(() => {
-    const initAnswerArray = initializeAnswerArray(quizData);
+    api
+      .get(`/api/quiz/${props.location.state.quizID}`)
+      .then((res) => res.data)
+      .then((data) => {
+        setQuizName(data.quizName);
+        setQuizData(data.quizData);
+        const initAnswerArray = initializeAnswerArray(quizData);
+        setQuizLength(data.quizData.length)
+        /**
+         * Filling both of the flashcard related arrays with 'false' initially,
+         * because none of them have been revealed or marked yet
+         */
+        const falseArray = new Array(quizLength).fill(false);
+        setCorrectFlashAns(falseArray);
+        setShownAns(falseArray);
 
-    /**
-     * Filling both of the flashcard related arrays with 'false' initially,
-     * because none of them have been revealed or marked yet
-     */
-    const falseArray = new Array(quizLength).fill(false);
-    setCorrectFlashAns(falseArray);
-    setShownAns(falseArray)
-
-    setCurrentAns(initAnswerArray);
-    setIsLoading(false);
+        setCurrentAns(initAnswerArray);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("Error in fetching quiz in TakeQuiz");
+      });
   }, []);
 
   const nextQuestion = () => {
@@ -130,16 +142,16 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
     copy[currentQuestion] = newTextVal;
     setCurrentAns(copy);
   };
-  
+
   /**
    * This sets the shown status of a flashcard to true.
    * This action cannot be undone, the button will disappear
    */
   const handleFlashcardShow = () => {
-    const tempFlashcardShowVal = [...shownAns!]
-    tempFlashcardShowVal[currentQuestion] = true
-    setShownAns(tempFlashcardShowVal)
-  }
+    const tempFlashcardShowVal = [...shownAns!];
+    tempFlashcardShowVal[currentQuestion] = true;
+    setShownAns(tempFlashcardShowVal);
+  };
 
   /**
    * This sets the value in the particular flashcard question to true or false
@@ -153,19 +165,25 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
     setCorrectFlashAns(correctFlashAnsCopy);
   };
 
-  // TODO: Replace this with a spinner
   if (isLoading) {
-    return <div></div>;
+    return (
+      <>
+        <Box h="7rem"> </Box>
+        <Center>
+          <Spinner size="lg" />
+        </Center>
+      </>
+    );
   }
 
   if (isQuizFinished) {
     return (
       <QuizResults
-      quizData={quizData}
-      currentAns={currentAns!}
-      correctFlashAns={correctFlashAns!}
+        quizData={quizData}
+        currentAns={currentAns!}
+        correctFlashAns={correctFlashAns!}
       />
-    )
+    );
   }
 
   return (

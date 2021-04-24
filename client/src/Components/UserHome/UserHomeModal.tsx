@@ -24,8 +24,11 @@ import {
   Text,
   Spinner,
   Center,
+  IconButton,
+  Flex,
 } from "@chakra-ui/react";
 import api from "../../API/api";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 export interface UserHomeModalProps {
   isOpen: boolean;
@@ -34,6 +37,7 @@ export interface UserHomeModalProps {
   showQuizID: boolean;
   quizID: string;
   changeShowStatus: () => void;
+  takequiz: () => void;
 }
 
 interface quizDetailsType  {
@@ -50,6 +54,7 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
     quizID,
     showQuizID,
     changeShowStatus,
+    takequiz
   } = props;
 
   const [loading, setLoading] = useState(true);
@@ -78,9 +83,12 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
           <ModalHeader> {quizName} Details </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <Flex justify="space-between" >
             <Text fontSize="2xl" fontWeight="bold">
-              Quiz Information{" "}
+              Quiz Information
             </Text>
+            <Button rightIcon={<DeleteIcon />} colorScheme="red" > Delete Quiz </Button>
+            </Flex>
             {loading === true ? (
               <Center>
                 <Spinner size="lg" />
@@ -127,9 +135,8 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
             </Box>
           </ModalBody>
           <ModalFooter justifyContent="space-between">
-            <Button colorScheme="green">Take quiz</Button>
-            <Button colorScheme="yellow">Edit Quiz</Button>
-            <Button colorScheme="red">Delete</Button>
+            <Button colorScheme="yellow" size="lg" >Edit quiz</Button>
+            <Button colorScheme="green" size="lg" onClick={takequiz} >Take quiz</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
