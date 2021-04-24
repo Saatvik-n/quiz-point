@@ -4,6 +4,7 @@ import {
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
@@ -17,6 +18,8 @@ export interface HomepageModalProps {
   quizRedirect: () => void;
   handleQuizIDChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   takeSampleQuiz: () => void;
+  isError: boolean;
+  errorMessage: string;
 }
 
 const HomepageModal: React.FC<HomepageModalProps> = (props) => {
@@ -27,7 +30,9 @@ const HomepageModal: React.FC<HomepageModalProps> = (props) => {
     quizID,
     quizRedirect,
     handleQuizIDChange,
-    takeSampleQuiz
+    takeSampleQuiz, 
+    isError, 
+    errorMessage
   } = props;
 
   const [chooseQuiz, setChooseQuiz] = useState(false); // This determines whether the modal should display the input for user to enter quiz id
@@ -56,8 +61,13 @@ On closing the modl, we do 2 things:
               value={quizID}
               onChange={(e) => handleQuizIDChange(e)}
             />
-            <Button margin="10px 0px"> Go to Quiz </Button>
+            <Button margin="10px 0px" onClick={quizRedirect} > Take Quiz </Button>
           </ModalBody>
+          {
+            isError === true ? (
+              <ModalFooter justifyContent="left" > {errorMessage} </ModalFooter>
+            ) : null
+          }
         </ModalContent>
       </Modal>
     );
@@ -70,7 +80,6 @@ On closing the modl, we do 2 things:
         <ModalHeader> Choose an option </ModalHeader>
         <ModalBody>
           <Button margin="10px 0px" onClick={sign}>
-            {" "}
             Sign in / Sign Up{" "}
           </Button>
           <br />

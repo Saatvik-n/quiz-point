@@ -29,6 +29,7 @@ Mongoose.connect(process.env.DB_URL!, {
 
 
 const app = Express()
+app.disable('etag')
 app.use(cookieParser())
 app.use(Cors({origin: true, credentials: true}))
 app.use(Morgan('dev'))
@@ -62,6 +63,6 @@ app.listen(PORT, () => {
 
 process.on('SIGINT', async () => {
   await Mongoose.connection.close()
-  
+  console.log("Connection closed");
   process.exit(0)
 })

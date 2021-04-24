@@ -14,6 +14,7 @@ import {
 import CreateQuestion from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuestion";
 import CreateQuestionType from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuestionType";
 import {
+  CurrentQuizData,
   questionTypes,
   QuizData,
   quizTypeState,
@@ -40,15 +41,21 @@ import {
   checkAtLeastOneIsTrue,
   createQuizData,
   checkAllOptionsFilled,
+  makeQuizEditable,
+  getQuestionInfo,
 } from "../../Util/QuizUtilFunctions";
-import TakeQuiz from "../TakeQuiz/TakeQuiz";
 import api from "../../API/api";
 import { useHistory } from "react-router";
 import CurrentUserContext from "../../Contexts/GlobalContexts/UserContext";
 
-export interface CreateQuizProps {}
+export interface CreateQuizProps {
+  isEdit?: boolean;
+  quizID?: boolean;
+}
 
-const CreateQuiz: React.FC<CreateQuizProps> = () => {
+const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
+  const { isEdit, quizID } = props;
+
   const [quizName, setQuizName] = useState("");
 
   // This stores question name, and type of question
@@ -138,7 +145,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
           currentQuestionState.multipleChoice.answerOptions!
         );
         if (res2 === false) {
-          return "emptyError"
+          return "emptyError";
         }
 
         return "none";
@@ -395,36 +402,77 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
     const finalQuizData = createQuizData(cqsClone, currentQuestionInfo);
     setFinishedQuizData(finalQuizData);
 
-    api
-      .post(`/api/quiz`, {
-        userID: currentUserState.userID,
-        quizName: quizName,
-        quizData: finalQuizData,
+    if (isEdit === true) {
+      console.log("User id is");
+      
+      console.log(currentUserState.userID);
+      api.put(`/api/quiz/${quizID}`, {
+          userID: currentUserState.userID,
+          quizName: quizName,
+          quizData: finalQuizData,
+      } )
+      .then(res => {
+        console.log("Successfully edited quiz");
+        history.push('/user')
       })
-      .then((res) => {
-        console.log("Successfully sent quiz");
-        history.push("/user");
+      .catch(err => {
+        console.log("Failed to edit quiz");
       })
-      .catch((err) => {
-        console.log("failed to send quiz");
-        console.log(err);
-      });
+    } else {
+      api
+        .post(`/api/quiz`, {
+          userID: currentUserState.userID,
+          quizName: quizName,
+          quizData: finalQuizData,
+        })
+        .then((res) => {
+          console.log("Successfully sent quiz");
+          history.push("/user");
+        })
+        .catch((err) => {
+          console.log("failed to send quiz");
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
     api
       .get("/api/validate")
-      .then((res) => {})
+      .then((res) => {
+        if (isEdit === true) {
+          api
+            .get(`/api/quiz/${quizID!}`)
+            .then((res) => res.data.quiz)
+            .then((data) => {
+              setQuizName(data.quizName);
+              const editableQuiz = makeQuizEditable(data.quizData);
+
+              cqd({
+                type: "edit",
+                payload: editableQuiz,
+              });
+              setCurLength(data.quizData.length);
+              setCurrentQuestionInfo(getQuestionInfo(data.quizData));
+
+              currentQuestionDispatch({
+                type: "changeQuestion",
+                payload: editableQuiz[0],
+              });
+            });
+        } else {
+          currentQuestionDispatch({
+            type: "changeQuestion",
+            payload: cloneDeep(iqTemp),
+          });
+        }
+
+        setLoading(false);
+      })
       .catch((err) => {
+        console.log("Error Creating Quiz");
         history.push("/");
       });
-
-    currentQuestionDispatch({
-      type: "changeQuestion",
-      payload: cloneDeep(iqTemp),
-    });
-
-    setLoading(false);
   }, []);
 
   if (loading) {
@@ -443,6 +491,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = () => {
         <Box>
           <CreateQuizHeader
             quizName={quizName}
+            isDisabled={isEdit === undefined ? false : true}
             handleQuizNameChange={handleQuizNameChange}
           />
           <IconButton

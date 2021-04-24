@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/layout";
+import { Box, Center, Flex, Text } from "@chakra-ui/layout";
 import { CSSObject } from "@chakra-ui/styled-system";
 import * as React from "react";
 
@@ -14,6 +14,14 @@ const UserQuizzes: React.FC<UserQuizzesProps> = (props) => {
   const cssStyle: CSSObject = {
     backgroundColor: "rgba(13, 11, 11, 0.07)",
   };
+
+  if (quizNames.length === 0) {
+    return (
+      <Center marginTop="24px" >
+        <Text fontSize="2xl" > You have not created any quizzes </Text>
+      </Center>
+    )
+  }
 
   return (
     <>

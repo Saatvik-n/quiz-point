@@ -137,7 +137,7 @@ export async function toggleQuizPublic(
   next: NextFunction
 ) {
   try {
-    const quizID = req.params.quizid;
+    const quizID = req.params.quizID;
 
     const quiz = await quizModel.findById(quizID);
 

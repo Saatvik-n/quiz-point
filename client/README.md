@@ -5,21 +5,35 @@
 Create a user context for the whole program, and change the navbar based on that
 
 1. Allow user to register, login, create, save quizzes - basically test the API 
-2. After these are done, make suitable error messages, UI improvements (like spinners, disabling input), etc.
-3. Make the website responsive 
+2. Allow users to make the quiz public, and allow them to take any other quiz they want, 
+and allow randoms to take that quiz 
+3. After these are done, make suitable error messages, UI improvements (like spinners, disabling input), etc.
+4. Make the website responsive 
+
+## Progress on todos 
+
+List 1 - done 
+List 2 - done 
+List 3 - 
 
 ### Immediate todos 
 
-* Change position of buttons in modal
-* Take quiz, delete quiz works when selecting a quiz 
 
-### Later 
+
+## Later 
+
 
 * Take care of all TODOs
+* Whenever a login fails, display error
 * Make page responsive 
 * Don't allow user to go to protected routes
 
 Document everything
+
+
+### Bugs 
+
+* Problem with delete icon while creating quiz 
 
 ### Optimizations  
 

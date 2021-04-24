@@ -47,8 +47,6 @@ const Navbar: React.FC<NavbarProps> = () => {
     history.push('/login')
   }
 
-
-
   if (isMobile) {
     // This is only returned if device width <= 1000
     return (

@@ -6,11 +6,12 @@ import * as React from "react";
 export interface CreateQuizHeaderProps {
   quizName: string;
   handleQuizNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isDisabled: boolean
 }
 
 const CreateQuizHeader: React.FC<CreateQuizHeaderProps> = (props) => {
 
-  const {quizName, handleQuizNameChange} = props
+  const {quizName, handleQuizNameChange, isDisabled} = props
 
   return (
     <>
@@ -19,6 +20,7 @@ const CreateQuizHeader: React.FC<CreateQuizHeaderProps> = (props) => {
         <InputGroup>
           <InputLeftAddon children="Quiz Name" />
           <Input type="text" placeholder="Name" value={quizName}
+          isDisabled={isDisabled}
           onChange={(e) => handleQuizNameChange(e)} />
         </InputGroup>
       </VStack>

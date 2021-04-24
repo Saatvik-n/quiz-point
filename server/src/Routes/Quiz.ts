@@ -8,7 +8,7 @@ app.get('/api/quiz/:quizID', getQuiz) // To get the quiz data
 
 app.post('/api/quiz',  createNewQuiz ) // To create a new Quiz
 
-app.delete('/quiz/:quizID', onlyValidateJWT,deleteQuiz) // To delete a quiz - this has no body
+app.delete('/api/quiz/:quizID', onlyValidateJWT,deleteQuiz) // To delete a quiz - this has no body
 
 app.put('/api/quiz/:quizID', onlyValidateJWT,replaceQuiz) // To replace a quiz 
 

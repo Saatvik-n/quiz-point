@@ -1,5 +1,6 @@
 import { CurrentQuizData, QuizData, quizTypeState, singleOption, singleQuestion, userQuizRecord } from "../Types/QuizTypes";
 import cloneDeep from "clone-deep"
+import { iqTemp } from "../Reducers/CurrentQuizReducer";
 
 export const checkSingleOptionCorrect = (userAnsers: boolean[], correctAnswers: singleOption[]):boolean => {
   for (let i = 0; i < correctAnswers.length; i++) {
@@ -197,15 +198,67 @@ export const createQuizData = (currentQuizState: CurrentQuizData, questionInfo: 
 export function getQuizInfo(data:userQuizRecord[]) {
   let quizIDs = []
   let quizNames = []
+  let isPublicList = []
   for (let i = 0; i < data.length; i++) {
     const record = data[i];
     
     quizIDs.push(record._id)
     quizNames.push(record.quizName)
+    isPublicList.push(record.isPublic)
   }
   let result = {
     quizIDs, 
-    quizNames
+    quizNames, 
+    isPublicList
   } 
   return result
+}
+
+/**
+ * When you fetch a question, you only get the final type of the questions, 
+ * the states for the other ones are left blank. So we have to populate the other
+ * states. Ex: a question type will be single option, so we need to add blank 
+ * templates for the other types
+ */
+export function makeQuizEditable(data:QuizData):CurrentQuizData {
+  let resArray:CurrentQuizData = []
+  for (let i = 0; i < data.length; i++) {
+    let resObject = cloneDeep(iqTemp)
+    const question = data[i];
+    switch (question.type) {
+      case "Single Option":
+        resObject.singleOption = question
+        break;
+      case "Multiple Option":
+        resObject.multipleChoice = question
+        break;
+      case "Flashcard":
+        resObject.flashcardText = question
+        break;
+      default:
+        break;
+    }
+    resArray.push(resObject)
+  }
+  
+  return resArray
+}
+
+/**
+ * When editing a quiz, we need to get the current question info (question text, question type)
+ * for each question as an array, so we can set it in useEffect
+ */
+export function getQuestionInfo(data:QuizData):quizTypeState {
+  let res = []
+  for (let i = 0; i < data.length; i++) {
+    const question = data[i];
+    const questionText = question.questionText
+    const questionType = question.type
+    let resObject = {
+      questionText, 
+      questionType
+    }
+    res.push(cloneDeep(resObject))
+  }
+  return res;
 }

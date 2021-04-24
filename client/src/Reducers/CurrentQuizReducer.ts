@@ -1,11 +1,10 @@
 import { initialQuestionState } from "../Contexts/CurrentQuizQuestionContext";
 import { CurrentQuizData, CurrentQuestion } from "../Types/QuizTypes";
-import cloneDeep from "clone-deep"
+import cloneDeep from "clone-deep";
 
-const initialQuestionStateCopy = cloneDeep(initialQuestionState)
+const initialQuestionStateCopy = cloneDeep(initialQuestionState);
 
 export const initialQuizState: CurrentQuizData = [initialQuestionStateCopy];
-
 
 type changeCurrentQuestionAction =
   | {
@@ -31,54 +30,67 @@ type changeCurrentQuestionAction =
       type: "previous";
       currentQuestion: number;
       payload: CurrentQuestion;
+    }
+  | {
+      type: "edit", 
+      payload: CurrentQuizData
     };
 
-export const currentQuizReducer = (state: CurrentQuizData, action: changeCurrentQuestionAction) => {
+export const currentQuizReducer = (
+  state: CurrentQuizData,
+  action: changeCurrentQuestionAction
+) => {
   switch (action.type) {
     case "next": {
-
       console.log("Next called");
-      
-      const stateCopy = cloneDeep(state)
+
+      const stateCopy = cloneDeep(state);
 
       stateCopy[action.currentQuestion] = action.payload;
       if (action.currentQuestion + 1 === stateCopy.length) {
-        const iqTempClone = cloneDeep(iqTemp)
-        
+        const iqTempClone = cloneDeep(iqTemp);
+
         stateCopy.push(iqTempClone);
         return stateCopy;
-      } 
-        return stateCopy;
-        
+      }
+      return stateCopy;
     }
     case "previous": {
-      const stateCopy = cloneDeep(state)
-      
-      const actionPayloadClone = cloneDeep(action.payload)
+      const stateCopy = cloneDeep(state);
 
-      stateCopy[action.currentQuestion] = actionPayloadClone
+      const actionPayloadClone = cloneDeep(action.payload);
+
+      stateCopy[action.currentQuestion] = actionPayloadClone;
 
       console.log("Statecopy log");
       console.log(stateCopy);
-      
-      return stateCopy
+
+      return stateCopy;
     }
 
     case "remove": {
-      const stateCopy = cloneDeep(state)
+      const stateCopy = cloneDeep(state);
       if (action.currentQuestion === 0) {
-        stateCopy.shift()
+        stateCopy.shift();
+      } else {
+        stateCopy.splice(action.currentQuestion, 1);
       }
-      else {
-        stateCopy.splice(action.currentQuestion, 1)
-      }
-      return stateCopy
+      return stateCopy;
+    }
+
+    case "edit": {
+      const newState = cloneDeep(action.payload)
+      console.log("New state is");
+      
+      console.log(newState);
+      
+      return newState
     }
 
     default:
       return state;
   }
-}
+};
 
 export const iqTemp: CurrentQuestion = {
   singleOption: {

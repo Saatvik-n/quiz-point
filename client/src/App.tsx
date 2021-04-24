@@ -19,6 +19,7 @@ import {
   initialUserState,
 } from "./Contexts/GlobalContexts/UserContext";
 import api from "./API/api";
+import EditQuiz from "./Containers/EditQuiz/EditQuiz";
 
 export const App = () => {
   const [currentUserState, currentUserDispatch] = React.useReducer(
@@ -30,7 +31,6 @@ export const App = () => {
     currentUserState, 
     currentUserDispatch
   }
-
 
   return (
     <ChakraProvider theme={theme}>
@@ -50,6 +50,7 @@ export const App = () => {
             exact
             render={() => <TakeQuiz givenQuizData={SampleQuiz} />}
           />
+          <Route path="/editquiz/:id" exact component={EditQuiz} />
           <Route path="/takequiz/:id" exact component={TakeQuiz} />
           <Route path="/user" exact component={UserHome} />
           <Route path="/" exact component={Homepage} />
