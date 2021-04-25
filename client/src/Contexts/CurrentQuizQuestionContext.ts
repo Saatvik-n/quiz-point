@@ -1,5 +1,4 @@
 import React, { createContext } from "react";
-import cloneDeep from "clone-deep"
 import {
   CurrentQuestion,
   questionTypes,

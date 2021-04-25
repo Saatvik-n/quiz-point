@@ -15,11 +15,9 @@ export const validateJWT = (
 
   const jwtToken = req.headers.cookie.split("=")[1];
 
-  console.log(jwtToken);
   let decodedToken;
 
   let result = JWT.decode(jwtToken) as any
-  console.log(result);
 
   decodedToken = JWT.verify(jwtToken, process.env.JWT_SECRET_KEY!, (err, payload) => {
     if (err) {

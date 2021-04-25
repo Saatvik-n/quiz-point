@@ -17,7 +17,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -73,12 +72,10 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
   const toast = useToast();
 
   React.useEffect(() => {
-    console.log("Quiz ID is", quizID);
 
     api
       .get(`/api/quiz/quizDetails/${quizID}`)
       .then((res) => {
-        console.log("Trying to fetch quiz details");
         setQuizState(res.data.numbers);
         setLoading(false);
       })

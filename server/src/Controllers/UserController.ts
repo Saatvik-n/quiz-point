@@ -105,7 +105,6 @@ export async function registerUser(
     }
     console.log("Error occurred while creating user");
     console.log(err);
-
     return next(HttpError(500, "Internal server error"));
   }
 }

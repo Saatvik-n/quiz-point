@@ -80,8 +80,8 @@ export async function createNewQuiz(
       quizID: newQuiz._id.toString(),
     });
   } catch (error) {
+    console.log("Error creating quiz");
     console.log(error);
-
     return next(HttpError(500, "Error creating quiz"));
   }
 }

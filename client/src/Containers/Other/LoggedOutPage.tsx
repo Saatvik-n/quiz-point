@@ -1,5 +1,5 @@
 import { Button } from '@chakra-ui/button';
-import { Box, Text, VStack } from '@chakra-ui/layout';
+import { Box, HStack, Text, VStack } from '@chakra-ui/layout';
 import * as React from 'react';
 import { useHistory } from 'react-router';
 
@@ -16,14 +16,18 @@ const LoggedOutPage: React.FC<LoggedOutPageProps> = () => {
     <Box h="7rem"></Box>
     <VStack spacing="20px" >
       <Text fontSize="3xl" > You have been logged out </Text>
-      <Box>
+      <HStack spacing="20px" >
         <Button onClick={() => {
           history.push('/')
-        }} > Go Home </Button>
+        }} 
+        size="lg"
+        > Go Home </Button>
         <Button onClick={() => {
           history.push('/login')
-        }} > Sign In </Button>
-      </Box>
+        }} 
+        size="lg"
+        > Sign In </Button>
+      </HStack>
     </VStack>
     </>
   );

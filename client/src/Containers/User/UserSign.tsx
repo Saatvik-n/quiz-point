@@ -53,7 +53,6 @@ const UserSign: React.FC<UserSignProps> = (props) => {
       password: password
     })
     .then(res => {
-      console.log(res.data);
       currentUserDispatch({
         type: "changeUser", 
         payload: {
@@ -69,7 +68,6 @@ const UserSign: React.FC<UserSignProps> = (props) => {
       setErrorMessage(err.response.data.error.message)
       setIsLoading(false)
       onOpen()
-      
     })
   }
 
@@ -87,10 +85,10 @@ const UserSign: React.FC<UserSignProps> = (props) => {
       setUsername("")
       setPassword("")
       setName("")
+      setIsLoading(false)
     })
     .catch(err => {
       console.log("Error registering user");
-      console.log(err.response.data);
       setErrorMessage(err.response.data.error.message)
       setIsLoading(false)
       onOpen()

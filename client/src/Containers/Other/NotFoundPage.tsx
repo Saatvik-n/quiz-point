@@ -1,5 +1,5 @@
 import { Button } from '@chakra-ui/button';
-import { Box, Center, Text, VStack } from '@chakra-ui/layout';
+import { Box, Text, VStack } from '@chakra-ui/layout';
 import * as React from 'react';
 import { useHistory } from 'react-router';
 

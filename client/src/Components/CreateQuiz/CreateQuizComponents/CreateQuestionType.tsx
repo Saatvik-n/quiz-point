@@ -1,4 +1,4 @@
-import { HStack, Stack } from "@chakra-ui/layout";
+import { Stack } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
 import * as React from "react";
 import { questionTypes } from "../../../Types/QuizTypes";

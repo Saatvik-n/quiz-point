@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import api from "../../API/api";
 import CurrentUserContext from "../../Contexts/GlobalContexts/UserContext";
 import burgerIcon from "../svgs/Homepage/burger.svg";
@@ -66,8 +66,6 @@ const Navbar: React.FC<NavbarProps> = () => {
       })
     })
     .catch(err => {
-      console.log("Logged out");
-      history.push('/loggedout')
     })
   }, [])
 

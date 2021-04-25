@@ -93,13 +93,10 @@ const UserHome: React.FC<UserHomeProps> = () => {
 
   const changePublicStatus = () => {
     const index = userQuizIDs!.indexOf(selectedQuizID);
-    console.log("Selected quiz ID is", selectedQuizID);
 
     // Set the value at this index to disabled, set the isPublic to true, and PATCH it later
     let disabledCopy = [...disabledQuizzes!];
     disabledCopy[index] = !disabledQuizzes![index];
-    console.log("Disabled copy is");
-    console.log(disabledCopy);
 
     setDisabledQuizzes(disabledCopy);
 
@@ -128,10 +125,6 @@ const UserHome: React.FC<UserHomeProps> = () => {
         return api
           .get(`/api/user/${res.data.userID}`)
           .then((res) => {
-            console.log("Data when reloading page is");
-
-            console.log(res.data);
-
             const quizResultObject = getQuizInfo(res.data.quizzes);
             const falseArray = new Array(res.data.quizzes.length).fill(false);
             setUserQuizIDs(quizResultObject.quizIDs);

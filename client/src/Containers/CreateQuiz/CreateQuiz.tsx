@@ -8,13 +8,11 @@ import {
   AddIcon,
   ArrowBackIcon,
   ArrowForwardIcon,
-  CheckIcon,
-  DeleteIcon,
+  CheckIcon
 } from "@chakra-ui/icons";
 import CreateQuestion from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuestion";
 import CreateQuestionType from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuestionType";
 import {
-  CurrentQuizData,
   questionTypes,
   QuizData,
   quizTypeState,
@@ -33,7 +31,7 @@ import {
   initialQuizState,
   iqTemp,
 } from "../../Reducers/CurrentQuizReducer";
-import { Button, IconButton } from "@chakra-ui/button";
+import { Button } from "@chakra-ui/button";
 import CurrentQuestionDisplay from "../../Components/CreateQuiz/CreateQuizComponents/CurrentQuestionDisplay";
 import { useDisclosure } from "@chakra-ui/hooks";
 import CreateQuizModal from "../../Components/CreateQuiz/CreateQuizComponents/CreateQuizModal";
@@ -180,7 +178,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
     if (validationResult !== "none") {
       if (validationResult === "flashError") {
         openModal("Make sure that the flashcard is not empty");
-      } else if (validationResult == "multipleError") {
+      } else if (validationResult === "multipleError") {
         openModal("Make sure at least one option is checked");
       } else {
         openModal("Make sure all options have text in them");
@@ -266,7 +264,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
     if (validationResult !== "none") {
       if (validationResult === "flashError") {
         openModal("Make sure that the flashcard is not empty");
-      } else if (validationResult == "multipleError") {
+      } else if (validationResult === "multipleError") {
         openModal("Make sure at least one option is checked");
       } else {
         openModal("Make sure all options have text in them");
@@ -364,7 +362,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
     if (validationResult !== "none") {
       if (validationResult === "flashError") {
         openModal("Make sure that the flashcard is not empty");
-      } else if (validationResult == "multipleError") {
+      } else if (validationResult === "multipleError") {
         openModal("Make sure at least one option is checked");
       } else {
         openModal("Make sure all options have text in them");
@@ -389,7 +387,6 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
      * currentQuestionInfo - contains the type of question for each question
      *  */
 
-    console.log("Inside setTimeout");
     const cqsClone = cloneDeep(cqs);
 
     cqsClone[currentQuestionNumber].flashcardText =
@@ -399,14 +396,11 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
     cqsClone[currentQuestionNumber].multipleChoice =
       currentQuestionClone.multipleChoice;
 
-    console.log(cqsClone);
     const finalQuizData = createQuizData(cqsClone, currentQuestionInfo);
     setFinishedQuizData(finalQuizData);
 
     if (isEdit === true) {
-      console.log("User id is");
       
-      console.log(currentUserState.userID);
       api.put(`/api/quiz/${quizID}`, {
           userID: currentUserState.userID,
           quizName: quizName,
@@ -495,17 +489,6 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
             isDisabled={isEdit === undefined ? false : true}
             handleQuizNameChange={handleQuizNameChange}
           />
-          {/* <IconButton
-            pos="revert"
-            zIndex={10}
-            top="20"
-            right="10px"
-            aria-label="delete-question"
-            backgroundColor="red.400"
-            color="black"
-            onClick={deleteQuestion}
-            icon={<DeleteIcon color="white" />}
-          /> */}
           <HStack
             marginTop="10px"
             width={{ base:"350px", sm: "500px", md: "710px" }}

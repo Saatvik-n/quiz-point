@@ -18,7 +18,7 @@ import { Button } from "@chakra-ui/button";
 import QuizResults from "../../Components/TakeQuiz/Result/QuizResults";
 import { Spinner } from "@chakra-ui/spinner";
 import api from "../../API/api";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { SampleQuiz } from "../../Data/SampleQuiz";
 
 export interface TakeQuizProps {
@@ -68,6 +68,8 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
   // @ts-ignore
   const {id} = useParams()
 
+  const history = useHistory()
+
 
   useEffect(() => {
 
@@ -88,26 +90,21 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
 
     if (id === undefined || id === "") {
       console.log("ID doesnt exist");
-
+      history.push('/')
     }
-    console.log("ID is ");
-    console.log(id)
+
     api
       .get(`/api/quiz/${id}`)
       .then((res) => res.data.quiz)
       .then((data) => {
-        console.log(data);
         
         setQuizName(data.quizName);
-        console.log("Quiz name is: " + data.quizName);
          
         setQuizData(data.quizData);
-        console.log("After set quiz data");
         
         const initAnswerArray = initializeAnswerArray(data.quizData);
         
         setQuizLength(data.quizData.length)
-        console.log("After quiz length");
         
         /**
          * Filling both of the flashcard related arrays with 'false' initially,
@@ -122,7 +119,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
       })
       .catch((err) => {
         console.log("Error in fetching quiz in TakeQuiz");
-        
+        history.push('/sfdg')
       });
   }, []);
 

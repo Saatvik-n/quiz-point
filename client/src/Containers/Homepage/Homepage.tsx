@@ -1,7 +1,6 @@
 import { useDisclosure } from "@chakra-ui/hooks";
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import cloneDeep from "clone-deep";
 
 import Banner from "../../Components/Homepage/Banner";
 import Footer from "../../Components/Homepage/Footer";
