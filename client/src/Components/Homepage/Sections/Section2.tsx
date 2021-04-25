@@ -13,7 +13,7 @@ export interface Section2Props {}
 const Section2: React.FC<Section2Props> = React.memo(() => {
   return (
     <Flex justify="center" wrap="wrap" paddingTop="40px" paddingBottom="40px">
-      <Box width="500px" marginRight="40px">
+      <Box width="500px" marginRight={{base: "0px", md:"20px", lg:"40px"}} textAlign={{base: "center", md: "inherit"}} >
         <Box>
           {/* This is for the bold text at the top of column */}
           <Text fontSize="28px">
@@ -37,7 +37,7 @@ const Section2: React.FC<Section2Props> = React.memo(() => {
           </Text>
         </Box>
       </Box>
-      <Center marginLeft="40px">
+      <Center marginLeft={{base:"0px", md:"20px", lg:"40px"}}>
         <Image
           src={shareImage}
           maxWidth={{ base: "350px", md: "400px", lg: "500px" }}

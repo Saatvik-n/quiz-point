@@ -6,7 +6,7 @@ import * as React from "react";
 export interface CreateQuizHeaderProps {
   quizName: string;
   handleQuizNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  isDisabled: boolean
+  isDisabled: boolean;
 }
 
 const CreateQuizHeader: React.FC<CreateQuizHeaderProps> = (props) => {

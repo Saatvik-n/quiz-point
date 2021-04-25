@@ -19,15 +19,15 @@ const Section1: React.FC<Section1Props> = React.memo(() => {
       paddingTop="40px"
       paddingBottom="40px"
     >
-      <Center marginRight="40px">
+      <Center marginRight={{base:"0px", md:"20px", lg:"40px"}}>
         <Image
           src={boardImage}
-          maxWidth={{ base: "350px", md: "400px", "lg": "500px" }}
-          maxHeight={{ base: "175px", md: "200px", lg: "350px" }}
+          maxWidth={{ base: "350px", sm: "400px", md:"450px",  lg: "500px" }}
+          maxHeight={{ base: "175px", sm: "200px", md:"250px",  lg: "350px" }}
         />
       </Center>
 
-      <Box width="500px" marginLeft="40px">
+      <Box maxWidth="600px" marginLeft={{base: "0px", md:"20px", lg:"40px"}} textAlign={{base: "center", md: "inherit"}} >
         <Box>
           {/* This is for the bold text at the top of column */}
           <Text fontSize="28px">

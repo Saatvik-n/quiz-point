@@ -30,8 +30,6 @@ const Homepage: React.FC<HomepageProps> = () => {
     setQuizID(newQuizID);
   };
 
-  // TODO - when a random user wants to take a quiz, use this function
-  // Also, show appropriate error messages when there is a problem with the entered quiz id
   const quizRedirect = () => {
     api.get(`/api/quiz/checkvalid/${quizID}`).then((res) => {
       history.push(`/takequiz/${quizID}`);

@@ -8,6 +8,7 @@ import {
   quizQADatarow
 } from "../../../Types/QuizTypes";
 import { checkMultipleChoiceCorrect, checkSingleOptionCorrect, findCorrectAnswerInSingle, findUserAnswerInSingle, getCorrectAnswersInMultiple, getUserAnswersInMultiple } from "../../../Util/QuizUtilFunctions";
+import { Text } from "@chakra-ui/layout";
 
 export interface QuizQATableProps {
   quizData: QuizData;
@@ -62,10 +63,15 @@ const QuizQATable: React.FC<QuizQATableProps> = (props) => {
   const {quizData, currentAns, correctFlashAns} = props
 
   return (
-    <Table variant="simple" size="lg" w={{ base: "500px", md: "900px" }} >
-      <TableCaption>
-        Note: Flashcard answers are marked correct based on whether you have
+    <Table variant="simple" w={{ base: "650px", sm:"800px", md: "900px" }} paddingLeft={{base:"10px", sm:"0px"}} >
+      <TableCaption placement="top"  >
+        <Text display={{base:"none", md:"initial"}} >
+        Note: Flashcard answers are marked
+        correct based on whether you have
         marked them correct
+        </Text>
+        <br/>
+        <Text display={{base:"initial", md:"none"}} > Please scroll to the right </Text>
       </TableCaption>
       <Thead>
         <Tr>
@@ -81,7 +87,7 @@ const QuizQATable: React.FC<QuizQATableProps> = (props) => {
           giveQuizQAData(quizData, currentAns, correctFlashAns).map((row, index) => {
             return (
               <Tr>
-                <Td> {index} </Td>
+                <Td> {index + 1} </Td>
                 <Td> {row.questionText} </Td>
                 <Td> {row.isCorrect ? (<CheckIcon />) : (<CloseIcon />)} </Td>
                 <Td> {row.yourAnswer} </Td>

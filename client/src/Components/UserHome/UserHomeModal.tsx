@@ -27,6 +27,7 @@ import {
   IconButton,
   Flex,
   useToast,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import api from "../../API/api";
 import { DeleteIcon } from "@chakra-ui/icons";
@@ -40,7 +41,7 @@ export interface UserHomeModalProps {
   takequiz: () => void;
   deleteQuiz: () => void;
   isDisabled: boolean;
-  editQuiz: () =>void;
+  editQuiz: () => void;
   changePublicStatus: () => void;
 }
 
@@ -56,16 +57,18 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
     onClose,
     quizName,
     quizID,
-    changePublicStatus, 
+    changePublicStatus,
     takequiz,
     deleteQuiz,
-    isDisabled, 
-    editQuiz, 
-    isPublic
+    isDisabled,
+    editQuiz,
+    isPublic,
   } = props;
 
   const [loading, setLoading] = useState(true);
   const [quizStats, setQuizState] = useState<quizDetailsType>();
+
+  const [isWideEnough] = useMediaQuery("(min-width: 700px)");
 
   const toast = useToast();
 
@@ -94,16 +97,20 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
           <ModalCloseButton />
           <ModalBody>
             <Flex justify="space-between">
-              <Text fontSize="2xl" fontWeight="bold">
+              <Text fontSize="2xl" fontWeight={{ base: "normal", md: "bold" }}>
                 Quiz Information
               </Text>
-              <Button
-                rightIcon={<DeleteIcon />}
-                colorScheme="red"
-                onClick={deleteQuiz}
-              >
-                Delete Quiz{" "}
-              </Button>
+              {isWideEnough === true ? (
+                <Button
+                  rightIcon={<DeleteIcon />}
+                  colorScheme="red"
+                  onClick={deleteQuiz}
+                >
+                  Delete Quiz{" "}
+                </Button>
+              ) : (
+                <IconButton aria-label="delete quiz" icon={<DeleteIcon />} onClick={deleteQuiz} />
+              )}
             </Flex>
             {loading === true ? (
               <Center>
@@ -135,7 +142,12 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
             )}
             <Box marginTop="20px">
               <span> Make quiz public? </span>{" "}
-              <Switch onChange={changePublicStatus} isChecked={isPublic} isDisabled={isDisabled} marginLeft="10px" />
+              <Switch
+                onChange={changePublicStatus}
+                isChecked={isPublic}
+                isDisabled={isDisabled}
+                marginLeft="10px"
+              />
             </Box>
             <Box>
               {isPublic === true ? (
@@ -147,7 +159,7 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
                       size="sm"
                       onClick={() => {
                         toast({
-                          title: "Quiz ID copied", 
+                          title: "Quiz ID copied",
                           status: "success",
                           duration: 1000,
                           isClosable: true,
@@ -163,7 +175,7 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
             </Box>
           </ModalBody>
           <ModalFooter justifyContent="space-between">
-            <Button colorScheme="yellow" size="lg" onClick={editQuiz} >
+            <Button colorScheme="yellow" size="lg" onClick={editQuiz}>
               Edit quiz
             </Button>
             <Button colorScheme="green" size="lg" onClick={takequiz}>

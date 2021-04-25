@@ -50,7 +50,7 @@ app.use((err: httpErrors.HttpError, req: Request, res: Response, next:NextFuncti
   return res.json({
     error: {
       status: err.status || 500, 
-      message: err.message
+      message: err.message || "There is an error"
     }
   })
 

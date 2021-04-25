@@ -14,26 +14,23 @@ and allow randoms to take that quiz
 
 List 1 - done 
 List 2 - done 
-List 3 - 
+List 3 - Responsive parts - done 
 
 ### Immediate todos 
 
 
-
 ## Later 
 
-
-* Take care of all TODOs
-* Whenever a login fails, display error
-* Make page responsive 
 * Don't allow user to go to protected routes
+* Document everything
 
-Document everything
-
+Possible solutions to 1:
+* To protect takequiz:  first check if it's public. If not, then check that the quiz ID that's passed belongs to the current user (get this via JWT)
+* To protect edit quiz: same thing, but don't check if it's public
 
 ### Bugs 
 
-* Problem with delete icon while creating quiz 
+* Problem with delete icon while creating quiz - done
 
 ### Optimizations  
 

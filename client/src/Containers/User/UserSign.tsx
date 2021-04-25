@@ -1,4 +1,7 @@
+import { Button } from "@chakra-ui/button";
+import { useDisclosure } from "@chakra-ui/hooks";
 import { Box, Container } from "@chakra-ui/layout";
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/modal";
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import api from "../../API/api";
@@ -16,8 +19,13 @@ const UserSign: React.FC<UserSignProps> = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
 
   const history = useHistory()
+
+  const {isOpen, onClose, onOpen} = useDisclosure()
+
+  const [errorMessage, setErrorMessage] = useState("")
 
   const { currentUserDispatch} = useContext(CurrentUserContext)
 
@@ -38,6 +46,7 @@ const UserSign: React.FC<UserSignProps> = (props) => {
 
   const loginUser = () => {
     console.log("Login user called");
+    setIsLoading(true)
     
     api.post("/api/login", {
       username: username, 
@@ -56,12 +65,17 @@ const UserSign: React.FC<UserSignProps> = (props) => {
       history.push('/user')
     })
     .catch(err => {
-      console.log(err);
+      console.log("Error logging in user");
+      setErrorMessage(err.response.data.error.message)
+      setIsLoading(false)
+      onOpen()
+      
     })
   }
 
   const registerUser = () => {
     console.log("Register user called");
+    setIsLoading(true)
     
     api.post("/api/register", {
       username: username, 
@@ -76,12 +90,32 @@ const UserSign: React.FC<UserSignProps> = (props) => {
     })
     .catch(err => {
       console.log("Error registering user");
-      console.log(err);
+      console.log(err.response.data);
+      setErrorMessage(err.response.data.error.message)
+      setIsLoading(false)
+      onOpen()
     })
   }
 
+  const ModalComponent = () => (
+      <Modal isOpen={isOpen} onClose={onClose} >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader> Error </ModalHeader>
+          <ModalBody>
+            {errorMessage}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose} > Close </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+  )
+
   if (isLogin) {
     return (
+      <>
+      <ModalComponent />
       <Container>
         <Box height="7rem"></Box>
         <LoginFormComponent
@@ -90,12 +124,16 @@ const UserSign: React.FC<UserSignProps> = (props) => {
           handleUsernameChange={handleUsernameChange}
           handlePasswordChange={handlePasswordChange}
           onLoginClick={loginUser}
+          isLoading={isLoading}
         />
       </Container>
+    </>
     );
   }
 
   return (
+    <>
+      <ModalComponent />
     <Container>
       <Box height="7rem"></Box>
       <RegisterFormComponent
@@ -106,8 +144,10 @@ const UserSign: React.FC<UserSignProps> = (props) => {
         handlePasswordChange={handlePasswordChange}
         handleNameChange={handleNameChange}
         onRegisterClick={registerUser}
+          isLoading={isLoading}
       />
     </Container>
+    </>
   );
 };
 

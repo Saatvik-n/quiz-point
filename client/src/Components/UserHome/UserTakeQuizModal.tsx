@@ -17,16 +17,20 @@ const UserTakeQuizModal: React.FC<UserTakeQuizModalProps> = (props) => {
   const [quizID, setQuizID] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const history = useHistory()
 
   const takeQuiz = () => {
+    setIsLoading(true)
     api.get(`/api/quiz/checkvalid/${quizID}`)
     .then(res => {
       history.push(`/takequiz/${quizID}`)
     })
     .catch(err => {
-      console.log(err);
       setErrorMessage(err.response.data.error.message)
+      setIsLoading(false)
+      setQuizID("")
     })
   }
 
@@ -38,7 +42,7 @@ const UserTakeQuizModal: React.FC<UserTakeQuizModalProps> = (props) => {
         <ModalHeader> Enter Quiz ID </ModalHeader>
         <ModalBody>
           <Input type="text" value={quizID} onChange={(e) => setQuizID(e.target.value)} />
-          <Button marginTop="15px" onClick={takeQuiz} > Take Quiz </Button>
+          <Button marginTop="15px" onClick={takeQuiz} isLoading={isLoading} > Take Quiz </Button>
         </ModalBody>
         <ModalFooter justifyContent="left" > 
         {errorMessage}

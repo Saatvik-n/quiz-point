@@ -19,10 +19,10 @@ import QuizResults from "../../Components/TakeQuiz/Result/QuizResults";
 import { Spinner } from "@chakra-ui/spinner";
 import api from "../../API/api";
 import { useParams } from "react-router";
+import { SampleQuiz } from "../../Data/SampleQuiz";
 
 export interface TakeQuizProps {
-  givenQuizData?: QuizData;
-  location?: any;
+  isSample?: boolean;
 }
 
 // This returns an array of unchecked checkboxes, unclicked radio buttons, empty texts
@@ -45,11 +45,11 @@ const initializeAnswerArray = (quizdata: QuizData): AnswerArray => {
 };
 
 const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
-  const { givenQuizData } = props;
+  const { isSample } = props;
 
   // Self explanatory
   const [quizName, setQuizName] = useState("");
-  const [quizData, setQuizData] = useState<QuizData>(givenQuizData!);
+  const [quizData, setQuizData] = useState<QuizData>();
   const [currentQuestion, setCurrent] = useState(0);
   const [isQuizFinished, setQuizFinished] = useState(false);
   const [quizLength, setQuizLength] = useState(0)
@@ -71,8 +71,23 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
 
   useEffect(() => {
 
+    if (isSample === true) {
+      setQuizName("Sample quiz")
+      setQuizData(SampleQuiz)
+      setQuizLength(SampleQuiz.length)
+
+      const initAnswerArray = initializeAnswerArray(SampleQuiz)
+      const falseArray = new Array(SampleQuiz.length).fill(false)
+      setCorrectFlashAns(falseArray)
+      setShownAns(falseArray)
+
+      setCurrentAns(initAnswerArray)
+      setIsLoading(false)
+      return 
+    }
+
     if (id === undefined || id === "") {
-      console.log("ID doesnt exits");
+      console.log("ID doesnt exist");
 
     }
     console.log("ID is ");
@@ -139,7 +154,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
    */
   const handleClick = (index: number) => {
     let copy = cloneDeep(currentAns);
-    if (quizData[currentQuestion].type === "Single Option") {
+    if (quizData![currentQuestion].type === "Single Option") {
       const currentQuestionLength = currentAns![currentQuestion].length;
       let tempArray = new Array(currentQuestionLength).fill(false);
       tempArray[index] = true;
@@ -200,7 +215,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
   if (isQuizFinished) {
     return (
       <QuizResults
-        quizData={quizData}
+        quizData={quizData!}
         currentAns={currentAns!}
         correctFlashAns={correctFlashAns!}
       />
@@ -212,10 +227,10 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
       <Box height="9rem"></Box>
       <Center>
         <Box>
-          <TakingQuizHeader quizName="quiz name" />
+          <TakingQuizHeader quizName={quizName} />
           <HStack
             marginTop="10px"
-            width={{ base: "500px", md: "600px" }}
+            width={{ base: "350px", sm:"450px", md: "600px" }}
             padding={{ base: "4px", md: "10px" }}
             boxShadow="-1px 0px 19px 3px rgba(207,206,206,0.69)"
           >
@@ -228,8 +243,8 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
             />
             <Box width={{ base: "80%", lg: "500px" }}>
               <QuestionHeader
-                questionName={quizData[currentQuestion].questionText}
-                questionType={quizData[currentQuestion].type}
+                questionName={quizData![currentQuestion].questionText}
+                questionType={quizData![currentQuestion].type}
               />
               {
                 /**
@@ -239,15 +254,15 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
                 <DecideType
                   currentArray={currentAns![currentQuestion] as boolean[]}
                   handleClick={handleClick}
-                  quizType={quizData[currentQuestion].type}
-                  answerTexts={quizData[currentQuestion].answerOptions!}
+                  quizType={quizData![currentQuestion].type}
+                  answerTexts={quizData![currentQuestion].answerOptions!}
                   stringVal={currentAns![currentQuestion] as string}
                   handleTextChange={handleTextChange}
                   correctFlashAns={correctFlashAns![currentQuestion]}
                   handleFlashcardButton={handleFlashcardButton}
                   shownAns={shownAns![currentQuestion]}
                   handleFlashcardShow={handleFlashcardShow}
-                  answerText={quizData[currentQuestion].flashcardAnswerText!}
+                  answerText={quizData![currentQuestion].flashcardAnswerText!}
                 />
               }
               <Box height="40px"></Box> {/* Just for extra space */}

@@ -20,6 +20,8 @@ import {
 } from "./Contexts/GlobalContexts/UserContext";
 import api from "./API/api";
 import EditQuiz from "./Containers/EditQuiz/EditQuiz";
+import NotFoundPage from "./Containers/Other/NotFoundPage";
+import LoggedOutPage from "./Containers/Other/LoggedOutPage";
 
 export const App = () => {
   const [currentUserState, currentUserDispatch] = React.useReducer(
@@ -48,12 +50,14 @@ export const App = () => {
           <Route
             path="/samplequiz"
             exact
-            render={() => <TakeQuiz givenQuizData={SampleQuiz} />}
+            render={() => <TakeQuiz isSample={true} />}
           />
           <Route path="/editquiz/:id" exact component={EditQuiz} />
           <Route path="/takequiz/:id" exact component={TakeQuiz} />
           <Route path="/user" exact component={UserHome} />
+          <Route path="/loggedout" exact component={LoggedOutPage} />
           <Route path="/" exact component={Homepage} />
+          <Route component={NotFoundPage} />
         </Switch>
       </HashRouter>
 

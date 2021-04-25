@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/layout";
+import { HStack, Stack } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
 import * as React from "react";
 import { questionTypes } from "../../../Types/QuizTypes";
@@ -18,7 +18,7 @@ const CreateQuestionType: React.FC<CreateQuestionTypeProps> = (props) => {
   const { currentQuestionType, setButtonType } = props;
 
   return (
-    <HStack>
+    <Stack direction={{base:"column", md:"row"}} wrap="wrap" >
       {types.map((option) => {
         return (
           <Button
@@ -32,7 +32,7 @@ const CreateQuestionType: React.FC<CreateQuestionTypeProps> = (props) => {
           </Button>
         );
       })}
-    </HStack>
+    </Stack>
   );
 
 };

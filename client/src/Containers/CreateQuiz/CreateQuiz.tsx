@@ -371,6 +371,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
       }
       return;
     }
+    setQuizFinished(true)
     // first, set the current quiz data to the current question in the quizData
     const currentQuestionClone = cloneDeep(currentQuestionState);
 
@@ -470,8 +471,8 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log("Error Creating Quiz");
-        history.push("/");
+        console.log("Error Validating");
+        history.push("/loggedout");
       });
   }, []);
 
@@ -494,26 +495,27 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
             isDisabled={isEdit === undefined ? false : true}
             handleQuizNameChange={handleQuizNameChange}
           />
-          <IconButton
-            pos="relative"
+          {/* <IconButton
+            pos="revert"
             zIndex={10}
             top="20"
-            left="650"
+            right="10px"
             aria-label="delete-question"
             backgroundColor="red.400"
             color="black"
             onClick={deleteQuestion}
             icon={<DeleteIcon color="white" />}
-          />
+          /> */}
           <HStack
             marginTop="10px"
-            width={{ base: "500px", md: "710px" }}
+            width={{ base:"350px", sm: "500px", md: "710px" }}
             padding={{ base: "4px", md: "10px" }}
             boxShadow="-1px 0px 19px 3px rgba(207,206,206,0.69)"
+            paddingBottom="30px"
           >
             <ArrowBackIcon
-              w={10}
-              h={10}
+                  w={{base:6, md:9}}
+                  h={{base:6, md:9}}
               visibility={currentQuestionNumber === 0 ? "hidden" : "initial"}
               cursor="pointer"
               onClick={() => prevClick()}
@@ -522,7 +524,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
               value={currentQuestionStateValues}
             >
               <Box>
-                <VStack width={{ base: "80%", lg: "600px" }}>
+                <VStack width={{ base: "278px", sm:"400px", md: "600px" }}  >
                   <CurrentQuestionDisplay
                     currentQuestion={currentQuestionNumber}
                     totalQuestions={curLength}
@@ -532,6 +534,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
                       currentQuestionInfo[currentQuestionNumber].questionText
                     }
                     handleChange={handleQuestionTextChange}
+                    deleteQuestion={deleteQuestion}
                   />
                   <CreateQuestionType
                     currentQuestionType={
@@ -548,8 +551,8 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
                 />
                 <VStack marginTop="20px" spacing="30px">
                   <AddIcon
-                    w={8}
-                    h={8}
+                    w={{base:6, md:8}}
+                    h={{base:6, md:8}}
                     cursor="pointer"
                     onClick={() =>
                       currentQuestionDispatch({
@@ -567,30 +570,32 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
                     }
                   />
                   <Button
+                    
                     size="lg"
-                    width="200px"
+                    width={{base:"150px", md:"200px"}}
                     colorScheme="green"
                     rightIcon={<CheckIcon />}
                     onClick={quizDone}
+                    isLoading={quizFinished}
                   >
-                    Finish{" "}
+                    Finish
                   </Button>
                 </VStack>
               </Box>
             </CurrentQuizQuestionContextProvider>
             {currentQuestionNumber + 1 === curLength ? (
               <AddIcon
-                w={9}
-                h={9}
-                marginRight={10}
+                w={{base:6, md:9}}
+                h={{base:6, md:9}}
+                marginRight="10px"
                 cursor="pointer"
                 onClick={nextClick}
               />
             ) : (
               <ArrowForwardIcon
-                w={10}
-                h={10}
-                marginRight={10}
+                w={{base:6, md:9}}
+                h={{base:6, md:9}}
+                marginRight="10px"
                 cursor="pointer"
                 onClick={nextClick}
               />

@@ -16,7 +16,7 @@ const QuizResultsTable: React.FC<QuizResultsTableProps> = (props) => {
 
   return (
     <>
-      <Table variant="simple" w={{ base: "500px", md: "700px" }} size="lg">
+      <Table variant="simple" w={{ base: "350px", sm:"450px", md: "700px" }}>
         <Thead>
           <Tr>
             <Th> Question Type </Th>

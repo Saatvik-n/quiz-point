@@ -12,7 +12,7 @@ const CurrentQuestionDisplay: React.FC<CurrentQuestionDisplayProps> = (props) =>
 
   return (  
     <>
-      <Text> Current Question: {currentQuestion + 1} / {totalQuestions} </Text>
+      <Text marginTop="10px" > Current Question: {currentQuestion + 1} / {totalQuestions} </Text>
 
     </>
   );

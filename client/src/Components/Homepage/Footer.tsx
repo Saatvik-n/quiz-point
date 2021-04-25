@@ -1,5 +1,5 @@
 import { Image } from "@chakra-ui/image";
-import { Box, Flex, Text } from "@chakra-ui/layout";
+import { Box, Flex, Link, Text } from "@chakra-ui/layout";
 import * as React from "react";
 
 import reactIcon from "../svgs/Homepage/icons/react.svg";
@@ -19,18 +19,27 @@ const Footer: React.FC<FooterProps> = React.memo(() => {
       justifyContent="center"
       background="rgba(204, 204, 204, 0.4)"
       padding="20px 10px"
+      wrap="wrap"
     >
-      <Box marginRight="20px" >
+      <Box marginRight="20px" marginBottom={{base: "10px", sm: "0px"}} >
         <Text>
           Made with:
-          <Image src={reactIcon} display="inline" margin="0px 10px" />
-          <Image src={nodeIcon} display="inline" margin="0px 10px" />
-          <Image src={chakraIcon} display="inline" margin="0px 10px" />
+          <Link href="https://reactjs.org/" isExternal >
+          <Image  src={reactIcon}  href="https://reactjs.org/" display="inline" margin="0px 10px" />
+          </Link>
+          <Link href="https://nodejs.org/en/" isExternal >
+          <Image src={nodeIcon}   display="inline" margin="0px 10px" />
+          </Link>
+          <Link href="https://chakra-ui.com/" isExternal >
+          <Image src={chakraIcon}   display="inline" margin="0px 10px" />
+          </Link>
         </Text>
       </Box>
       <Box>
         <Text>Code on:
+          <Link href="https://github.com/Saatvik-n/quiz-point" isExternal >
         <Image src={githubIcon} display="inline" margin="0px 10px" />
+          </Link>
         </Text>
       </Box>
     </Flex>

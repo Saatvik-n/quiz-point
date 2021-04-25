@@ -14,11 +14,12 @@ export interface RegisterFormComponentProps {
   handleNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRegisterClick: () => void
+  isLoading: boolean;
 }
 
 const RegisterFormComponent: React.FC<RegisterFormComponentProps> = (props) => {
 
-  const {username, password, name, handleNameChange, handleUsernameChange, handlePasswordChange, onRegisterClick} = props
+  const {username, password, name, handleNameChange, handleUsernameChange, isLoading, handlePasswordChange, onRegisterClick} = props
 
 
   return (
@@ -43,7 +44,7 @@ const RegisterFormComponent: React.FC<RegisterFormComponentProps> = (props) => {
       onChange={(e) => handlePasswordChange(e)} />
       </FormControl>
 
-      <Button width="150px" colorScheme="green" onClick={onRegisterClick} >
+      <Button width="150px" colorScheme="green" onClick={onRegisterClick} isLoading={isLoading} >
         Register
       </Button>
       <Text>

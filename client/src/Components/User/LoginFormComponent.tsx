@@ -11,11 +11,12 @@ export interface LoginFormComponentProps {
   handleUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onLoginClick: () => void
+  isLoading: boolean;
 }
  
 const LoginFormComponent: React.FC<LoginFormComponentProps> = (props) => {
 
-  const {username, password, handleUsernameChange, handlePasswordChange, onLoginClick} = props
+  const {username, password, handleUsernameChange, isLoading, handlePasswordChange, onLoginClick} = props
 
   return (  
     <VStack spacing={5}
@@ -45,6 +46,7 @@ const LoginFormComponent: React.FC<LoginFormComponentProps> = (props) => {
     <Button width="150px"
     colorScheme="green"
     onClick={onLoginClick}
+    isLoading={isLoading}
     > Log In </Button>
     <Text>
       Not registered? <Link to="/register" style={{color:"blue"}} > Sign up here </Link>

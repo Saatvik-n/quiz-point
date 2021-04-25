@@ -4,6 +4,7 @@ import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/layout";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
+import CurrentUserContext from "../../../Contexts/GlobalContexts/UserContext";
 import { AnswerArray, QuizData, singleOption } from "../../../Types/QuizTypes";
 import QuizQATable from "./QuizQATable";
 import QuizResultsTable from "./QuizResultsTable";
@@ -127,6 +128,8 @@ const QuizResults: React.FC<QuizResultsProps> = (props) => {
 
   const history = useHistory()
 
+  const {currentUserState} = React.useContext(CurrentUserContext)
+
   useEffect(() => {
     const questionResult = calcQuestions(quizData);
     setQuestionData(questionResult);
@@ -148,15 +151,20 @@ const QuizResults: React.FC<QuizResultsProps> = (props) => {
     <>
       <Box h="7rem"></Box>
       <VStack spacing="30px">
-        <Flex justify="space-between" w="650px" >
-          <Text fontSize="3xl">Results</Text>
-          <HStack>
+        <Flex justify={{base:"center", lg:"space-between"}} w={{base: "350px", md:"450px", lg: "650px"}} >
+          <Text fontSize="3xl" display={{base: "none", lg: "initial"}} >Results</Text>
+          <HStack >
           <Button rightIcon={<RepeatIcon />} onClick={() => {
             window.location.reload()
           }} > Take quiz Again </Button>
           <Button rightIcon={<ArrowLeftIcon />} 
           onClick={() => {
-            history.push('/user')
+            if (currentUserState.userID === "") {
+              history.push('/')
+            }
+            else {
+              history.push('/user')
+            }
           }} > Go back </Button>
           </HStack>
         </Flex>

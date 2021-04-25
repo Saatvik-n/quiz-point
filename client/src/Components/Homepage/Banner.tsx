@@ -19,14 +19,13 @@ const Banner: React.FC<BannerProps> = React.memo((props) => {
         justify="center"
         flexDirection={{ base: "row-reverse", xl: "row" }}
         margin={10}
-
         wrap={{ base: "wrap-reverse", "2xl": "wrap" }}
       >
         <Box maxWidth={{ base: "100%", xl: "600px" }}
         marginRight={{base: "0em", xl:"3em"}}
         textAlign={{base: "center", xl: "inherit"}}
         paddingBottom={{base: "20px", xl:"40px"}} >
-          <Text fontSize={{ base: "5xl", md:"5xl", xl: "6xl" }} fontWeight="600">
+          <Text fontSize={{ base: "4xl", md:"5xl", xl: "6xl" }} marginTop={{base:"20px", md: "0px"}} fontWeight="600">
             Create, edit, share, and practice quizzes for free
           </Text>
           <Button 
@@ -37,7 +36,7 @@ const Banner: React.FC<BannerProps> = React.memo((props) => {
         </Box>
         <Box>
           <Image src={bannerImage} 
-          maxWidth={{base: "400px", md: "400px", lg: "500px"}}
+          maxWidth={{base: "350px", md: "400px", lg: "500px"}}
           maxHeight={{base: "200px", md: "200px", lg: "300px"}} />
         </Box>
       </Flex>

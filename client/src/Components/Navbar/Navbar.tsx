@@ -20,9 +20,11 @@ const Navbar: React.FC<NavbarProps> = () => {
   const [isMobile] = useMediaQuery("(max-width: 1000px)"); // used to check if user is in a smaller device
   const [isClicked, setIsClicked] = useState(false);
 
-  const history = useHistory()
+  const history = useHistory();
 
-  const {currentUserState, currentUserDispatch} = React.useContext(CurrentUserContext)
+  const { currentUserState, currentUserDispatch } = React.useContext(
+    CurrentUserContext
+  );
 
   const handleClick = () => {
     let curVal = isClicked;
@@ -30,22 +32,44 @@ const Navbar: React.FC<NavbarProps> = () => {
   };
 
   const handleLogout = () => {
-    api.get('/api/logout')
-    .then(res => {
-      currentUserDispatch({
-        type: "clearUser"
+    api
+      .get("/api/logout")
+      .then((res) => {
+        currentUserDispatch({
+          type: "clearUser",
+        });
+        setIsClicked(false)
+        history.push("/");
       })
-      history.push('/')
-    })
-    .catch(err => {
-      console.log("Problem logging out");
-      console.log(err);
-    })
-  }
+      .catch((err) => {
+        console.log("Problem logging out");
+        console.log(err);
+      });
+    
+  };
 
   const handleLogin = () => {
-    history.push('/login')
-  }
+    setIsClicked(false)
+    history.push("/login");
+  };
+
+  React.useEffect(() => {
+    api.get(`/api/validate`)
+    .then(res => {
+      currentUserDispatch({
+        type: "changeUser", 
+        payload: {
+          userID: res.data.userID, 
+          name: res.data.username, 
+          username: res.data.username
+        }
+      })
+    })
+    .catch(err => {
+      console.log("Logged out");
+      history.push('/loggedout')
+    })
+  }, [])
 
   if (isMobile) {
     // This is only returned if device width <= 1000
@@ -63,27 +87,45 @@ const Navbar: React.FC<NavbarProps> = () => {
           zIndex={5} // It is always in front of any other element
         >
           <Box>
-            <Text  fontSize="2xl" > Quiz Point
-            </Text>
+            <Text fontSize="2xl"> Quiz Point</Text>
           </Box>
 
           <Image src={burgerIcon} onClick={handleClick} />
         </Flex>
         {isClicked ? ( // Display only if user has clicked the hamburger icon
-          <VStack paddingTop="100px" spacing={5}> {/* Padding top is so that the menu can take up space  */}
+          <VStack
+            position="fixed"
+            width="100%"
+            marginTop="85px"
+            spacing={5}
+            zIndex={5}
+            backgroundColor="white"
+          >
+            {/* Padding top is so that the menu can take up space  */}
             {/* Vertical stack for links */}
-            <Box borderBottom="2px solid #cccccc" width="100%"
-            textAlign="center"
-            paddingBottom={2} >
-              <Text as="a" href="/#/" >
+            <Box
+              borderBottom="2px solid #cccccc"
+              width="100%"
+              textAlign="center"
+              padding="10px 0px"
+            >
+              <Text as="a" href="/#/" onClick={() => setIsClicked(false)} >
                 Home
               </Text>
             </Box>
-            <Box borderBottom="2px solid #cccccc" width="100%"
-            textAlign="center"
-            paddingBottom={2} >
-              <Text cursor="pointer" onClick={currentUserState.userID !== "" ? handleLogout : handleLogin } >
-              {currentUserState.userID !== "" ? "Log out" : "Sign In"}
+            <Box
+              borderBottom="2px solid #cccccc"
+              width="100%"
+              textAlign="center"
+              paddingBottom={2}
+            >
+              <Text
+                cursor="pointer"
+                onClick={
+                  currentUserState.userID !== "" ? handleLogout : handleLogin
+                }
+              >
+                {currentUserState.userID !== "" ? "Log out" : "Sign In"}
               </Text>
             </Box>
           </VStack>
@@ -105,18 +147,27 @@ const Navbar: React.FC<NavbarProps> = () => {
       w="100%"
       zIndex={5}
       backgroundColor="white"
-      alignItems="center"  >
+      alignItems="center"
+    >
       {/* 2 main sections - logo and links */}
       <Box>
         <Text fontSize="3xl"> Quiz Point</Text>
       </Box>
       <HStack spacing={6}>
         <Box>
-          <Text fontSize="1xl"  as={"a"} href="/#/"> Home </Text>
+          <Text fontSize="1xl" as={"a"} href="/#/">
+            {" "}
+            Home{" "}
+          </Text>
         </Box>
         <Box>
-          <Text cursor="pointer" onClick={currentUserState.userID !== "" ? handleLogout : handleLogin } >
-              {currentUserState.userID !== "" ? "Log out" : "Sign In"}
+          <Text
+            cursor="pointer"
+            onClick={
+              currentUserState.userID !== "" ? handleLogout : handleLogin
+            }
+          >
+            {currentUserState.userID !== "" ? "Log out" : "Sign In"}
           </Text>
         </Box>
       </HStack>
