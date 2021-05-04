@@ -85,7 +85,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           zIndex={5} // It is always in front of any other element
         >
           <Box>
-            <Text fontSize="2xl"> Quiz Point</Text>
+            <Text fontSize="2xl" as="a" href="/#/" > Quiz Point</Text>
           </Box>
 
           <Image src={burgerIcon} onClick={handleClick} />
@@ -149,7 +149,7 @@ const Navbar: React.FC<NavbarProps> = () => {
     >
       {/* 2 main sections - logo and links */}
       <Box>
-        <Text fontSize="3xl"> Quiz Point</Text>
+        <Text fontSize="3xl" as="a" href="/#/" > Quiz Point</Text>
       </Box>
       <HStack spacing={6}>
         <Box>

@@ -186,6 +186,11 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
       return;
     }
 
+    if (currentQuestionInfo[currentQuestionNumber].questionText.trim() === "") {
+      openModal("Please enter a question")
+      return;
+    }
+
     /**
      * Dispatch to the reducer, saying that we are creating another question.
      * It will do the following:
@@ -272,6 +277,11 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
       return;
     }
 
+    if (currentQuestionInfo[currentQuestionNumber].questionText.trim() === "") {
+      openModal("Please enter a question")
+      return;
+    }
+
     // Clone the current question state, so that it can be saved to the array
     const currentQuestionClone = cloneDeep(currentQuestionState);
     // setCurrentQuestionNumber occurs with a delay, so just create a variable here
@@ -312,7 +322,6 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
     if (curLength === 1) {
       setModalMessage("You cannot delete the only remaining question");
       onOpen();
-
       return;
     }
     /**
@@ -369,6 +378,12 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
       }
       return;
     }
+
+    if (currentQuestionInfo[currentQuestionNumber].questionText.trim() === "") {
+      openModal("Please enter a question")
+      return;
+    }
+
     setQuizFinished(true)
     // first, set the current quiz data to the current question in the quizData
     const currentQuestionClone = cloneDeep(currentQuestionState);

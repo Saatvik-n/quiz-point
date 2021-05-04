@@ -138,6 +138,7 @@ const UserHome: React.FC<UserHomeProps> = () => {
           });
       })
       .catch((err) => {
+        console.log(err);
         currentUserDispatch({
           type: "clearUser",
         });

@@ -5,6 +5,7 @@ import Morgan from "morgan";
 import * as dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import httpErrors from "http-errors"
+import Path from "path"
 
 import loginUser from "./Routes/Login"
 import registerUser from "./Routes/Register"
@@ -20,7 +21,6 @@ Mongoose.connect(process.env.DB_URL!, {
   useUnifiedTopology: true
 }).then(res => {
   console.log("Successfully connected to DBMS");
-  
 })
 .catch(err => {
   console.log("Error in connecting to DBMS");
@@ -34,6 +34,8 @@ app.use(cookieParser())
 app.use(Cors({origin: true, credentials: true}))
 app.use(Morgan('dev'))
 app.use(Express.json())
+
+app.use(Express.static(Path.join(__dirname, "..", "build")))
 
 app.use(loginUser)
 

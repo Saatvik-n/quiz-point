@@ -128,13 +128,6 @@ export async function getUserQuizzes(
         isPublic: 1,
       });
 
-    console.log(names);
-    
-
-    // res.status(200).json({
-    //   message: "Quizzes fetched",
-    //   quizNames: names
-    // })
     return res.status(200).json({
       message: "Fetched quiz names",
       quizzes: names,

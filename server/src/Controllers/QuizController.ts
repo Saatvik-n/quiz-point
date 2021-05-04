@@ -62,8 +62,6 @@ export async function createNewQuiz(
     const quizData = req.body.quizData;
     const userID = req.body.userID;
 
-    console.log(quizData);
-
     // All of these fields are in the quiz document
 
     let newQuiz = await quizModel.create({
@@ -165,7 +163,6 @@ export async function getQuizDetails(
 ) {
   try {
     const quizID = req.params.quizID;
-    console.log("Quiz id is: ", quizID);
 
     const quiz = await quizModel.findById(quizID).exec();
 
