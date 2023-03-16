@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { HashRouter, Switch, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 import { ChakraProvider, theme } from "@chakra-ui/react";
 
@@ -15,7 +15,6 @@ import {
   CurrentUserContextProvider,
   initialUserState,
 } from "./Contexts/GlobalContexts/UserContext";
-import api from "./API/api";
 import EditQuiz from "./Containers/EditQuiz/EditQuiz";
 import NotFoundPage from "./Containers/Other/NotFoundPage";
 import LoggedOutPage from "./Containers/Other/LoggedOutPage";
@@ -27,37 +26,30 @@ export const App = () => {
   );
 
   const currentUserValues = {
-    currentUserState, 
+    currentUserState,
     currentUserDispatch
   }
 
   return (
     <ChakraProvider theme={theme}>
       <CurrentUserContextProvider value={currentUserValues} >
-      <HashRouter>
-      <Navbar />
-        <Switch>
-          <Route path="/login" exact render={() => <UserSign isLogin />} />
-          <Route
-            path="/register"
-            exact
-            render={() => <UserSign isLogin={false} />}
-          />
-          <Route path="/createquiz" exact component={CreateQuiz} />
-          <Route
-            path="/samplequiz"
-            exact
-            render={() => <TakeQuiz isSample={true} />}
-          />
-          <Route path="/editquiz/:id" exact component={EditQuiz} />
-          <Route path="/takequiz/:id" exact component={TakeQuiz} />
-          <Route path="/user" exact component={UserHome} />
-          <Route path="/loggedout" exact component={LoggedOutPage} />
-          <Route path="/" exact component={Homepage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </HashRouter>
-
+        <HashRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/login" element={<UserSign isLogin />} />
+            <Route
+              path="/register" element={<UserSign isLogin={false} />} />
+            <Route path="/createquiz" element={<CreateQuiz />} />
+            <Route
+              path="/samplequiz" element={<TakeQuiz isSample={true} />} />
+            <Route path="/editquiz/:id" element={<EditQuiz />} />
+            <Route path="/takequiz/:id" element={<TakeQuiz />} />
+            <Route path="/user" element={<UserHome />} />
+            <Route path="/loggedout" element={<LoggedOutPage />} />
+            <Route path="/" element={<Homepage />} />
+            <Route element={<NotFoundPage />} />
+          </Routes>
+        </HashRouter>
       </CurrentUserContextProvider>
     </ChakraProvider>
   );

@@ -18,7 +18,7 @@ import { Button } from "@chakra-ui/button";
 import QuizResults from "../../Components/TakeQuiz/Result/QuizResults";
 import { Spinner } from "@chakra-ui/spinner";
 import api from "../../API/api";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { SampleQuiz } from "../../Data/SampleQuiz";
 
 export interface TakeQuizProps {
@@ -66,9 +66,9 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
   const [isLoading, setIsLoading] = useState(true);
 
   // @ts-ignore
-  const {id} = useParams()
+  const { id } = useParams()
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -85,27 +85,27 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
 
       setCurrentAns(initAnswerArray)
       setIsLoading(false)
-      return 
+      return
     }
 
     if (id === undefined || id === "") {
       console.log("ID doesnt exist");
-      history.push('/')
+      navigate('/')
     }
 
     api
       .get(`/api/quiz/${id}`)
       .then((res) => res.data.quiz)
       .then((data) => {
-        
+
         setQuizName(data.quizName);
-         
+
         setQuizData(data.quizData);
-        
+
         const initAnswerArray = initializeAnswerArray(data.quizData);
-        
+
         setQuizLength(data.quizData.length)
-        
+
         /**
          * Filling both of the flashcard related arrays with 'false' initially,
          * because none of them have been revealed or marked yet
@@ -119,7 +119,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
       })
       .catch((err) => {
         console.log("Error in fetching quiz in TakeQuiz");
-        history.push('/sfdg')
+        navigate('/sfdg')
       });
   }, []);
 
@@ -227,7 +227,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
           <TakingQuizHeader quizName={quizName} />
           <HStack
             marginTop="10px"
-            width={{ base: "350px", sm:"450px", md: "600px" }}
+            width={{ base: "350px", sm: "450px", md: "600px" }}
             padding={{ base: "4px", md: "10px" }}
             boxShadow="-1px 0px 19px 3px rgba(207,206,206,0.69)"
           >

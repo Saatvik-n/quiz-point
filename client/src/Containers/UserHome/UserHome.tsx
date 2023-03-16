@@ -6,7 +6,7 @@ import { useMediaQuery } from "@chakra-ui/media-query";
 import { Spinner } from "@chakra-ui/spinner";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import api from "../../API/api";
 import UserHomeModal from "../../Components/UserHome/UserHomeModal";
 import UserQuizzes from "../../Components/UserHome/UserQuizzes";
@@ -14,7 +14,7 @@ import UserTakeQuizModal from "../../Components/UserHome/UserTakeQuizModal";
 import CurrentUserContext from "../../Contexts/GlobalContexts/UserContext";
 import { getQuizInfo } from "../../Util/QuizUtilFunctions";
 
-export interface UserHomeProps {}
+export interface UserHomeProps { }
 
 const UserHome: React.FC<UserHomeProps> = () => {
   const [userQuizNames, setUserQuizNames] = useState<string[]>();
@@ -37,7 +37,7 @@ const UserHome: React.FC<UserHomeProps> = () => {
     CurrentUserContext
   );
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [isWideEnough] = useMediaQuery('(min-width: 700px)')
 
@@ -55,18 +55,15 @@ const UserHome: React.FC<UserHomeProps> = () => {
   };
 
   const createQuiz = () => {
-    history.push("/createquiz");
+    navigate("/createquiz");
   };
 
   const takeQuiz = () => {
     if (selectedQuizID === "") {
       return;
     }
-    history.push({
-      pathname: `/takequiz/${selectedQuizID}`,
-      state: {
-        quizID: selectedQuizID,
-      },
+    navigate(`/takequiz/${selectedQuizID}`, {
+      state: selectedQuizID,
     });
   };
 
@@ -88,7 +85,7 @@ const UserHome: React.FC<UserHomeProps> = () => {
     if (selectedQuizID === "") {
       return;
     }
-    history.push(`/editquiz/${selectedQuizID}`);
+    navigate(`/editquiz/${selectedQuizID}`);
   };
 
   const changePublicStatus = () => {
@@ -106,7 +103,7 @@ const UserHome: React.FC<UserHomeProps> = () => {
 
     api
       .patch(`/api/quiz/togglepub/${selectedQuizID}`)
-      .then((res) => {})
+      .then((res) => { })
       .catch((err) => {
         console.log("Error when trying to PATCH");
       });
@@ -142,14 +139,14 @@ const UserHome: React.FC<UserHomeProps> = () => {
         currentUserDispatch({
           type: "clearUser",
         });
-        history.push("/loggedout");
+        navigate("/loggedout");
       });
   }, []);
 
   const SmallButtons = () => (
     <HStack>
-      <IconButton aria-label="take quiz" icon={<ArrowRightIcon />}  onClick={handleTakeQuizClick} />
-      <IconButton aria-label="create quiz" icon={<AddIcon />}  onClick={createQuiz} /> 
+      <IconButton aria-label="take quiz" icon={<ArrowRightIcon />} onClick={handleTakeQuizClick} />
+      <IconButton aria-label="create quiz" icon={<AddIcon />} onClick={createQuiz} />
     </HStack>
   )
 
@@ -181,7 +178,7 @@ const UserHome: React.FC<UserHomeProps> = () => {
         <Flex justifyContent="space-between" marginTop="1rem">
           <Text fontSize={{ base: "2xl", md: "3xl" }}> Your Quizzes: </Text>
           {
-            isWideEnough === true ? (          <HStack>
+            isWideEnough === true ? (<HStack>
               <Button
                 rightIcon={<ArrowRightIcon />}
                 size="lg"

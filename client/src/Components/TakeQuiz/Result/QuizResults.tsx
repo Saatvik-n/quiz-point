@@ -3,7 +3,7 @@ import { ArrowLeftIcon, RepeatIcon } from "@chakra-ui/icons";
 import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/layout";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import CurrentUserContext from "../../../Contexts/GlobalContexts/UserContext";
 import { AnswerArray, QuizData, singleOption } from "../../../Types/QuizTypes";
 import QuizQATable from "./QuizQATable";
@@ -126,9 +126,9 @@ const QuizResults: React.FC<QuizResultsProps> = (props) => {
 
   const [loading, setLoading] = useState(true);
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
-  const {currentUserState} = React.useContext(CurrentUserContext)
+  const { currentUserState } = React.useContext(CurrentUserContext)
 
   useEffect(() => {
     const questionResult = calcQuestions(quizData);
@@ -151,21 +151,21 @@ const QuizResults: React.FC<QuizResultsProps> = (props) => {
     <>
       <Box h="7rem"></Box>
       <VStack spacing="30px">
-        <Flex justify={{base:"center", lg:"space-between"}} w={{base: "350px", md:"450px", lg: "650px"}} >
-          <Text fontSize="3xl" display={{base: "none", lg: "initial"}} >Results</Text>
+        <Flex justify={{ base: "center", lg: "space-between" }} w={{ base: "350px", md: "450px", lg: "650px" }} >
+          <Text fontSize="3xl" display={{ base: "none", lg: "initial" }} >Results</Text>
           <HStack >
-          <Button rightIcon={<RepeatIcon />} onClick={() => {
-            window.location.reload()
-          }} > Take quiz Again </Button>
-          <Button rightIcon={<ArrowLeftIcon />} 
-          onClick={() => {
-            if (currentUserState.userID === "") {
-              history.push('/')
-            }
-            else {
-              history.push('/user')
-            }
-          }} > Go back </Button>
+            <Button rightIcon={<RepeatIcon />} onClick={() => {
+              window.location.reload()
+            }} > Take quiz Again </Button>
+            <Button rightIcon={<ArrowLeftIcon />}
+              onClick={() => {
+                if (currentUserState.userID === "") {
+                  navigate('/')
+                }
+                else {
+                  navigate('/user')
+                }
+              }} > Go back </Button>
           </HStack>
         </Flex>
         <QuizResultsTable

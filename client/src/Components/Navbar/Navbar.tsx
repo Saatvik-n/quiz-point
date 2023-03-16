@@ -9,18 +9,18 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../API/api";
 import CurrentUserContext from "../../Contexts/GlobalContexts/UserContext";
 import burgerIcon from "../svgs/Homepage/burger.svg";
 
-export interface NavbarProps {}
+export interface NavbarProps { }
 
 const Navbar: React.FC<NavbarProps> = () => {
   const [isMobile] = useMediaQuery("(max-width: 1000px)"); // used to check if user is in a smaller device
   const [isClicked, setIsClicked] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { currentUserState, currentUserDispatch } = React.useContext(
     CurrentUserContext
@@ -39,34 +39,34 @@ const Navbar: React.FC<NavbarProps> = () => {
           type: "clearUser",
         });
         setIsClicked(false)
-        history.push("/");
+        navigate("/");
       })
       .catch((err) => {
         console.log("Problem logging out");
         console.log(err);
       });
-    
+
   };
 
   const handleLogin = () => {
     setIsClicked(false)
-    history.push("/login");
+    navigate("/login");
   };
 
   React.useEffect(() => {
     api.get(`/api/validate`)
-    .then(res => {
-      currentUserDispatch({
-        type: "changeUser", 
-        payload: {
-          userID: res.data.userID, 
-          name: res.data.username, 
-          username: res.data.username
-        }
+      .then(res => {
+        currentUserDispatch({
+          type: "changeUser",
+          payload: {
+            userID: res.data.userID,
+            name: res.data.username,
+            username: res.data.username
+          }
+        })
       })
-    })
-    .catch(err => {
-    })
+      .catch(err => {
+      })
   }, [])
 
   if (isMobile) {

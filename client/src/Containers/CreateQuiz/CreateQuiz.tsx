@@ -43,12 +43,12 @@ import {
   getQuestionInfo,
 } from "../../Util/QuizUtilFunctions";
 import api from "../../API/api";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import CurrentUserContext from "../../Contexts/GlobalContexts/UserContext";
 
 export interface CreateQuizProps {
   isEdit?: boolean;
-  quizID?: boolean;
+  quizID?: string;
 }
 
 const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
@@ -83,7 +83,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
 
   const { currentUserState } = useContext(CurrentUserContext);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -415,19 +415,19 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
     setFinishedQuizData(finalQuizData);
 
     if (isEdit === true) {
-      
+
       api.put(`/api/quiz/${quizID}`, {
-          userID: currentUserState.userID,
-          quizName: quizName,
-          quizData: finalQuizData,
-      } )
-      .then(res => {
-        console.log("Successfully edited quiz");
-        history.push('/user')
+        userID: currentUserState.userID,
+        quizName: quizName,
+        quizData: finalQuizData,
       })
-      .catch(err => {
-        console.log("Failed to edit quiz");
-      })
+        .then((res: any) => {
+          console.log("Successfully edited quiz");
+          navigate('/user')
+        })
+        .catch((err: any) => {
+          console.log("Failed to edit quiz");
+        })
     } else {
       api
         .post(`/api/quiz`, {
@@ -437,7 +437,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
         })
         .then((res) => {
           console.log("Successfully sent quiz");
-          history.push("/user");
+          navigate("/user");
         })
         .catch((err) => {
           console.log("failed to send quiz");
@@ -481,7 +481,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
       })
       .catch((err) => {
         console.log("Error Validating");
-        history.push("/loggedout");
+        navigate("/loggedout");
       });
   }, []);
 
@@ -506,14 +506,14 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
           />
           <HStack
             marginTop="10px"
-            width={{ base:"350px", sm: "500px", md: "710px" }}
+            width={{ base: "350px", sm: "500px", md: "710px" }}
             padding={{ base: "4px", md: "10px" }}
             boxShadow="-1px 0px 19px 3px rgba(207,206,206,0.69)"
             paddingBottom="30px"
           >
             <ArrowBackIcon
-                  w={{base:6, md:9}}
-                  h={{base:6, md:9}}
+              w={{ base: 6, md: 9 }}
+              h={{ base: 6, md: 9 }}
               visibility={currentQuestionNumber === 0 ? "hidden" : "initial"}
               cursor="pointer"
               onClick={() => prevClick()}
@@ -522,7 +522,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
               value={currentQuestionStateValues}
             >
               <Box>
-                <VStack width={{ base: "278px", sm:"400px", md: "600px" }}  >
+                <VStack width={{ base: "278px", sm: "400px", md: "600px" }}  >
                   <CurrentQuestionDisplay
                     currentQuestion={currentQuestionNumber}
                     totalQuestions={curLength}
@@ -549,8 +549,8 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
                 />
                 <VStack marginTop="20px" spacing="30px">
                   <AddIcon
-                    w={{base:6, md:8}}
-                    h={{base:6, md:8}}
+                    w={{ base: 6, md: 8 }}
+                    h={{ base: 6, md: 8 }}
                     cursor="pointer"
                     onClick={() =>
                       currentQuestionDispatch({
@@ -568,9 +568,9 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
                     }
                   />
                   <Button
-                    
+
                     size="lg"
-                    width={{base:"150px", md:"200px"}}
+                    width={{ base: "150px", md: "200px" }}
                     colorScheme="green"
                     rightIcon={<CheckIcon />}
                     onClick={quizDone}
@@ -583,16 +583,16 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
             </CurrentQuizQuestionContextProvider>
             {currentQuestionNumber + 1 === curLength ? (
               <AddIcon
-                w={{base:6, md:9}}
-                h={{base:6, md:9}}
+                w={{ base: 6, md: 9 }}
+                h={{ base: 6, md: 9 }}
                 marginRight="10px"
                 cursor="pointer"
                 onClick={nextClick}
               />
             ) : (
               <ArrowForwardIcon
-                w={{base:6, md:9}}
-                h={{base:6, md:9}}
+                w={{ base: 6, md: 9 }}
+                h={{ base: 6, md: 9 }}
                 marginRight="10px"
                 cursor="pointer"
                 onClick={nextClick}

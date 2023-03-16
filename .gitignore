@@ -7,3 +7,4 @@ server/Dockerfile
 server/.dockerignore
 server/build
 server/my_env.list
+*.local

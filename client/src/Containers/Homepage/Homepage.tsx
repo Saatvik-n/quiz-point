@@ -1,6 +1,6 @@
 import { useDisclosure } from "@chakra-ui/hooks";
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Banner from "../../Components/Homepage/Banner";
 import Footer from "../../Components/Homepage/Footer";
@@ -10,11 +10,11 @@ import Section2 from "../../Components/Homepage/Sections/Section2";
 import CurrentUserContext from "../../Contexts/GlobalContexts/UserContext";
 import api from "../../API/api";
 
-export interface HomepageProps {}
+export interface HomepageProps { }
 
 const Homepage: React.FC<HomepageProps> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [quizID, setQuizID] = useState(""); // By default, this is empty, since we don't know whether the user will choose to go to a quiz
 
@@ -31,25 +31,25 @@ const Homepage: React.FC<HomepageProps> = () => {
 
   const quizRedirect = () => {
     api.get(`/api/quiz/checkvalid/${quizID}`).then((res) => {
-      history.push(`/takequiz/${quizID}`);
+      navigate(`/takequiz/${quizID}`);
     })
-    .catch(err => {
-      setIsError(true)
-      setErrorMessage(err.response.data.error.message)
-    })
+      .catch(err => {
+        setIsError(true)
+        setErrorMessage(err.response.data.error.message)
+      })
   };
 
   const signIn = () => {
-    history.push("/login");
+    navigate("/login");
   };
 
   const takeSampleQuiz = () => {
-    history.push("/samplequiz");
+    navigate("/samplequiz");
   };
 
   useEffect(() => {
     if (currentUserState.userID !== "") {
-      history.push("/user");
+      navigate("/user");
     }
   }, []);
 

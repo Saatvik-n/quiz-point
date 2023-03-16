@@ -75,11 +75,11 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
 
     api
       .get(`/api/quiz/quizDetails/${quizID}`)
-      .then((res) => {
+      .then((res: any) => {
         setQuizState(res.data.numbers);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log("Error fetching quiz numbers");
         console.log(err);
       });
