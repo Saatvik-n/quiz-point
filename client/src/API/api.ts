@@ -1,5 +1,5 @@
 export default {
-  baseUrl: import.meta.env.BASE_URL,
+  baseUrl: import.meta.env.VITE_API_URL,
   get: function (url: string) {
     return fetch(this.baseUrl + url, { method: "GET" }).then(response => response.json())
   },
