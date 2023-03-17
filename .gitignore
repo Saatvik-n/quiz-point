@@ -1,10 +1,4 @@
-client/node_modules
-server/node_modules
-server/dist
-client/build
-server/.env
-server/Dockerfile
-server/.dockerignore
-server/build
-server/my_env.list
-*.local
+node_modules
+dist
+build
+*.env*
