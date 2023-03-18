@@ -1,11 +1,6 @@
 import { createServer } from "node:http";
+import { router } from "./routes/router.js";
 
 const server = createServer((req, res) => {
-    res.write("Hi")
-    res.end()
+    router(req, res)
 }).listen(4000)
-
-process.on('SIGINT', (signal) => {
-    server.close()
-    process.exit()
-})
