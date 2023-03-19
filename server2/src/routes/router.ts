@@ -3,7 +3,7 @@ import { HttpMethod, RouteType } from "../types/routeTypes.js";
 import { handleLoginRoute } from "./login.js";
 import { routeNotFound } from "./notFound.js";
 
-function homeRoute(request: IncomingMessage, response: ServerResponse) {
+async function homeRoute(request: IncomingMessage, response: ServerResponse) {
     response.write("Hi")
     response.end()
     return true
@@ -22,11 +22,11 @@ const routes: RouteType = {
 }
 
 
-export function router(request: IncomingMessage, response: ServerResponse) {
+export async function router(request: IncomingMessage, response: ServerResponse) {
     console.log(`Request recieved at ${request.url}`);
     let routeHandlerFunction: undefined | HttpMethod = undefined
     for (const uri in routes) {
-        if (request.url !== undefined && request.url.startsWith(uri)) {
+        if (request.url !== undefined && request.url === uri) {
             routeHandlerFunction = routes[uri].routeHandler
             break
         }
