@@ -1,20 +1,13 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import { HttpMethod, RouteType } from "../types/routeTypes.js";
 import { handleLoginRoute } from "./login.js";
+import { routeNotFound } from "./notFound.js";
 
 function homeRoute(request: IncomingMessage, response: ServerResponse) {
     response.write("Hi")
     response.end()
     return true
 }
-
-function routeNotFound(request: IncomingMessage, response: ServerResponse) {
-    response.statusCode = 404
-    response.write("Not Found")
-    response.end()
-    return true
-}
-
 
 const routes: RouteType = {
     "/api/login": {

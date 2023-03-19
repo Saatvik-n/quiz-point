@@ -7,3 +7,10 @@ export type RouteObject = {
 }
 
 export type RouteType = Record<string, RouteObject>
+
+export type RouterObject = {
+    method: string,
+    routerMethod: (request: IncomingMessage, response: ServerResponse) => void
+}
+
+export type Router = Record<string, RouterObject>
