@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import HttpError from "http-errors";
 import { mongoose } from "@typegoose/typegoose";
-import { quizModel } from "../Models/QuizModel";
+import { quizModel } from "../Models/QuizModel.js";
 
 export async function getQuiz(req: Request, res: Response, next: NextFunction) {
   try {

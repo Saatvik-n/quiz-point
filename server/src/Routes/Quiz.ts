@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getQuiz, createNewQuiz, deleteQuiz, replaceQuiz, checkQuiz, toggleQuizPublic, getQuizDetails } from "../Controllers/QuizController"
-import { onlyValidateJWT, validateJWT } from "../Helpers/JWTHelper";
+import { getQuiz, createNewQuiz, deleteQuiz, replaceQuiz, checkQuiz, toggleQuizPublic, getQuizDetails } from "../Controllers/QuizController.js"
+import { onlyValidateJWT, validateJWT } from "../Helpers/JWTHelper.js";
 
 const app = Router()
 

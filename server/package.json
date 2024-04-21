@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Create and share quizzes",
   "main": "app.js",
+  "type": "module",
   "author": "saatvik-n",
   "license": "MIT",
   "scripts": {
@@ -11,6 +12,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@typegoose/typegoose": "^12.3.1",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",

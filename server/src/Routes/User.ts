@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getUserQuizzes, validateNext } from "../Controllers/UserController";
-import { onlyValidateJWT, validateJWT } from "../Helpers/JWTHelper";
+import { getUserQuizzes, validateNext } from "../Controllers/UserController.js";
+import { onlyValidateJWT, validateJWT } from "../Helpers/JWTHelper.js";
 
 const app = Router()
 

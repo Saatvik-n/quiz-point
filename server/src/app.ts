@@ -5,10 +5,10 @@ import cookieParser from "cookie-parser"
 import httpErrors from "http-errors"
 import Path from "path"
 
-import loginUser from "./Routes/Login"
-import registerUser from "./Routes/Register"
-import userRoute from "./Routes/User"
-import quizRoute from "./Routes/Quiz"
+import loginUser from "./Routes/Login.js"
+import registerUser from "./Routes/Register.js"
+import userRoute from "./Routes/User.js"
+import quizRoute from "./Routes/Quiz.js"
 
 const PORT = process.env.PORT || 8000
 
@@ -29,7 +29,7 @@ app.use(cookieParser())
 app.use(Cors({ origin: true, credentials: true }))
 app.use(Express.json())
 
-app.use(Express.static(Path.join(__dirname, "..", "build")))
+app.use(Express.static(Path.join(import.meta.dirname, "..", "build")))
 
 app.use(loginUser)
 
