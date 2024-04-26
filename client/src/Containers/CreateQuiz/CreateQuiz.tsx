@@ -453,7 +453,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
         if (isEdit === true) {
           api
             .get(`/api/quiz/${quizID!}`)
-            .then((res) => res.data.quiz)
+            .then((res) => res.quiz)
             .then((data) => {
               setQuizName(data.quizName);
               const editableQuiz = makeQuizEditable(data.quizData);

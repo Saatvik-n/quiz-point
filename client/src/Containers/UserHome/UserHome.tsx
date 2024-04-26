@@ -118,12 +118,12 @@ const UserHome: React.FC<UserHomeProps> = () => {
     api
       .get("/api/validate")
       .then((res) => {
-        setName(res.data.name);
+        setName(res.name);
         return api
-          .get(`/api/user/${res.data.userID}`)
+          .get(`/api/user/${res.userID}`)
           .then((res) => {
-            const quizResultObject = getQuizInfo(res.data.quizzes);
-            const falseArray = new Array(res.data.quizzes.length).fill(false);
+            const quizResultObject = getQuizInfo(res.quizzes);
+            const falseArray = new Array(res.quizzes.length).fill(false);
             setUserQuizIDs(quizResultObject.quizIDs);
             setUserQuizNames(quizResultObject.quizNames);
             setPublicQuizzes(quizResultObject.isPublicList);
@@ -131,6 +131,7 @@ const UserHome: React.FC<UserHomeProps> = () => {
             setLoading(false);
           })
           .catch((err) => {
+            console.log(err);
             console.log("Error in fetching quizzes");
           });
       })

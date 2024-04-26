@@ -31,14 +31,7 @@ export async function loginUser(
         if (!isPasswordCorrect) {
             return next(HttpError(401, "Wrong password"));
         }
-
-        console.log("Before access token");
-
         const accessToken = JWT.sign({ userID: user._id, name: user.name, username: user.username }, process.env.JWT_SECRET_KEY!);
-
-        console.log("Access token = ", accessToken);
-
-
         return res
             .status(200)
             .cookie("JWT", accessToken, {
