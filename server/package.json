@@ -8,11 +8,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "node --watch dist/app.js",
-    "start": "tsc && node dist/app.js",
+    "start": "tsc && node --env-file=.env dist/app.js",
     "build": "tsc"
   },
   "dependencies": {
     "@typegoose/typegoose": "^12.3.1",
+    "@types/morgan": "^1.9.9",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -21,6 +22,7 @@
     "joi": "^17.4.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.2",
+    "morgan": "^1.10.0",
     "typescript": "^5.4.5"
   },
   "devDependencies": {

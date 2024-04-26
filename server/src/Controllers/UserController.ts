@@ -13,8 +13,6 @@ export async function loginUser(
     next: NextFunction
 ) {
     try {
-        console.log("Login request recieved");
-
         const result = await loginAuthSchema.validateAsync(req.body);
 
         const user = await userModel.findOne({
@@ -55,7 +53,7 @@ export async function loginUser(
                 userID: user._id,
                 name: user.name
             });
-    } catch (error: any) {
+    } catch (error: any) { 
         if (error.isJoi) {
             return next(
                 HttpError(401, "Make sure that all fields have 5 characters")

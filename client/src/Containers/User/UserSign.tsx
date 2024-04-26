@@ -52,7 +52,7 @@ const UserSign: React.FC<UserSignProps> = (props) => {
       username: username,
       password: password
     })
-      .then(res => {
+      .then((res: any) => {
         currentUserDispatch({
           type: "changeUser",
           payload: {

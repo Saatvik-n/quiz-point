@@ -10,6 +10,7 @@ import registerUser from "./Routes/Register.js"
 import userRoute from "./Routes/User.js"
 import quizRoute from "./Routes/Quiz.js"
 import { DB_URL, PORT } from "./Constants/Constants.js"
+import morgan from "morgan"
 
 async function main() {
     try {
@@ -17,10 +18,11 @@ async function main() {
         console.log("Successfully connected to MongoDB");
 
         const app = Express()
+        app.use(morgan('dev'))
         app.disable('etag')
+        app.use(Express.json())
         app.use(cookieParser())
         app.use(Cors({ origin: true, credentials: true }))
-        app.use(Express.json())
 
         app.use(Express.static(Path.join(import.meta.dirname, "..", "build")))
 
@@ -49,7 +51,8 @@ async function main() {
         if (error instanceof MongooseError) {
             console.log('Failed to connect to mongoDB, exiting');
         } else {
-            console.log("Some other error");
+            console.error(error);
+            console.log("Some other error occurred, exiting");
         }
     }
 }
