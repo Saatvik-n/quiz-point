@@ -52,19 +52,21 @@ const UserSign: React.FC<UserSignProps> = (props) => {
       username: username,
       password: password
     })
-      .then(res => {
+      .then((res: any) => {
         currentUserDispatch({
           type: "changeUser",
           payload: {
-            userID: res.data.userID,
-            username: res.data.username,
-            name: res.data.name
+            userID: res.userID,
+            username: res.username,
+            name: res.name
           }
         })
         navigate('/user')
       })
       .catch(err => {
         console.log("Error logging in user");
+        console.log(err);
+        
         setErrorMessage(err.response.data.error.message)
         setIsLoading(false)
         onOpen()

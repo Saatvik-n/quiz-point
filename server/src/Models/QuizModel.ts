@@ -1,6 +1,6 @@
-import { prop, Ref, getModelForClass, mongoose } from "@typegoose/typegoose";
+import { prop, getModelForClass} from "@typegoose/typegoose";
 
-import { QuestionType } from "../Types/QuizTypes";
+import { type QuestionType } from "../Types/QuizTypes.js";
 
 class SingleOption {
   @prop({required: true})

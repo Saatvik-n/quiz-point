@@ -76,7 +76,7 @@ const UserHomeModal: React.FC<UserHomeModalProps> = (props) => {
     api
       .get(`/api/quiz/quizDetails/${quizID}`)
       .then((res: any) => {
-        setQuizState(res.data.numbers);
+        setQuizState(res.numbers);
         setLoading(false);
       })
       .catch((err: any) => {

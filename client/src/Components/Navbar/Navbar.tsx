@@ -59,9 +59,9 @@ const Navbar: React.FC<NavbarProps> = () => {
         currentUserDispatch({
           type: "changeUser",
           payload: {
-            userID: res.data.userID,
-            name: res.data.username,
-            username: res.data.username
+            userID: res.userID,
+            name: res.username,
+            username: res.username
           }
         })
       })
