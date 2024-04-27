@@ -119,7 +119,7 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
       })
       .catch((err) => {
         console.log("Error in fetching quiz in TakeQuiz");
-        navigate('/sfdg')
+        navigate('/')
       });
   }, []);
 

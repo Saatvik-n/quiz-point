@@ -8,11 +8,10 @@ export const validateJWT = (
     res: Response,
     next: NextFunction
 ) => {
-    console.log('Cookie');
     if (!req.headers.cookie) {
+        console.log('No cookie');
         return next(HttpErrors(401, "Unauthorized"))
     }
-
     const jwtToken = req.headers.cookie.split("=")[1];
 
     let decodedToken;
@@ -20,10 +19,8 @@ export const validateJWT = (
     let result = JWT.decode(jwtToken) as any
 
     decodedToken = JWT.verify(jwtToken, process.env.JWT_SECRET_KEY!, (err, payload) => {
-        console.log("Inside JWT.verify");
-        
         if (err) {
-            console.log(err);
+            console.log('Error verifying JWT');
             return next(HttpErrors(401, "Unauthorized"));
         }
         return res.json({
