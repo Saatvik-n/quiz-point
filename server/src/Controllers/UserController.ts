@@ -47,6 +47,7 @@ export async function loginUser(
                 name: user.name
             });
     } catch (error: any) { 
+        console.log(error)
         if (error.isJoi) {
             return next(
                 HttpError(401, "Make sure that all fields have 5 characters")
