@@ -2,6 +2,13 @@
 
 Visit it [here](https://quizpoint1.herokuapp.com/#/) 
 
+### Run Locally:
+
+1. Have docker installed
+2. `docker compose build`
+3. `docker compose up`
+4. Go to `localhost:5001`
+
 ## Overview
 
 This web application allows users to create and take a quiz in their browser. The quizzes can have multiple types 

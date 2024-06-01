@@ -8,6 +8,8 @@ services:
       - "5001:5173" # Maps port 5001 on the host to port 5173 in the container
     depends_on: 
       - server # Ensures the server service starts before the client
+    environment:
+      VITE_API_URL: http://localhost:3001 # Use 3001 from our machine as it won't work in the browser otherwise
 
   server: 
     build: 
@@ -17,7 +19,8 @@ services:
     depends_on: 
       - mongo # Ensures the mongo service starts before the server
     environment:
-      MONGO_URI: mongodb://mongo:27017/mydatabase # Sets the environment variable for the MongoDB URI
+      JWT_SECRET_KEY: sjhdbf8i3287riy # IMPORTANT: change this if you're running on a server
+      DB_URL: mongodb://mongo:27017/quizpointdb # Sets the environment variable for the MongoDB URI
       PORT: 3000
 
   mongo: 

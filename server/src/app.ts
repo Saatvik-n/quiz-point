@@ -14,7 +14,7 @@ import morgan from "morgan"
 
 async function main() {
     try {
-        // await Mongoose.connect(DB_URL);
+        await Mongoose.connect(DB_URL);
         console.log("Successfully connected to MongoDB");
 
         const app = Express()
