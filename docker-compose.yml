@@ -1,0 +1,31 @@
+version: '3.8' # Specifies the version of the Docker Compose file format
+
+services: 
+  client: 
+    build: 
+      context: ./client # Path to the client directory
+    ports: 
+      - "5001:5173" # Maps port 5001 on the host to port 5173 in the container
+    depends_on: 
+      - server # Ensures the server service starts before the client
+
+  server: 
+    build: 
+      context: ./server # Path to the server directory
+    ports: 
+      - "3001:3000" # Maps port 3000 on the host to port 3000 in the container
+    depends_on: 
+      - mongo # Ensures the mongo service starts before the server
+    environment:
+      MONGO_URI: mongodb://mongo:27017/mydatabase # Sets the environment variable for the MongoDB URI
+      PORT: 3000
+
+  mongo: 
+    image: mongo:latest # Uses the official MongoDB image from Docker Hub
+    ports: 
+      - "27017:27017" # Maps port 27017 on the host to port 27017 in the container
+    volumes:
+      - mongo-data:/data/db # Persists MongoDB data in a Docker volume
+
+volumes:
+  mongo-data: # Defines the named volume for MongoDB data persistence

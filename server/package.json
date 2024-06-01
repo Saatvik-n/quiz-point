@@ -7,8 +7,9 @@
   "author": "saatvik-n",
   "license": "MIT",
   "scripts": {
-    "dev": "node --watch dist/app.js",
-    "start": "tsc && node --env-file=.env dist/app.js",
+    "dev": "tsc -w && node --watch dist/app.js",
+    "start": "tsc && node dist/app.js",
+    "local": "tsc && node --env-file=.env dist/app.js",
     "build": "tsc"
   },
   "dependencies": {
