@@ -95,7 +95,9 @@ const TakeQuiz: React.FC<TakeQuizProps> = (props) => {
 
     api
       .get(`/api/quiz/${id}`)
-      .then((res) => res.quiz)
+      .then((res) => {
+        const data = res.data;
+        return data.quiz})
       .then((data) => {
 
         setQuizName(data.quizName);
