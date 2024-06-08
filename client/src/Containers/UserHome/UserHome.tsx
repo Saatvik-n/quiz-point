@@ -118,12 +118,14 @@ const UserHome: React.FC<UserHomeProps> = () => {
     api
       .get("/api/validate")
       .then((res) => {
-        setName(res.name);
+        const data = res.data;
+        setName(data.name);
         return api
-          .get(`/api/user/${res.userID}`)
+          .get(`/api/user/${data.userID}`)
           .then((res) => {
-            const quizResultObject = getQuizInfo(res.quizzes);
-            const falseArray = new Array(res.quizzes.length).fill(false);
+            const userData = res.data;
+            const quizResultObject = getQuizInfo(userData.quizzes);
+            const falseArray = new Array(userData.quizzes.length).fill(false);
             setUserQuizIDs(quizResultObject.quizIDs);
             setUserQuizNames(quizResultObject.quizNames);
             setPublicQuizzes(quizResultObject.isPublicList);
