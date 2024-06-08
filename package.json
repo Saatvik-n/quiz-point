@@ -4,6 +4,8 @@
     "author": "saatvik nargund(saatvik.nargund@gmail.com)",
     "scripts": {
         "start": "npm run build && npm run clean && npm run move && cd server && npm run start",
+        "build:server": "cd server && npm install && npm run build",
+        "start:server": "cd server && npm run start",
         "build": "cd client && npm install && cd ../server && npm install && cd ..",
         "clean": "cd client && rm -rf build && cd ../server && rm -rf build",
         "move": "cd client && npm run build && mv build ../server"
