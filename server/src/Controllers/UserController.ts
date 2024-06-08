@@ -6,6 +6,7 @@ import JWT from "jsonwebtoken";
 import { loginAuthSchema, regAuthSchema } from "../Helpers/ValidationSchema.js";
 import { userModel } from "../Models/UserModel.js";
 import { quizModel } from "../Models/QuizModel.js";
+import { JWT_SECRET_KEY } from "../Constants/Constants.js";
 
 export async function loginUser(
     req: Request,
@@ -31,7 +32,7 @@ export async function loginUser(
         if (!isPasswordCorrect) {
             return next(HttpError(401, "Wrong password"));
         }
-        const accessToken = JWT.sign({ userID: user._id, name: user.name, username: user.username }, process.env.JWT_SECRET_KEY!);
+        const accessToken = JWT.sign({ userID: user._id, name: user.name, username: user.username }, JWT_SECRET_KEY!);
         return res
             .status(200)
             .cookie("JWT", accessToken, {

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import HttpErrors from "http-errors";
 import JWT from "jsonwebtoken";
+import { JWT_SECRET_KEY } from "../Constants/Constants.js";
 
 
 export const validateJWT = (
@@ -10,7 +11,7 @@ export const validateJWT = (
 ) => {
     if (!req.headers.cookie) {
         console.log('No cookie');
-        return next(HttpErrors(401, "Unauthorized"))
+        return next(HttpErrors(401, "No cookie"))
     }
     const jwtToken = req.headers.cookie.split("=")[1];
 
@@ -18,10 +19,10 @@ export const validateJWT = (
 
     let result = JWT.decode(jwtToken) as any
 
-    decodedToken = JWT.verify(jwtToken, process.env.JWT_SECRET_KEY!, (err, payload) => {
+    decodedToken = JWT.verify(jwtToken, JWT_SECRET_KEY!, (err, payload) => {
         if (err) {
             console.log('Error verifying JWT');
-            return next(HttpErrors(401, "Unauthorized"));
+            return next(HttpErrors(401, "Could not verify JWT"));
         }
         return res.json({
             username: result.username,
@@ -41,7 +42,7 @@ export function onlyValidateJWT(req: Request, res: Response, next: NextFunction)
 
     let result = JWT.decode(jwtToken) as any
 
-    decodedToken = JWT.verify(jwtToken, process.env.JWT_SECRET_KEY!, (err, payload) => {
+    decodedToken = JWT.verify(jwtToken, JWT_SECRET_KEY, (err, payload) => {
         if (err) {
             return next(HttpErrors(401, "Unauthorized"));
         }

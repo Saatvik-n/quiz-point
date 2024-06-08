@@ -1,0 +1,10 @@
+{
+    "name": "quiz-point",
+    "version": "1.0.0",
+    "author": "saatvik nargund(saatvik.nargund@gmail.com)",
+    "scripts": {
+        "start": "npm run clean && npm run move && cd server && npm run start",
+        "clean": "cd client && rm -rf build && cd ../server && rm -rf build",
+        "move": "cd client && npm run build && mv build ../server"
+    }
+}
