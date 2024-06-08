@@ -8,6 +8,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@vitejs/plugin-react": "^3.1.0",
+    "axios": "^1.7.2",
     "clone-deep": "^4.0.1",
     "framer-motion": "^10.3.2",
     "react": "^18.2.0",

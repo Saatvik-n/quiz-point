@@ -24,7 +24,7 @@ const UserTakeQuizModal: React.FC<UserTakeQuizModalProps> = (props) => {
   const takeQuiz = () => {
     setIsLoading(true)
     api.get(`/api/quiz/checkvalid/${quizID}`)
-      .then(res => {
+      .then(_ => {
         navigate(`/takequiz/${quizID}`)
       })
       .catch(err => {

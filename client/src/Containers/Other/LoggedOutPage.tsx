@@ -16,6 +16,7 @@ const LoggedOutPage: React.FC<LoggedOutPageProps> = () => {
       <Box h="7rem"></Box>
       <VStack spacing="20px" >
         <Text fontSize="3xl" > You have been logged out </Text>
+        <Text fontSize="4xl"> Do not use this site on Incognito Mode </Text>
         <HStack spacing="20px" >
           <Button onClick={() => {
             navigate('/')

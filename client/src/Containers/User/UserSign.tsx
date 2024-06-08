@@ -52,13 +52,14 @@ const UserSign: React.FC<UserSignProps> = (props) => {
       username: username,
       password: password
     })
-      .then((res: any) => {
+      .then((res) => {
+        const data = res.data;
         currentUserDispatch({
           type: "changeUser",
           payload: {
-            userID: res.userID,
-            username: res.username,
-            name: res.name
+            userID: data.userID,
+            username: data.username,
+            name: data.name
           }
         })
         navigate('/user')
@@ -82,7 +83,7 @@ const UserSign: React.FC<UserSignProps> = (props) => {
       password: password,
       name: name
     })
-      .then(res => {
+      .then(_ => {
         navigate('/login')
         setUsername("")
         setPassword("")

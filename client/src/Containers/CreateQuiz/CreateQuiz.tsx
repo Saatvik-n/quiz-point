@@ -421,7 +421,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
         quizName: quizName,
         quizData: finalQuizData,
       })
-        .then((res: any) => {
+        .then(_ => {
           console.log("Successfully edited quiz");
           navigate('/user')
         })
@@ -453,7 +453,9 @@ const CreateQuiz: React.FC<CreateQuizProps> = (props) => {
         if (isEdit === true) {
           api
             .get(`/api/quiz/${quizID!}`)
-            .then((res) => res.quiz)
+            .then((res) => {
+                const data = res.data;
+                return data.quiz})
             .then((data) => {
               setQuizName(data.quizName);
               const editableQuiz = makeQuizEditable(data.quizData);
