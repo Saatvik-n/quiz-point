@@ -1,7 +1,10 @@
 import axios from "axios";
 
+// Temporary measure
+const apiUrl = 'https://quiz-point.onrender.com';
+
 const axiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: apiUrl,
     withCredentials: true
 });
 
