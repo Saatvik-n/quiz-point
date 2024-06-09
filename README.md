@@ -1,7 +1,5 @@
 # Quiz Point
 
-Visit it [here](https://quizpoint1.herokuapp.com/#/) 
-
 ### Run Locally:
 
 1. Have docker installed
@@ -31,3 +29,33 @@ Other users can take these quizzes with or without signing in.
 * Node JS and Express for Back End 
 * MongoDB for data storage 
 * Chakra UI as the UI Framework
+
+## Images
+
+### Home page
+
+![Home page](./images/home.png)
+
+### Home on mobile
+
+![Home on mobile](./images/home_mobile.png)
+
+### Login
+
+![Login](./images/login.png)
+
+### Validation error
+
+![Validation error](./images/validation_error.png)
+
+### User's quizzes
+
+![Quizzes list](./images/quizzes_list.png)
+
+### Taking quiz
+
+![Taking quiz](./images/taking_quiz.png)
+
+### Quiz results
+
+![Quiz results](./images/quiz_results.png)

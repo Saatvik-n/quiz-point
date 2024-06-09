@@ -36,8 +36,9 @@ export async function loginUser(
         return res
             .status(200)
             .cookie("JWT", accessToken, {
-                sameSite: "none",
+                sameSite: "lax",
                 expires: new Date(new Date().getTime() + 60 * 15 * 1000),
+                secure: true,
                 httpOnly: true,
                 path: "/",
             })

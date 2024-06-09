@@ -22,7 +22,7 @@ async function main() {
         app.disable('etag')
         app.use(Express.json())
         app.use(cookieParser())
-        app.use(Cors({ origin: true, credentials: true }))
+        app.use(Cors({ origin: true, credentials: true }));
 
         app.use(Express.static(Path.join(import.meta.dirname, "..", "build")))
 
